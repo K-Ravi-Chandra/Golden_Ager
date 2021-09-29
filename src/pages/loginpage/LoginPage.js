@@ -56,8 +56,14 @@ export default function LoginPage() {
         event.stopPropagation();
       }
 
+      else{
+        
+        event.preventDefault();
+        event.stopPropagation();
+        console.log(email)
+      }
+
       setValidated(true);
-      console.log(email)
       
     };
 
