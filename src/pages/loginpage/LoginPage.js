@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import {Form,Button,InputGroup}  from 'react-bootstrap';
+import {Form,Button}  from 'react-bootstrap';
 import { useState } from 'react';
 
 const Wrapper = styled.div`
@@ -55,7 +55,6 @@ export default function LoginPage() {
         event.preventDefault();
         event.stopPropagation();
       }
-
 
       setValidated(true);
       console.log(email)

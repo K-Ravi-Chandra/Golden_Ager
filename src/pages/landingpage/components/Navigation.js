@@ -14,14 +14,14 @@ function Navigation() {
                 <Nav className="me-auto">
                     <Nav.Link as={Link} to="/about">About</Nav.Link>
                     <NavDropdown title="Donate" id="basic-nav-dropdown">
-                    <NavDropdown.Item as={Link} to="/Donate/money">Donate Money</NavDropdown.Item>
-                    <NavDropdown.Item as={Link} to="/Donate/requirements">Donate Requirements</NavDropdown.Item>
+                    <NavDropdown.Item as={Link} to="/Golden_Ager/Donate/money">Donate Money</NavDropdown.Item>
+                    <NavDropdown.Item as={Link} to="/Golden_Ager/Donate/requirements">Donate Requirements</NavDropdown.Item>
                     </NavDropdown>
                 </Nav>
                 <Nav className="ms-auto">
-                        <Button as={Link} to="/login" variant="outline-primary">Log in</Button>{' '}
+                        <Button as={Link} to="/Golden_Ager/login" variant="outline-primary">Log in</Button>{' '}
                         <Button variant="light"></Button>
-                        <Button as={Link} to="/signup" variant="primary">Sign up</Button>{' '}
+                        <Button as={Link} to="/Golden_Ager/signup" variant="primary">Sign up</Button>{' '}
 
                 </Nav>
                 </Navbar.Collapse>
