@@ -1,6 +1,7 @@
 import React from 'react';
 import { Jumbotron, Container,Button } from 'reactstrap';
 import styled from 'styled-components';
+import {Link} from 'react-router-dom'
 
 const Wrapper = styled.section`
   padding: 4em;
@@ -16,7 +17,7 @@ function Header() {
                     {/* <hr /> */}
                     <p className="lead">An inovative step to help Senior Citizens</p>
                     <p className="lead">
-                        <Button color="primary">Learn More</Button>
+                        <Button color="primary" href="/Golden_Ager/signup">Join us</Button>
                     </p>
                 </Container>
 
