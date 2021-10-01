@@ -8,7 +8,7 @@ function Navigation() {
     return (
         <Navbar bg="light" expand="sm">
             <Container>
-                <Navbar.Brand as={Link} to="/">React-Bootstrap</Navbar.Brand>
+                <Navbar.Brand as={Link} to="/">Golden Ager</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="me-auto">
