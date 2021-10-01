@@ -5,10 +5,12 @@ import Login from './pages/loginpage/LoginPage'
 import LandingPage from './pages/landingpage/LandingPage'
 import Userdashboad from './pages/dashboard/userdashboard'
 import SignUp from './pages/SignUp/SignUp';
+import senior from './pages/SeniorCitizen/senior';
+import SeniorCitizenDashboard from './pages/SeniorCitizen/SeniorCitizenDashboard';
 
 function App() {
   return (
-        <Router>
+      <Router>
             <Switch>
               <Route exact path= "/Golden_Ager">
                   <LandingPage/>
@@ -19,12 +21,16 @@ function App() {
               <Route exact path= "/Golden_Ager/signup">
                   <SignUp/>
               </Route>
-              <Route  exact path= "/Golden_Ager/dashboard">
+              {/* <Route  exact path= "/Golden_Ager/dashboard">
                   <Userdashboad/>
+              </Route> */}
+              <Route  exact path= "/Golden_Ager/dashboard">
+                  <SeniorCitizenDashboard/>
               </Route>
               <Route>
                 <div> Yet to design this page</div>
               </Route>
+
             </Switch>
         </Router>
   );
