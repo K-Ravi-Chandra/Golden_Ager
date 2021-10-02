@@ -1,5 +1,6 @@
 import React from 'react';
-import { Jumbotron, Container,Button } from 'reactstrap';
+import { Jumbotron, Container } from 'reactstrap';
+import { Button } from 'react-bootstrap';
 import styled from 'styled-components';
 import {Link} from 'react-router-dom'
 
@@ -17,7 +18,7 @@ function Header() {
                     {/* <hr /> */}
                     <p className="lead">An inovative step to help Senior Citizens</p>
                     <p className="lead">
-                        <Button color="primary" href="/Golden_Ager/signup">Join us</Button>
+                    <Button as={Link} to="/Golden_Ager/signup" variant="primary">Join us</Button>{' '}
                     </p>
                 </Container>
 

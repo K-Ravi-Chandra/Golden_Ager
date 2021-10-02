@@ -5,7 +5,6 @@ import Login from './pages/loginpage/LoginPage'
 import LandingPage from './pages/landingpage/LandingPage'
 import Userdashboad from './pages/dashboard/userdashboard'
 import SignUp from './pages/SignUp/SignUp';
-import senior from './pages/SeniorCitizen/senior';
 import SeniorCitizenDashboard from './pages/SeniorCitizen/SeniorCitizenDashboard';
 import FamilyDashboard from './pages/family/FamilyDashboard';
 
@@ -19,7 +18,7 @@ function App() {
               <Route exact path= "/Golden_Ager/login">
                   <Login/>
               </Route>
-              <Route  exact path= "/Golden_Ager/family">
+              <Route  exact path= "/Golden_Ager/FamilyDashboard">
                   <FamilyDashboard/>
               </Route>
               <Route exact path= "/Golden_Ager/signup">
@@ -28,7 +27,7 @@ function App() {
               {/* <Route  exact path= "/Golden_Ager/dashboard">
                   <Userdashboad/>
               </Route> */}
-              <Route  exact path= "/Golden_Ager/dashboard">
+              <Route  exact path= "/Golden_Ager/SeniorCitizenDashboard">
                   <SeniorCitizenDashboard/>
               </Route>
               <Route>

@@ -14,11 +14,11 @@ const Wrapper = styled.section`
 function About() {
 
     const [open , setOpen]  = useState(false);
-    const [buttonText, setButtonText] = useState("Learn More");
+    const [buttonText, setButtonText] = useState("Read More");
 
     function ButtonText(){
         if(open){
-            setButtonText("Learn More")
+            setButtonText("Read More")
             setOpen(!open)
         }
         else{

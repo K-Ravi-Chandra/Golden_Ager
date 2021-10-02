@@ -13,7 +13,7 @@ export default function FamilyDashboard() {
                 <a href="#" class="">Support Volunteer</a>
             </div>
             <div class="text-column">
-                <h1>Your Web Page info here</h1>
+                <h1>Our Web Page info here</h1>
             </div>
         </div>
         </div>
