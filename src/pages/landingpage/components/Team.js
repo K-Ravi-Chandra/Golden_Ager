@@ -15,7 +15,7 @@ export default function Team() {
         <Wrapper>
             <h4>Our Team</h4>
             <hr/>
-<Row xs={1} md={2} lg = {4} className="g-4">
+<Row xs={2}  lg = {4} className="g-4">
   {Array.from({ length: 4 }).map((_, idx) => (
     <Col>
       <Card className="text-center" style={{ width: '15rem' }}>
