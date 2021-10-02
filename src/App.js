@@ -7,6 +7,7 @@ import Userdashboad from './pages/dashboard/userdashboard'
 import SignUp from './pages/SignUp/SignUp';
 import senior from './pages/SeniorCitizen/senior';
 import SeniorCitizenDashboard from './pages/SeniorCitizen/SeniorCitizenDashboard';
+import FamilyDashboard from './pages/family/FamilyDashboard';
 
 function App() {
   return (
@@ -17,6 +18,9 @@ function App() {
               </Route>
               <Route exact path= "/Golden_Ager/login">
                   <Login/>
+              </Route>
+              <Route  exact path= "/Golden_Ager/family">
+                  <FamilyDashboard/>
               </Route>
               <Route exact path= "/Golden_Ager/signup">
                   <SignUp/>
