@@ -1,9 +1,7 @@
 import React from 'react'
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
-
 import Login from './pages/loginpage/LoginPage'
 import LandingPage from './pages/landingpage/LandingPage'
-import Userdashboad from './pages/dashboard/userdashboard'
 import SignUp from './pages/SignUp/SignUp';
 import SeniorCitizenDashboard from './pages/SeniorCitizen/SeniorCitizenDashboard';
 import FamilyDashboard from './pages/family/FamilyDashboard';
@@ -11,7 +9,7 @@ import FamilyDashboard from './pages/family/FamilyDashboard';
 function App() {
   return (
       <Router>
-            <Switch>
+            <Switch> 
               <Route exact path= "/Golden_Ager">
                   <LandingPage/>
               </Route>
@@ -24,9 +22,6 @@ function App() {
               <Route exact path= "/Golden_Ager/signup">
                   <SignUp/>
               </Route>
-              {/* <Route  exact path= "/Golden_Ager/dashboard">
-                  <Userdashboad/>
-              </Route> */}
               <Route  exact path= "/Golden_Ager/SeniorCitizenDashboard">
                   <SeniorCitizenDashboard/>
               </Route>

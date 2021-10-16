@@ -1,200 +1,111 @@
-import React from 'react'
-import styled from 'styled-components'
-import {Form,Button,Row,Col}  from 'react-bootstrap';
-import { useState } from 'react';
-import { Formik } from "formik";
-import * as yup from "yup";
+import * as React from 'react';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
+import TextField from '@mui/material/TextField';
+import Link from '@mui/material/Link';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 
+const theme = createTheme();
 
-const schema = yup.object().shape({
-  firstName: yup.string()
-  .required()
-  .min(2, "*Name must have at least 2 characters")
-  .max(100, "*Names can't be longer than 100 characters")
-  .required("*Name is required"),
-  email: yup.string().required(),
-  phone: yup.string().required(),
-  city: yup.string().required(),
-  state: yup.string().required(),
-  zip: yup.string().required(),
-  terms: yup.bool().required().oneOf([true], 'Terms must be accepted'),
-});
-
-
-const Wrapper = styled.div`
-  height : 100vh
-`;
-
-const Center = styled.div`
-  position : absolute;
-  padding: 2em;
-  background: papayawhip;
-  top : 50%;
-  left : 50%;
-  transform : translate(-50%, -50%);
-  border-radius :10px;
-  box-shadow: 0px 0px 15px -5px grey
-
-`;
-
-const Title = styled.h1`
-  font-size: 1.5em;
-  text-align: center;
-  color: palevioletred;
-  justify-content:center;
-
-  
-`;
 export default function SignUp() {
-    return (
-      <Wrapper>
-        <Center>
-        <Title>Register</Title>
-                <hr/>
-        <Formik
-      validationSchema={schema}
-      onSubmit={console.log}
-      initialValues={{
-        firstName: '',
-        lastName: '',
-        username: '',
-        email: '',
-        phone: '',
-        city: '',
-        state: '',
-        zip: '',
-        terms: false,
-      }}
-    >
-      {({
-        handleSubmit,
-        handleChange,
-        handleBlur,
-        values,
-        isValid,
-        touched,
-        errors,
-      }) => (
-        <Form noValidate onSubmit={handleSubmit}>
-          <Row className="mb-2">
-            <Form.Group as={Col} md="6" controlId="firstName">
-              <Form.Label>First name</Form.Label>
-              <Form.Control
-                type="text"
-                name="firstName"
-                placeholder="First Name"
-                value={values.firstName}
-                onChange={handleChange}
-                isInvalid={!!errors.firstName}
-              />
-              <Form.Control.Feedback type="invalid" >{errors.firstName}</Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group as={Col} md="6" controlId="lastName">
-              <Form.Label>Last name</Form.Label>
-              <Form.Control
-                type="text"
-                name="lastName"
-                placeholder="Last Name"
-                value={values.lastName}
-                onChange={handleChange}
-                // isValid={touched.lastName && !errors.lastName}
-              />
-            </Form.Group>
-          </Row>
-          <Row className="mb-2">
-            <Form.Group as={Col} md="6" controlId="formEmail">
-              <Form.Label>Email</Form.Label>
-              <Form.Control
-                type="email"
-                name="email"
-                placeholder="abc@gmail.com"
-                value={values.email}
-                onChange={handleChange}
-                isInValid={!!errors.email}
-              />
-             <Form.Control.Feedback type = "invalid">{errors.email}</Form.Control.Feedback> 
-            </Form.Group>
-            <Form.Group as={Col} md="6" controlId="lastName">
-              <Form.Label>Phone</Form.Label>
-              <Form.Control
-                type="text"
-                name="phone"
-                placeholder="Phone"
-                value={values.phone}
-                onChange={handleChange}
-                isInValid={!!errors.phone}
-              />
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    // eslint-disable-next-line no-console
+    console.log({
+      email: data.get('email'),
+      password: data.get('password'),
+    });
+  };
 
-              <Form.Control.Feedback type="invalid">{errors.phone}</Form.Control.Feedback> 
-            </Form.Group>
-          </Row>
-          <Row className="mb-2">
-            <Form.Group as={Col} md="6" controlId="validationFormik03">
-              <Form.Label>City</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="City"
-                name="city"
-                value={values.city}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                isInvalid={!!errors.city}
-              />
-
-              <Form.Control.Feedback type="invalid">
-                {errors.city}
-              </Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group as={Col} md="3" controlId="validationFormik04">
-              <Form.Label>State</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="State"
-                name="state"
-                value={values.state}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                isInvalid={!!errors.state}
-              />
-              <Form.Control.Feedback type="invalid">
-                {errors.state}
-              </Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group as={Col} md="3" controlId="validationFormik05">
-              <Form.Label>Zip</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Zip"
-                name="zip"
-                value={values.zip}
-                onBlur={handleBlur}
-                onChange={handleChange}
-                isInvalid={!!errors.zip}
-              />
-
-              <Form.Control.Feedback type="invalid">
-                {errors.zip}
-              </Form.Control.Feedback>
-            </Form.Group>
-          </Row>
-          <Form.Group className="mb-3">
-            <Form.Check
-              required
-              name="terms"
-              label="Agree to terms and conditions"
-              onChange={handleChange}
-              isInvalid={!!errors.terms}
-              feedback={errors.terms}
-              feedbackType="invalid"
-              id="validationFormik0"
-            />
-          </Form.Group>
-          <Button type="submit">Submit form</Button>
-        </Form>
-      )}
-    </Formik>
-        </Center>
-      </Wrapper>
-    )
+  return (
+    <ThemeProvider theme={theme}>
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <Box
+          sx={{
+            marginTop: 8,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Sign up
+          </Typography>
+          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  autoComplete="given-name"
+                  name="firstName"
+                  required
+                  fullWidth
+                  id="firstName"
+                  label="First Name"
+                  autoFocus
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  required
+                  fullWidth
+                  id="lastName"
+                  label="Last Name"
+                  name="lastName"
+                  autoComplete="family-name"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  autoComplete="new-password"
+                />
+              </Grid>
+            </Grid>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              Sign Up
+            </Button>
+            <Grid container justifyContent="flex-end">
+              <Grid item>
+                <Link href="/login" variant="body2">
+                  Already have an account? Sign in
+                </Link>
+              </Grid>
+            </Grid>
+          </Box>
+        </Box>
+      </Container>
+    </ThemeProvider>
+  );
 }
