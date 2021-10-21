@@ -109,7 +109,7 @@ export default function NavBar() {
         </List>
       </Collapse>
       <Divider/>
-      <ListItemButton  component={Link} to="/Golden_Ager/login" >
+      <ListItemButton  component={Link} to="/login" >
                   {/* <ListItemIcon>
                     <InfoIcon/>
                   </ListItemIcon> */}
@@ -120,7 +120,7 @@ export default function NavBar() {
                     } 
                   />
               </ListItemButton>
-              <ListItemButton  component={Link} to="/Golden_Ager/signup" >
+              <ListItemButton  component={Link} to="/register" >
                   {/* <ListItemIcon>
                     <InfoIcon/>
                   </ListItemIcon> */}
@@ -184,8 +184,8 @@ export default function NavBar() {
           <Button onClick={handleClick}  color="inherit">Donate</Button>
           <Button onClick={handleClick2} color="inherit">DemoPages</Button>
           <Divider orientation="vertical" flexItem />
-          <Button color="primary" component={Link} to="/Golden_Ager/login">Login</Button>
-          <Button color="primary" variant = "outlined" component={Link} to="/Golden_Ager/signup" >Signup</Button>
+          <Button color="primary" component={Link} to="/login">Login</Button>
+          <Button color="primary" variant = "outlined" component={Link} to="/register" >Signup</Button>
 
       </Box>
 
