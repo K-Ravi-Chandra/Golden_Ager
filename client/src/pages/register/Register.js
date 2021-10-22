@@ -64,7 +64,7 @@ const Register = () => {
         console.log({
           username,
           email,
-          password
+          password,
         });
         
         const config = {
@@ -74,12 +74,14 @@ const Register = () => {
         };
 
         try {
+          const role = "3"
           const { data } = await axios.post(
             "/api/auth/register",
             {
               username,
               email,
               password,
+              role
             },
             config
           );

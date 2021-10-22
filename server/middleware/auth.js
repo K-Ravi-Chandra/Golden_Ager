@@ -23,7 +23,18 @@ exports.protect = async(req,res,next) => {
         }
         req.user = user;
 
-        next();
+        console.log(user);
+
+        res.status(200).json({
+            sucess : true,
+            name : user.username,
+            email : user.email,
+            role : user.role,
+            data : `${user.username} have got access to dashboard ! you have assigned to role :${user.role} and now you can see your dashboard`
+        })
+
+
+        // next();
 
     } catch (error) {
         return next(new ErrorResponse("Not autherized to access this route", 401));
