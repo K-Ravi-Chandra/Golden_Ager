@@ -44,12 +44,6 @@ export default function NavBar() {
     <div>
                   <Toolbar sx={{ toolbar: (theme) => theme.mixins.toolbar }}/>
             <List>
-              <ListItemButton key= "About" component={Link} to="/Golden_Ager/" >
-                  {/* <ListItemIcon>
-                    <InfoIcon/>
-                  </ListItemIcon> */}
-                  <ListItemText  primary= "About" />
-              </ListItemButton>
               <ListItemButton onClick = { () => {setDonateOpen(!donateOpen)}}>
                 {/* <ListItemIcon>
                   <InboxIcon />
@@ -59,13 +53,13 @@ export default function NavBar() {
               </ListItemButton>
               <Collapse in={donateOpen } timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
-                  <ListItemButton component={Link} to="/Golden_Ager/donatemoney" sx={{ pl: 4 }}>
+                  <ListItemButton component={Link} to="/donatemoney" sx={{ pl: 4 }}>
                     {/* <ListItemIcon>
                       <StarBorder />
                     </ListItemIcon> */}
                   <ListItemText  primary="Donate Money" />
                 </ListItemButton>
-                <ListItemButton component={Link} to="/Golden_Ager/donaterequirements" sx={{ pl: 4 }}>
+                <ListItemButton component={Link} to="/donaterequirements" sx={{ pl: 4 }}>
                     {/* <ListItemIcon>
                       <StarBorder />
                     </ListItemIcon> */}
@@ -82,25 +76,25 @@ export default function NavBar() {
               </ListItemButton>
               <Collapse in={demoOpen } timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
-                  <ListItemButton component={Link} to="/Golden_Ager/VolunterDashboard" sx={{ pl: 4 }}>
+                  <ListItemButton component={Link} to="/VolunterDashboard" sx={{ pl: 4 }}>
                     {/* <ListItemIcon>
                       <StarBorder />
                     </ListItemIcon> */}
                   <ListItemText primary="Volunter Dashboard " />
                 </ListItemButton>
-                <ListItemButton component={Link} to="/Golden_Ager/SeniorCitizenDashboard"  sx={{ pl: 4 }}>
+                <ListItemButton component={Link} to="/SeniorCitizenDashboard"  sx={{ pl: 4 }}>
                     {/* <ListItemIcon>
                       <StarBorder />
                     </ListItemIcon> */}
                   <ListItemText primary="Senior Citizen Dashboard" />
                 </ListItemButton>
-                <ListItemButton component={Link} to="/Golden_Ager/DoctorDashboard"  sx={{ pl: 4 }}>
+                <ListItemButton component={Link} to="/DoctorDashboard"  sx={{ pl: 4 }}>
                     {/* <ListItemIcon>
                       <StarBorder />
                     </ListItemIcon> */}
                   <ListItemText primary="Doctor Dashboard" />
                 </ListItemButton>
-                <ListItemButton component={Link} to="/Golden_Ager/FamilyDashboard" sx={{ pl: 4 }}>
+                <ListItemButton component={Link} to="/FamilyDashboard" sx={{ pl: 4 }}>
                     {/* <ListItemIcon>
                       <StarBorder />
                     </ListItemIcon> */}
@@ -180,7 +174,7 @@ export default function NavBar() {
           width: 'fit-content',
         }}
       >
-      <Button color="inherit"  component={Link} to="/Golden_Ager" >About</Button>
+
           <Button onClick={handleClick}  color="inherit">Donate</Button>
           <Button onClick={handleClick2} color="inherit">DemoPages</Button>
           <Divider orientation="vertical" flexItem />
@@ -251,10 +245,10 @@ export default function NavBar() {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <MenuItem  component={Link} to="/Golden_Ager/donatemoney" >
+        <MenuItem  component={Link} to="/donatemoney" >
           Donate Money
         </MenuItem>
-        <MenuItem component={Link} to="/Golden_Ager/donaterequirements">
+        <MenuItem component={Link} to="/donaterequirements">
           Donate Requirements
         </MenuItem>
         
@@ -293,16 +287,16 @@ export default function NavBar() {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <MenuItem component={Link} to="/Golden_Ager/SeniorCitizenDashboard">
+        <MenuItem component={Link} to="/SeniorCitizenDashboard">
           Senior Citizen Dashboard
         </MenuItem>
-        <MenuItem  component={Link} to="/Golden_Ager/VolunterDashboard">
+        <MenuItem  component={Link} to="/VolunterDashboard">
           Volunter Dashboard
         </MenuItem>
-        <MenuItem  component={Link} to="/Golden_Ager/DoctorDashboard">
+        <MenuItem  component={Link} to="/DoctorDashboard">
           Doctor Dashboard
         </MenuItem>
-        <MenuItem  component={Link} to="/Golden_Ager/FamilyDashboard">
+        <MenuItem  component={Link} to="/FamilyDashboard">
           Family Dashboard
         </MenuItem>
         

@@ -2,30 +2,31 @@ import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-
 import { useState } from "react";
 import axios from "axios";
+import OutlinedInput from '@mui/material/OutlinedInput';
+import InputLabel from '@mui/material/InputLabel';
+import FormControl from '@mui/material/FormControl';
+
 
 const theme = createTheme();
 
 export default function ForgotPassword() {
     const [email, setEmail] = useState("");
 
+    const handleEmail =  (event) => {
+      setEmail(event.target.value);
+    };
+
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const formData = new FormData(event.currentTarget);
-        // eslint-disable-next-line no-console
-        console.log({
-          email: formData.get('email'),
-        });
-        setEmail(formData.get('email'));
+
         const config = {
           header: {
             "Content-Type": "application/json",
@@ -38,8 +39,8 @@ export default function ForgotPassword() {
             config
           );
     
-          // setSuccess(data.data);
           console.log(data.data)
+
         } catch (error) {
           console.log(error);
         }
@@ -77,16 +78,16 @@ export default function ForgotPassword() {
               Forgot Password
             </Typography>
             <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-                autoFocus
-              />
+            <FormControl  margin = "normal" fullWidth variant="outlined">
+          <InputLabel htmlFor="outlined-adornment-email">Email Address</InputLabel>
+          <OutlinedInput
+            id="outlined-adornment-email"
+            type='text'
+            value={email}
+            onChange={handleEmail }
+            label="Email Address"
+          />
+        </FormControl>
               <Button
                 type="submit"
                 fullWidth

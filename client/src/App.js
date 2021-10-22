@@ -21,16 +21,16 @@ function App() {
               <Route exact path= "/forgotpassword">
                 <ForgotPassword/>
               </Route>
-             <Route exact path= "/passwordreset/:resetToken">
+             <Route exact path= "/resetpassword/:resetToken">
                 <ResetPassword/>
               </Route>
-              <Route  exact path= "/Golden_Ager/FamilyDashboard">
+              <Route  exact path= "/FamilyDashboard">
                   <FamilyDashboard/>
               </Route>
               <Route exact path= "/register">
                   <Register/>
               </Route>
-              <Route  exact path= "/Golden_Ager/SeniorCitizenDashboard">
+              <Route  exact path= "/SeniorCitizenDashboard">
                   <SeniorCitizenDashboard/>
               </Route>
               <Route>

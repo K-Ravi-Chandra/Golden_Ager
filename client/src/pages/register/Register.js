@@ -2,7 +2,6 @@ import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
 import { Link } from '@mui/material';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
@@ -13,30 +12,61 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import InputLabel from '@mui/material/InputLabel';
+import InputAdornment from '@mui/material/InputAdornment';
+import FormHelperText from '@mui/material/FormHelperText';
+import FormControl from '@mui/material/FormControl';
+import IconButton from '@mui/material/IconButton';
 
 const theme = createTheme();
 
 const Register = () => {
 
-    const [username,setUsername] = useState("");
+    const [username,setUserName] = useState("");
     const [email,setEmail] = useState("");
     const [password,setPassword] = useState("");
+    const[showPassword,setShowPassword] = React.useState(false)
+
+    const handleUsername =  (event) => {
+      setUserName(event.target.value);
+    };
+
+    const handleEmail =  (event) => {
+      setEmail(event.target.value);
+    };
+
+    const handlePassword = (event) =>  {
+      setPassword(event.target.value);
+    };
+
+    const handleShowPassword = () => {
+      setShowPassword(!showPassword);
+    }
+
+    const handleMouseDownPassword = (event) => {
+      event.preventDefault();
+    };
 
     let history = useHistory();
 
+    React.useEffect(() => {
+      if (localStorage.getItem("authToken")) {
+        history.push("/");
+      }
+    }, [history]);
+
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const formData = new FormData(event.currentTarget);
 
-        setUsername(formData.get('username'));
-        setEmail(formData.get('email'));
-        setPassword(formData.get('password'));
         console.log({
           username,
           email,
-          password,
+          password
         });
-        // eslint-disable-next-line no-console
+        
         const config = {
           header: {
             "Content-Type": "application/json",
@@ -55,8 +85,11 @@ const Register = () => {
           );
     
           localStorage.setItem("authToken", data.token);
+
+          console.log("Registered sucessfully");
     
           history.push("/");
+
         } catch (error) {
           console.log(error);
         }
@@ -96,34 +129,49 @@ const Register = () => {
               Register
             </Typography>
             <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
-            <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="username"
-                label="User Name"
-                name="username"
-                autoFocus
-              />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-              />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-              />
+            <FormControl  margin = "normal" fullWidth variant="outlined">
+          <InputLabel htmlFor="outlined-adornment-name">Full Name</InputLabel>
+          <OutlinedInput
+            id="outlined-adornment-name"
+            type='text'
+            value={username}
+            onChange={handleUsername }
+            label="Full Name"
+          />
+        </FormControl>
+          <FormControl  margin = "normal" fullWidth variant="outlined">
+          <InputLabel htmlFor="outlined-adornment-email">Email Address</InputLabel>
+          <OutlinedInput
+            id="outlined-adornment-email"
+            type='text'
+            value={email}
+            onChange={handleEmail }
+            label="Email Address"
+          />
+        </FormControl>
+          <FormControl margin = "normal"  fullWidth variant="outlined">
+          <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+          <OutlinedInput
+            id="outlined-adornment-password"
+            type={showPassword ? 'text' : 'password'}
+            value={password}
+            onChange={handlePassword}
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={handleShowPassword}
+                  onMouseDown={handleMouseDownPassword}
+                  edge="end"
+                >
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            }
+            label="Password"
+          />
+        </FormControl>
+
               <Button
                 type="submit"
                 fullWidth

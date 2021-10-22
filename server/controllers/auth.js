@@ -77,7 +77,7 @@ exports.forgotpassword = async (req ,res , next) => {
 
         await user.save();
 
-        const resetUrl = `http://localhost:3000/passwordreset/${resetToken}`;
+        const resetUrl = `http://localhost:3000/resetpassword/${resetToken}`;
 
         const message = `
             <h1> You have requested a password reset<h1>

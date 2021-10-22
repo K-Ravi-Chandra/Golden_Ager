@@ -2,8 +2,6 @@ import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import { useState } from "react";
 import axios from "axios";
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
@@ -11,10 +9,33 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import InputLabel from '@mui/material/InputLabel';
+import InputAdornment from '@mui/material/InputAdornment';
+import FormControl from '@mui/material/FormControl';
+import IconButton from '@mui/material/IconButton';
+import { withRouter } from "react-router";
 
 const theme = createTheme();
 const ResetPassword = ({ history, match }) => {
-    const [password, setPassword] = useState("");
+  const [password, setPassword] = React.useState("");
+  const[showPassword,setShowPassword] = React.useState(false)
+
+
+    const handlePassword = (event) =>  {
+      setPassword(event.target.value);
+    };
+
+    const handleShowPassword = () => {
+      setShowPassword(!showPassword);
+    }
+  
+    const handleMouseDownPassword = (event) => {
+      event.preventDefault();
+    };
+
     const handleSubmit = async (event) => {
         event.preventDefault();
         const config = {
@@ -22,15 +43,10 @@ const ResetPassword = ({ history, match }) => {
             "Content-Type": "application/json",
           },
         };
-        const formData = new FormData(event.currentTarget);
-        // eslint-disable-next-line no-console
-        console.log({
-          password: formData.get('password'),
-        });
-        setPassword(formData.get('password'));
+       
         try {
           const { data } = await axios.put(
-            `/api/auth/passwordreset/${match.params.resetToken}`,
+            `/api/auth/resetpassword/${match.params.resetToken}`,
             {
               password,
             },
@@ -77,16 +93,29 @@ const ResetPassword = ({ history, match }) => {
               Reset
             </Typography>
             <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-              />
+
+            <FormControl margin = "normal"  fullWidth variant="outlined">
+          <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+          <OutlinedInput
+            id="outlined-adornment-password"
+            type={showPassword ? 'text' : 'password'}
+            value={password}
+            onChange={handlePassword}
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={handleShowPassword}
+                  onMouseDown={handleMouseDownPassword}
+                  edge="end"
+                >
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            }
+            label="Password"
+          />
+        </FormControl>
               <Button
                 type="submit"
                 fullWidth
@@ -103,4 +132,4 @@ const ResetPassword = ({ history, match }) => {
     )
 }
 
-export default ResetPassword
+export default withRouter(ResetPassword);

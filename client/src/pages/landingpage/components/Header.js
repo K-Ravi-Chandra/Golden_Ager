@@ -65,7 +65,7 @@ export default function Header() {
               justifyContent="center"
             >
               
-              <Button variant="outlined" color="inherit" component={Link} to="/Golden_Ager/signup">Join us</Button>
+              <Button variant="outlined" color="inherit" component={Link} to="/register">Join us</Button>
             </Stack>
           </Container>
 
