@@ -11,10 +11,14 @@ const app = express();
 // get data from body
 app.use(express.json());
 
-// redirect to auth
-app.use('/api/auth', require('./routes/auth'));
+// redirect to auth 
+app.use('/api/auth', require('./routes/auth'));  
 
 app.use('/api/private', require('./routes/private'));
+
+
+
+app.use('/api/contact', require('./routes/contact'));   
 
 // Error Handler (last piece of middleware)
 app.use(errorHandler);

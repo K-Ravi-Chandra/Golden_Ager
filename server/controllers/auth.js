@@ -88,6 +88,7 @@ exports.forgotpassword = async (req ,res , next) => {
         try {
 
             await sendEmail({
+                from :process.env.EMAIL_FROM,
                 to : user.email,
                 subject : "Password Reset Request",
                 text: message
