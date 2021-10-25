@@ -44,16 +44,32 @@ const UserDashBoard = ({history}) => {
     }
     const renderSwitch = (role) => {
       switch(role) {
+        
         case '0':
-          return <VolunteerDashboard/>;
+          return <>
+                    <div>{privateData}</div>
+                    <button onClick={logout}>Logout</button>
+                    <VolunteerDashboard/>
+                 </>;
+        
         case '1':
-          return <SeniorCitizenDashboard/>;
+          return <>
+                    <div>{privateData}</div>
+                    <button onClick={logout}>Logout</button>
+                    <SeniorCitizenDashboard/>   
+                 </>;
+        
         case '2':
           return <DoctorDashboard/>;
+        
         case '3':
-          return <FamilyDashboard/> ;
+          return <>
+                    <div>{privateData}</div>
+                    <button onClick={logout}>Logout</button>
+                    <FamilyDashboard/> 
+                 </>;
         default:
-          return <div>Can't find your role</div>;
+          return <div></div>;
       }
     }
     
@@ -61,8 +77,6 @@ const UserDashBoard = ({history}) => {
       <span className="error-message">{error}</span>
     ) : (
         <>
-              <div>{privateData}</div>
-      <button onClick={logout}>Logout</button>
         {renderSwitch(role)}
         </>
     );

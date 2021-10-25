@@ -12,6 +12,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
+import CloseIcon from '@mui/icons-material/Close';
 import Collapse from '@mui/material/Collapse';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
@@ -156,7 +157,7 @@ export default function NavBar() {
 
     <React.Fragment>
       <Box sx={{ flexGrow: 1 }}>
-      <AppBar color= "inherit"  sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
+      <AppBar elevation ={0} color= "inherit"  sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
         <Toolbar >
           
           <img style = {{ width :32, height :32, margin : 4}} alt = "logo" src = {Logo}/>
@@ -187,16 +188,17 @@ export default function NavBar() {
 
           </div>)}
           
+          {/* <Box sx={{ ...commonStyles, borderRadius: '16px' }} > */}
           <IconButton
-            size="large"
-            edge="start"
             color="inherit"
             aria-label="menu"
             onClick={toggleDrawer(!state)}
-            sx={{ mr: 2, display: { sm: 'none' } }}
+            sx={{  display: { sm: 'none' } }}
           >
-            <MenuIcon />
+            {state ? <CloseIcon/> : <MenuIcon /> }
+            
           </IconButton>
+          {/* </Box> */}
           <Drawer
             anchor='top'
             open={state & isMobile}
