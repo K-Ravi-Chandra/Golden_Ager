@@ -46,11 +46,8 @@ const UserDashBoard = ({history}) => {
       switch(role) {
         
         case '0':
-          return <>
-                    <div>{privateData}</div>
-                    <button onClick={logout}>Logout</button>
-                    <VolunteerDashboard/>
-                 </>;
+          return <VolunteerDashboard/>
+;
         
         case '1':
           return <>

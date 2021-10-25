@@ -105,23 +105,17 @@ export default function NavBar() {
       </Collapse>
       <Divider/>
       <ListItemButton  component={Link} to="/login" >
-                  {/* <ListItemIcon>
-                    <InfoIcon/>
-                  </ListItemIcon> */}
                   <ListItemText  primary={
                       <Typography color="primary">
-                        Login
+                        LOGIN
                       </Typography>
                     } 
                   />
               </ListItemButton>
               <ListItemButton  component={Link} to="/register" >
-                  {/* <ListItemIcon>
-                    <InfoIcon/>
-                  </ListItemIcon> */}
                   <ListItemText  primary={
-                      <Typography color="primary" variant = "outlined">
-                        Signup
+                      <Typography color="primary" >
+                        REGISTER
                       </Typography>
                     } 
                   />
@@ -162,7 +156,7 @@ export default function NavBar() {
           
           <img style = {{ width :32, height :32, margin : 4}} alt = "logo" src = {Logo}/>
          
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          <Typography variant="h5" component="div" sx={{ flexGrow: 1 }}>
             Golden Ager
           </Typography>
           {isMobile ? (<div></div>
@@ -191,6 +185,7 @@ export default function NavBar() {
           {/* <Box sx={{ ...commonStyles, borderRadius: '16px' }} > */}
           <IconButton
             color="inherit"
+            edge = "end"
             aria-label="menu"
             onClick={toggleDrawer(!state)}
             sx={{  display: { sm: 'none' } }}
@@ -222,10 +217,10 @@ export default function NavBar() {
           elevation: 0,
           sx: {
             overflow: 'visible',
-            filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+            filter: 'drop-shadow(0px 2px 8px rgba(50,50,110,0.32))',
             mt: 1.5,
             '& .MuiAvatar-root': {
-              width: 32,
+              width: 32000,
               height: 32,
               ml: -0.5,
               mr: 1,
@@ -264,7 +259,7 @@ export default function NavBar() {
           elevation: 0,
           sx: {
             overflow: 'visible',
-            filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+            filter: 'drop-shadow(0px 2px 8px rgba(50,50,110,0.32))',
             mt: 1.5,
             '& .MuiAvatar-root': {
               width: 32,

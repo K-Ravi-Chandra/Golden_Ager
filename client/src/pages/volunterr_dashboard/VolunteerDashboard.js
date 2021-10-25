@@ -13,6 +13,8 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Logo from '../landingpage/components/logo.png';
 import { useHistory } from "react-router-dom";
+import HelpRequests from './components/HelpRequests';
+import Registration from './components/Registration';
 const drawerWidth = 240;
 
 const VolunteerDashboard = () => {
@@ -33,9 +35,9 @@ const VolunteerDashboard = () => {
   const renderSwitch = (item) => {
     switch(item) {
       case '0':
-        return <div>Help Requests</div>;
+        return <HelpRequests/>;
       case '1':
-        return  <div>Register a Senior Citizen</div>;
+        return  <Registration/>;
       case '2':
         return  <div>Financial Requests</div>;
       case '3':
@@ -147,7 +149,7 @@ const VolunteerDashboard = () => {
       </Box>
       <Box
         component="main"
-        sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
+        sx={{ flexGrow: 1, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
       >
         <Toolbar />
         {renderSwitch(item)}

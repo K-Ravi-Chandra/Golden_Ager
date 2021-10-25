@@ -27,6 +27,9 @@ const Register = () => {
 
     const [username,setUserName] = useState("");
     const [email,setEmail] = useState("");
+    const [phone, setPhone] = useState("");
+    const [age, setAge] = useState("");
+    const [address , setAddress] = useState("");
     const [password,setPassword] = useState("");
     const[showPassword,setShowPassword] = React.useState(false)
 
@@ -50,6 +53,20 @@ const Register = () => {
       event.preventDefault();
     };
 
+    const handlePhone = (event) =>  {
+      setPhone(event.target.value);
+    };
+
+
+    const handleAge = (event) => {
+      setAge(event.target.value);
+    }
+
+    const handleAddress = (event) => {
+        setAddress(event.target.value);
+    }
+
+
     let history = useHistory();
 
     React.useEffect(() => {
@@ -65,6 +82,9 @@ const Register = () => {
           username,
           email,
           password,
+          age,
+          phone,
+          address
         });
         
         const config = {
@@ -74,14 +94,17 @@ const Register = () => {
         };
 
         try {
-          const role = "3"
+          const role = "0"
           const { data } = await axios.post(
             "/api/auth/register",
             {
               username,
               email,
               password,
-              role
+              role,
+              age,
+              phone,
+              address
             },
             config
           );
@@ -150,7 +173,18 @@ const Register = () => {
             onChange={handleEmail }
             label="Email Address"
           />
-        </FormControl>
+          </FormControl>
+              <FormControl  margin = "normal" fullWidth variant="outlined">
+      <InputLabel htmlFor="outlined-adornment-phone">Phone Number</InputLabel>
+      <OutlinedInput
+        id="outlined-adornment-phone"
+        type='text'
+        value={phone}
+        onChange={handlePhone }
+        label="Phone Number"
+      />
+    </FormControl>
+        
           <FormControl margin = "normal"  fullWidth variant="outlined">
           <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
           <OutlinedInput

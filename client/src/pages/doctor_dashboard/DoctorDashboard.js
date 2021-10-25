@@ -48,7 +48,7 @@ const logout = () => {
       case '3':
         return  <div>Notifications</div> ;
       case '4':
-            return  <div>Your Profile</div> ;
+            return  <div>Your Profile ! Hello Doctor</div> ;
       default:
         return <div>Help Requests</div>;
     }
