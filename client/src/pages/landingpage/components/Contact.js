@@ -116,7 +116,7 @@ const Contact = () => {
         flexDirection: 'column', p:5}} noValidate autoComplete="off">
 
       <FormControl  margin = "normal" fullWidth variant="outlined">
-          <InputLabel htmlFor="name">Full Name</InputLabel>
+          <InputLabel htmlFor="name">Full Name </InputLabel>
           <OutlinedInput
             id="name"
             type='text'
