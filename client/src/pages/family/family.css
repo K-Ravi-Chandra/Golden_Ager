@@ -1,39 +1,39 @@
-* {
-    box-sizing: border-box;
-  }
-    
-  .buttons-column {
-    float: left;
-    width: 20%;
-    height: 780px;
-    background-color: rgb(245, 193, 63);
-  }
-  
-  .text-column {
-      float: left;
-      width: 80%;
-      padding: 10px;
-      height: 100%;
-  }
-  
-  
-  .buttons-column a {
-      background-color: gold;
-      text-decoration: none;
-      font-style: bold;
-      margin-top: 5px;
-      margin-bottom: 7px;
-      margin-left: 7px;
-      color: rgb(0, 0, 0);
-      font-size: 1.3em;
-      cursor: pointer;
-      width: 97%;
-      border: solid gold 2px;
-      padding-left: 5px;
-      padding-top: 10px;
-      padding-bottom: 10px;
-      border-radius: 10px;
-      display: inline;
-      display: table;
-      clear: both;
-  }
+.family-dash-board{
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: row;
+}
+
+.side-bar{
+  height: 100%;
+  width: 250px;
+  background-color: gold;
+}
+
+.side-bar-list{
+  height: auto;
+  padding: 0;
+  width:100%;
+}
+
+.side-bar-list .row-item{
+  width: 100%;
+  height: 50px;
+  list-style-type: none;
+  margin: 0;
+  padding-top: 5px;
+  padding-bottom: 2px;
+}
+
+.side-bar-list .row-item:hover{
+  cursor: pointer;
+  background-color: rgb(211, 179, 3);
+}
+
+.side-bar-list #row-active{
+  background-color: rgb(211, 179, 3);
+  font-style: italic; 
+}
+
+
