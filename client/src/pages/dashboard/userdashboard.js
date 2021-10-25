@@ -60,11 +60,8 @@ const UserDashBoard = ({history}) => {
           return <DoctorDashboard/>;
         
         case '3':
-          return <>
-                    <div>{privateData}</div>
-                    <button onClick={logout}>Logout</button>
-                    <FamilyDashboard/> 
-                 </>;
+          return <FamilyDashboard/> 
+
         default:
           return <div></div>;
       }
