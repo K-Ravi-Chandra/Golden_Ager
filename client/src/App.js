@@ -10,6 +10,8 @@ import UserDashBoard from './pages/dashboard/userdashboard';
 import PrivateRoute  from './routes/PrivateRoute';
 import DoctorDashboard from './pages/doctor_dashboard/DoctorDashboard'
 import VolunteerDashboard from './pages/volunterr_dashboard/VolunteerDashboard'
+import DonateRequirements from './pages/donate/DonateRequirements';
+import DonateMoney from './pages/donate/DonateMoney';
 
 function App() {
   return (
@@ -39,6 +41,12 @@ function App() {
               </Route>
               <Route exact path= "/DoctorDashboard">
                   <DoctorDashboard/>
+              </Route>
+              <Route exact path= "/donaterequirements">
+                <DonateRequirements/>
+              </Route>
+              <Route exact path= "/donatemoney">
+                <DonateMoney/>
               </Route>
               <Route>
                 <div>Page not found</div>

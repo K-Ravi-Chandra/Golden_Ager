@@ -23,7 +23,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 
 
 
-const Contact = () => {
+const DonateRequirements = () => {
 
   const [name,setName] = useState("");
   const [email,setEmail] = useState("");
@@ -85,16 +85,12 @@ const Contact = () => {
   };
 
     return (
-<Paper 
-      sx={{
-        position: 'relative',
-        backgroundColor: '#dedede',
-        color: 'black',
-      }}
-    >
+        <>
+
             <Box
             sx={{
-              position: 'relative',
+               height: '100vh' ,
+
               p: 5,
             }}
           >
@@ -152,33 +148,11 @@ const Contact = () => {
             <Button variant="contained" type="submit">Submit</Button>
             </Box>
 
-         
+      </Box>
 
+      </>
 
-            
-        </Box>
-        <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">
-          {"Submitted Successfully"}
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-           your form has been received. We will get back to you quickly.
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} autoFocus>
-            Ok
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </Paper>
     )
 }
 
-export default  Contact
+export default DonateRequirements
