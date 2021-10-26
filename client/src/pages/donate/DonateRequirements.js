@@ -102,7 +102,7 @@ const DonateRequirements = () => {
               gutterBottom
               paragraph
             >
-              Contact us
+              Donate Rquirements
             </Typography>
 
             <Divider/>
