@@ -269,7 +269,7 @@ const Register = () => {
               spacing={2}
               justifyContent="center"
             >
-              <StyledSubmitButton >Submit</StyledSubmitButton>
+              <StyledSubmitButton >Register</StyledSubmitButton>
             </Stack>
 
         </Form>

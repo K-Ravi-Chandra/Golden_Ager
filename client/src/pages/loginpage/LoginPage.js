@@ -217,7 +217,7 @@ const  Login  = () => {
                           spacing={2}
                           justifyContent="center"
                         >
-                          <StyledSubmitButton>Submit</StyledSubmitButton>
+                          <StyledSubmitButton>Login</StyledSubmitButton>
                         </Stack>
 
                     </Form>
