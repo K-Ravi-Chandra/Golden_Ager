@@ -1,71 +1,88 @@
 import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
+import { Formik, Form } from 'formik';
+import * as Yup from 'yup';
+import Logo from '../../components/logo.png'
+import { styled} from '@mui/styles';
+import { Paper,Link, Box ,Toolbar,Typography, Stack , Container, Grid} from '@mui/material'
 import CssBaseline from '@mui/material/CssBaseline';
-import { Link } from '@mui/material';
-import Paper from '@mui/material/Paper';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import InputLabel from '@mui/material/InputLabel';
-import InputAdornment from '@mui/material/InputAdornment';
-import FormHelperText from '@mui/material/FormHelperText';
-import FormControl from '@mui/material/FormControl';
+import Textfield from '../../components/formUI/Textfield';
+import SubmitButton from '../../components/formUI/Button';
+import Alert from '@mui/material/Alert';
 import IconButton from '@mui/material/IconButton';
+import Collapse from '@mui/material/Collapse';
+import CloseIcon from '@mui/icons-material/Close';
+
+const phoneRegExp=/^[2-9]{2}[0-9]{8}/
+
+const Title = styled(Typography)({
+  fontSize : 35,
+  background: "linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(0,212,255,1) 0%, rgba(162,222,131,1) 100%)",
+  WebkitBackgroundClip: "text",
+  WebkitTextFillColor: "transparent"
+});
+
+const StyledSubmitButton = styled(SubmitButton)({
+  background: "linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(0,212,255,1) 0%, rgba(162,222,131,1) 100%)",
+  border: 0,
+  borderRadius: 3,
+  boxShadow: '0 3px 5px 2px rgba(2, 212, 225, .3)',
+  color: 'white',
+  height: 48,
+  padding: '0 30px',
+});
+
+const INITIAL_FORM_STATE = {
+  username: '',
+  email: '',
+  phone: '',
+  password: '',
+  confirmPassword : ''
+
+};
+
+
+const FORM_VALIDATION = Yup.object().shape({
+  username: Yup.string()
+    .required('Required'),
+  email: Yup.string()
+    .email('Invalid email.')
+    .required('Required'),
+  phone: Yup.string()
+    .max(10, 'Enter a valid phone number')
+    .matches(phoneRegExp,"Enter valid Phone number")
+    .required("Required"),
+  password: Yup.string()
+    .min(6, "Minimum characters should be 6")
+    .required('Required'),
+  confirmPassword:Yup.string().oneOf([Yup.ref('password')],"Password not matches").required('Required')
+});
+
+
 
 const theme = createTheme();
 
 const Register = () => {
 
-    const [username,setUserName] = useState("");
-    const [email,setEmail] = useState("");
-    const [phone, setPhone] = useState("");
-    const [age, setAge] = useState("");
-    const [address , setAddress] = useState("");
-    const [password,setPassword] = useState("");
-    const[showPassword,setShowPassword] = React.useState(false)
+  const [error, setError] = React.useState("");
+  const [open, setOpen] = React.useState(false);
 
-    const handleUsername =  (event) => {
-      setUserName(event.target.value);
-    };
-
-    const handleEmail =  (event) => {
-      setEmail(event.target.value);
-    };
-
-    const handlePassword = (event) =>  {
-      setPassword(event.target.value);
-    };
-
-    const handleShowPassword = () => {
-      setShowPassword(!showPassword);
-    }
-
-    const handleMouseDownPassword = (event) => {
-      event.preventDefault();
-    };
-
-    const handlePhone = (event) =>  {
-      setPhone(event.target.value);
-    };
+  const handleClose = () => {
+    setOpen(false);
+  };
 
 
-    const handleAge = (event) => {
-      setAge(event.target.value);
-    }
+   
 
-    const handleAddress = (event) => {
-        setAddress(event.target.value);
-    }
+    // const handleShowPassword = () => {
+    //   setShowPassword(!showPassword);
+    // }
 
+    // const handleMouseDownPassword = (event) => {
+    //   event.preventDefault();
+    // };
 
     let history = useHistory();
 
@@ -75,18 +92,11 @@ const Register = () => {
       }
     }, [history]);
 
-    const handleSubmit = async (event) => {
-        event.preventDefault();
+    const onSubmit  = async (values, props) => {
 
-        console.log({
-          username,
-          email,
-          password,
-          age,
-          phone,
-          address
-        });
-        
+      console.log("You clicked Eight!")
+      console.log(values)
+
         const config = {
           header: {
             "Content-Type": "application/json",
@@ -94,6 +104,10 @@ const Register = () => {
         };
 
         try {
+          const email = values.email;
+          const password = values.password;
+          const username = values.username;
+          const phone = values.phone;
           const role = "0"
           const { data } = await axios.post(
             "/api/auth/register",
@@ -102,9 +116,7 @@ const Register = () => {
               email,
               password,
               role,
-              age,
               phone,
-              address
             },
             config
           );
@@ -116,7 +128,15 @@ const Register = () => {
           history.push("/");
 
         } catch (error) {
-          console.log(error);
+          console.log(error.response.data)
+          if(error.response.data.error === 'Duplicate field Value Enter'){
+            setError('Account Already Exists')
+          }
+          else{
+            setError(error.response.data.error)
+          }
+          setOpen(true)
+          setTimeout(handleClose, 8000);
         }
   
 
@@ -147,83 +167,129 @@ const Register = () => {
               alignItems: 'center',
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-              <LockOutlinedIcon />
-            </Avatar>
-            <Typography component="h1" variant="h5">
-              Register
-            </Typography>
-            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
-            <FormControl  margin = "normal" fullWidth variant="outlined">
-          <InputLabel htmlFor="outlined-adornment-name">Full Name</InputLabel>
-          <OutlinedInput
-            id="outlined-adornment-name"
-            type='text'
-            value={username}
-            onChange={handleUsername }
-            label="Full Name"
-          />
-        </FormControl>
-          <FormControl  margin = "normal" fullWidth variant="outlined">
-          <InputLabel htmlFor="outlined-adornment-email">Email Address</InputLabel>
-          <OutlinedInput
-            id="outlined-adornment-email"
-            type='text'
-            value={email}
-            onChange={handleEmail }
-            label="Email Address"
-          />
-          </FormControl>
-              <FormControl  margin = "normal" fullWidth variant="outlined">
-      <InputLabel htmlFor="outlined-adornment-phone">Phone Number</InputLabel>
-      <OutlinedInput
-        id="outlined-adornment-phone"
-        type='text'
-        value={phone}
-        onChange={handlePhone }
-        label="Phone Number"
-      />
-    </FormControl>
-        
-          <FormControl margin = "normal"  fullWidth variant="outlined">
-          <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
-          <OutlinedInput
-            id="outlined-adornment-password"
-            type={showPassword ? 'text' : 'password'}
-            value={password}
-            onChange={handlePassword}
-            endAdornment={
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={handleShowPassword}
-                  onMouseDown={handleMouseDownPassword}
-                  edge="end"
-                >
-                  {showPassword ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
-              </InputAdornment>
-            }
-            label="Password"
-          />
-        </FormControl>
 
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-              >
-                Register
-              </Button>
+<Toolbar >
+          <img style = {{ width :32, height :32, margin : 4}} alt = "logo" src = {Logo}/>
+          <Title variant="h4" component="div" sx={{ flexGrow: 1 }}>Golden Ager</Title>
+        </Toolbar>
+
+                
+        <Grid container sx = {{pt :2}} >
+
+<Grid item xs={12}>
+
+<Box sx={{ width: '100%' }}>
+                    <Collapse in={open} >
+                      <Alert severity="error"
+                        action={
+                          <IconButton
+                            aria-label="close"
+                            color="inherit"
+                            size="small"
+                            onClick={() => {
+                              setOpen(false);
+                            }}
+                          >
+                            <CloseIcon fontSize="inherit" />
+                          </IconButton>
+                        }
+                        sx={{ mb: 2 }}
+                      >   
+                        {error} 
+                      </Alert>
+                    </Collapse>
+                        </Box>
+
+    <div >
+
+      <Formik
+        initialValues={{
+          ...INITIAL_FORM_STATE
+        }}
+        validationSchema={FORM_VALIDATION}
+        onSubmit={onSubmit}
+      >
+        <Form>
+
+          <Grid container spacing={2} rowSpacing = {2}>
+
+          <Grid item xs={12}>
+              <Textfield
+                required
+                name="username"
+                label="Full Name"
+              />
+            </Grid>
+
+            <Grid item xs={12}>
+              <Textfield
+                required
+                name="email"
+                label="Email Address"
+              />
+            </Grid>
+
+            <Grid item xs={12}>
+              <Textfield
+              required
+                name="phone"
+                label="Phone Number"
+              />
+            </Grid>
+
+            <Grid item xs={12}>
+              <Textfield
+              required
+              type="password"
+                name="password"
+                label="Password"
+              />
+            </Grid>
+
+            
+            <Grid item xs={12}>
+              <Textfield
+              required
+              type="password"
+                name="confirmPassword"
+                label="Confirm Password"
+              />
+            </Grid>
+
+           
+
+          </Grid>
+
+
+         
+
+          <Stack
+              sx={{ p: 2}}
+              direction="row"
+              spacing={2}
+              justifyContent="center"
+            >
+              <StyledSubmitButton >Submit</StyledSubmitButton>
+            </Stack>
+
+        </Form>
+      </Formik>
+
+    </div>
+
+</Grid>
+</Grid>
+            
               <Grid container>
                 <Grid item >
-                  <Link href="/login" variant="body2">
-                    {"Already have an account? Login here"}
-                  </Link>
+                  
+                    
+                    <Typography sx = {{color : '#2cdaf6'}} as={Link} href="/login" >
+                       Already have an account? Login here
+                    </Typography>
+                  
                 </Grid>
               </Grid>
-            </Box>
           </Box>
         </Grid>
       </Grid>
@@ -232,3 +298,27 @@ const Register = () => {
 }
 
 export default Register
+
+
+// <FormControl margin = "normal"  fullWidth variant="outlined">
+//           <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+//           <OutlinedInput
+//             id="outlined-adornment-password"
+//             type={showPassword ? 'text' : 'password'}
+//             value={password}
+//             onChange={handlePassword}
+//             endAdornment={
+//               <InputAdornment position="end">
+//                 <IconButton
+//                   aria-label="toggle password visibility"
+//                   onClick={handleShowPassword}
+//                   onMouseDown={handleMouseDownPassword}
+//                   edge="end"
+//                 >
+//                   {showPassword ? <VisibilityOff /> : <Visibility />}
+//                 </IconButton>
+//               </InputAdornment>
+//             }
+//             label="Password"
+//           />
+//         </FormControl>

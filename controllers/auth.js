@@ -25,10 +25,6 @@ exports.login = async (req ,res , next) => {
     const {email, password} = req.body;
 
     if(!email || !password){
-        // res.status(400).json({
-        //     success : false,
-        //     error : "Please provide email and password"
-        // });
         return next(new ErrorResponse("Please provide email and password", 400))
     }
     else{

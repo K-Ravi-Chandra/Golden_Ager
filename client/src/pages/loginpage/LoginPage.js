@@ -3,13 +3,17 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import Paper from '@mui/material/Paper';
+import { Formik, Form } from 'formik';
+import * as Yup from 'yup';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Logo from '../../components/logo.png'
 import Typography from '@mui/material/Typography';
+import Textfield from '../../components/formUI/Textfield';
+import SubmitButton from '../../components/formUI/Button';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useEffect } from "react";
-import { Link } from '@mui/material';
+import { Link, Toolbar  ,Stack , Container } from '@mui/material';
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import Visibility from '@mui/icons-material/Visibility';
@@ -17,32 +21,57 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import InputAdornment from '@mui/material/InputAdornment';
-import FormHelperText from '@mui/material/FormHelperText';
-import FormControl from '@mui/material/FormControl';
+import { styled} from '@mui/styles';
+import Alert from '@mui/material/Alert';
 import IconButton from '@mui/material/IconButton';
+import Collapse from '@mui/material/Collapse';
+import CloseIcon from '@mui/icons-material/Close';
+import AlertTitle from '@mui/material/AlertTitle';
 
 const theme = createTheme();
 
+const Title = styled(Typography)({
+  fontSize : 35,
+  background: "linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(0,212,255,1) 0%, rgba(162,222,131,1) 100%)",
+  WebkitBackgroundClip: "text",
+  WebkitTextFillColor: "transparent"
+});
+
+const StyledSubmitButton = styled(SubmitButton)({
+  background: "linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(0,212,255,1) 0%, rgba(162,222,131,1) 100%)",
+  border: 0,
+  borderRadius: 4,
+  boxShadow: '0 3px 5px 2px rgba(2, 212, 225, .3)',
+  color: 'white',
+  height: 10,
+  padding: '0 10px',
+});
+
+const INITIAL_FORM_STATE = {
+  email: '',
+  password: ''
+}
+
+const FORM_VALIDATION = Yup.object().shape({
+
+  email: Yup.string()
+    .email('Invalid email.')
+    .required('Required'),
+  password : Yup.string()
+   .min(6 , 'Password has minimum 6 characters')
+   .required('Required')
+});
+
+
+
+
 const  Login  = () => {
 
-  const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
-  const[showPassword,setShowPassword] = React.useState(false)
+  const [error, setError] = React.useState("");
+  const [open, setOpen] = React.useState(false);
 
-  const handleEmail =  (event) => {
-    setEmail(event.target.value);
-  };
-
-  const handlePassword = (event) =>  {
-    setPassword(event.target.value);
-  };
-
-  const handleShowPassword = () => {
-    setShowPassword(!showPassword);
-  }
-
-  const handleMouseDownPassword = (event) => {
-    event.preventDefault();
+  const handleClose = () => {
+    setOpen(false);
   };
 
   let history = useHistory();
@@ -53,18 +82,18 @@ const  Login  = () => {
     }
   }, [history]);
 
-    const handleSubmit = async (event) => {
-        event.preventDefault();
+    const onSubmit  = async (values, props) => {
+
         const config = {
           header: {
             "Content-Type": "application/json",
           },
         };
 
-        console.log({
-          email,
-          password
-        });
+        const email = values.email;
+        const password = values.password;
+
+
         try {
           const { data } = await axios.post(
             "/api/auth/login",
@@ -80,7 +109,10 @@ const  Login  = () => {
           history.push("/")
 
         } catch (error) {
-          console.log(error);
+          setError(error.response.data.error);
+          setOpen(true)
+          console.log(error.response.data);
+          setTimeout(handleClose, 8000);
         }
       };
     return (
@@ -109,66 +141,106 @@ const  Login  = () => {
               alignItems: 'center',
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-              <LockOutlinedIcon />
-            </Avatar>
-            <Typography component="h1" variant="h5">
-              Login 
-            </Typography>
-            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
-          <FormControl  margin = "normal" fullWidth variant="outlined">
-          <InputLabel htmlFor="outlined-adornment-email">Email Address</InputLabel>
-          <OutlinedInput
-            id="outlined-adornment-email"
-            type='text'
-            value={email}
-            onChange={handleEmail }
-            label="Email Address"
-          />
-        </FormControl>
-          <FormControl margin = "normal"  fullWidth variant="outlined">
-          <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
-          <OutlinedInput
-            id="outlined-adornment-password"
-            type={showPassword ? 'text' : 'password'}
-            value={password}
-            onChange={handlePassword}
-            endAdornment={
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={handleShowPassword}
-                  onMouseDown={handleMouseDownPassword}
-                  edge="end"
-                >
-                  {showPassword ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
-              </InputAdornment>
-            }
-            label="Password"
-          />
-        </FormControl>
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-              >
-                Sign In
-              </Button>
+            <Toolbar >
+          <img style = {{ width :32, height :32, margin : 4}} alt = "logo" src = {Logo}/>
+          <Title variant="h4" component="div" sx={{ flexGrow: 1 }}>Golden Ager</Title>
+        </Toolbar>
+
+                
+        <Grid container sx = {{pt : 5}} >
+
+            <Grid item xs={12}>
+
+            <Box sx={{ width: '100%' , pt : 1}}>
+                                <Collapse in={open} >
+                                  <Alert severity="error"
+                                    action={
+                                      <IconButton
+                                        aria-label="close"
+                                        color="inherit"
+                                        size="small"
+                                        onClick={() => {
+                                          setOpen(false);
+                                        }}
+                                      >
+                                        <CloseIcon fontSize="inherit" />
+                                      </IconButton>
+                                    }
+                                    sx={{ mb: 2 }}
+                                  >   
+                                    {error} 
+                                  </Alert>
+                                </Collapse>
+                                    </Box>
+
+                <div >
+
+                  <Formik
+                    initialValues={{
+                      ...INITIAL_FORM_STATE
+                    }}
+                    validationSchema={FORM_VALIDATION}
+                    onSubmit={onSubmit}
+                  >
+                    <Form>
+
+                      <Grid container spacing={2} rowSpacing = {2}>
+
+
+                        <Grid item xs={12}>
+                          <Textfield
+                          required
+                            name="email"
+                            label="Email"
+                          />
+                        </Grid>
+
+                        <Grid item xs={12}>
+                          <Textfield
+                          required
+                          type="password"
+                            name="password"
+                            label="Password"
+                          />
+                        </Grid>
+
+                      
+
+                      </Grid>
+
+
+                    
+
+                      <Stack
+                          sx={{ p: 2}}
+                          direction="row"
+                          spacing={2}
+                          justifyContent="center"
+                        >
+                          <StyledSubmitButton>Submit</StyledSubmitButton>
+                        </Stack>
+
+                    </Form>
+                  </Formik>
+
+                </div>
+
+            </Grid>
+          </Grid>
               <Grid container>
+
                 <Grid item xs>
-                  <Link href="/forgotpassword" variant="body2">
-                    Forgot password?
-                  </Link>
+                    <Typography sx = {{color : '#00a6c1'}} as={Link} href="/forgotpassword" variant="body1">
+                          Forgot password?
+                    </Typography>
                 </Grid>
-                <Grid item>
-                  <Link href="/register" variant="body2">
-                    {"Don't have an account? Sign Up"}
-                  </Link>
+                <Grid item xs>
+                    <Typography sx = {{color : '#00a6c1'}} as={Link} href="/register" variant="body1">
+                      Don't have an account? Sign Up
+                    </Typography>
                 </Grid>
               </Grid>
-            </Box>
+           
           </Box>
         </Grid>
       </Grid>

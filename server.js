@@ -17,7 +17,7 @@ app.use('/api/auth', require('./routes/auth'));
 
 app.use('/api/private', require('./routes/private'));
 
-
+app.use('/api/donate', require('./routes/donate'));
 
 app.use('/api/contact', require('./routes/contact'));   
 
