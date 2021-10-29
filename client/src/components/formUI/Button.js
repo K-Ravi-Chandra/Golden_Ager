@@ -10,8 +10,8 @@ const StyledButton = styled(Button)({
   borderRadius: 3,
   boxShadow: '0 3px 5px 2px rgba(2, 212, 225, .3)',
   color: 'white',
-  height: 48,
-  padding: '0 30px',
+  width: 100,
+  padding: 5,
 });
 
 const SubmitButton = ({

@@ -143,7 +143,11 @@ const  Login  = () => {
           >
             <Toolbar >
           <img style = {{ width :32, height :32, margin : 4}} alt = "logo" src = {Logo}/>
-          <Title variant="h4" component="div" sx={{ flexGrow: 1 }}>Golden Ager</Title>
+          <Title  variant="h4" component="div" sx={{ flexGrow: 1 }}>
+            <Link underline="none" href="/">
+              Golden Ager
+            </Link>
+          </Title>
         </Toolbar>
 
                 
@@ -217,7 +221,7 @@ const  Login  = () => {
                           spacing={2}
                           justifyContent="center"
                         >
-                          <StyledSubmitButton>Login</StyledSubmitButton>
+                          <StyledSubmitButton >Login</StyledSubmitButton>
                         </Stack>
 
                     </Form>
@@ -229,14 +233,14 @@ const  Login  = () => {
           </Grid>
               <Grid container>
 
-                <Grid item xs>
-                    <Typography sx = {{color : '#00a6c1'}} as={Link} href="/forgotpassword" variant="body1">
-                          Forgot password?
+                <Grid item xs >
+                    <Typography  sx = {{color : '#00a6c1'}} as={Link} underline="none" href="/forgotpassword" variant="body1">
+                          Forgot Password
                     </Typography>
                 </Grid>
-                <Grid item xs>
-                    <Typography sx = {{color : '#00a6c1'}} as={Link} href="/register" variant="body1">
-                      Don't have an account? Sign Up
+                <Grid item >
+                    <Typography align = 'right' sx = {{color : '#00a6c1'}} as={Link} underline="none" href="/register" variant="body1">
+                      SIGNUP
                     </Typography>
                 </Grid>
               </Grid>

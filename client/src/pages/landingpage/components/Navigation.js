@@ -7,7 +7,7 @@ import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
 import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
-import { useTheme, useMediaQuery, Menu, MenuItem } from '@mui/material';
+import { useTheme, useMediaQuery, Menu, MenuItem , Link} from '@mui/material';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import IconButton from '@mui/material/IconButton';
@@ -17,7 +17,7 @@ import Collapse from '@mui/material/Collapse';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import Logo from './logo.png';
-import { Link } from 'react-router-dom';
+
 
 
 
@@ -54,16 +54,11 @@ export default function NavBar() {
               </ListItemButton>
               <Collapse in={donateOpen } timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
-                  <ListItemButton component={Link} to="/donatemoney" sx={{ pl: 4 }}>
-                    {/* <ListItemIcon>
-                      <StarBorder />
-                    </ListItemIcon> */}
+                 <ListItemButton component={Link} href="https://rzp.io/l/yt2s6Yf" sx={{ pl: 4 }}>
                   <ListItemText  primary="Donate Money" />
-                </ListItemButton>
-                <ListItemButton component={Link} to="/donaterequirements" sx={{ pl: 4 }}>
-                    {/* <ListItemIcon>
-                      <StarBorder />
-                    </ListItemIcon> */}
+                </ListItemButton> 
+                
+                <ListItemButton component={Link} href="/donaterequirements" sx={{ pl: 4 }}>
                   <ListItemText primary="Donate Requirements" />
                 </ListItemButton>
         </List>
@@ -77,25 +72,25 @@ export default function NavBar() {
               </ListItemButton>
               <Collapse in={demoOpen } timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
-                  <ListItemButton component={Link} to="/VolunterDashboard" sx={{ pl: 4 }}>
+                  <ListItemButton component={Link} href="/VolunterDashboard" sx={{ pl: 4 }}>
                     {/* <ListItemIcon>
                       <StarBorder />
                     </ListItemIcon> */}
                   <ListItemText primary="Volunter Dashboard " />
                 </ListItemButton>
-                <ListItemButton component={Link} to="/SeniorCitizenDashboard"  sx={{ pl: 4 }}>
+                <ListItemButton component={Link} href="/SeniorCitizenDashboard"  sx={{ pl: 4 }}>
                     {/* <ListItemIcon>
                       <StarBorder />
                     </ListItemIcon> */}
                   <ListItemText primary="Senior Citizen Dashboard" />
                 </ListItemButton>
-                <ListItemButton component={Link} to="/DoctorDashboard"  sx={{ pl: 4 }}>
+                <ListItemButton component={Link} href="/DoctorDashboard"  sx={{ pl: 4 }}>
                     {/* <ListItemIcon>
                       <StarBorder />
                     </ListItemIcon> */}
                   <ListItemText primary="Doctor Dashboard" />
                 </ListItemButton>
-                <ListItemButton component={Link} to="/FamilyDashboard" sx={{ pl: 4 }}>
+                <ListItemButton component={Link} href="/FamilyDashboard" sx={{ pl: 4 }}>
                     {/* <ListItemIcon>
                       <StarBorder />
                     </ListItemIcon> */}
@@ -104,7 +99,7 @@ export default function NavBar() {
         </List>
       </Collapse>
       <Divider/>
-      <ListItemButton  component={Link} to="/login" >
+      <ListItemButton  component={Link} href="/login" >
                   <ListItemText  primary={
                       <Typography color="primary">
                         LOGIN
@@ -112,7 +107,7 @@ export default function NavBar() {
                     } 
                   />
               </ListItemButton>
-              <ListItemButton  component={Link} to="/register" >
+              <ListItemButton  component={Link} href ="/register" >
                   <ListItemText  primary={
                       <Typography color="primary" >
                         REGISTER
@@ -173,8 +168,8 @@ export default function NavBar() {
           <Button onClick={handleClick}  color="inherit">Donate</Button>
           <Button onClick={handleClick2} color="inherit">DemoPages</Button>
           <Divider orientation="vertical" flexItem />
-          <Button color="primary" component={Link} to="/login">Login</Button>
-          <Button color="primary" variant = "outlined" component={Link} to="/register" >Signup</Button>
+          <Button color="primary" component={Link} href="/login">Login</Button>
+          <Button color="primary" variant = "outlined" component={Link} href="/register" >Signup</Button>
 
       </Box>
 
@@ -242,10 +237,11 @@ export default function NavBar() {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <MenuItem  component={Link} to="/donatemoney" >
+         <Link as={MenuItem } underline="none" target="_blank"  href = {'https://rzp.io/l/yt2s6Yf'} >
           Donate Money
-        </MenuItem>
-        <MenuItem component={Link} to="/donaterequirements">
+        </Link> 
+        {/* <a as={MenuItem} target="_blank" href="https://meetflo.zendesk.com/hc/en-us/articles/230425728-Privacy-Policies">Policies</a> */}
+        <MenuItem component={Link} href = "/donaterequirements">
           Donate Requirements
         </MenuItem>
         
@@ -284,16 +280,16 @@ export default function NavBar() {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <MenuItem component={Link} to="/SeniorCitizenDashboard">
+        <MenuItem component={Link} href="/SeniorCitizenDashboard">
           Senior Citizen Dashboard
         </MenuItem>
-        <MenuItem  component={Link} to="/VolunterDashboard">
+        <MenuItem  component={Link} href="/VolunterDashboard">
           Volunter Dashboard
         </MenuItem>
-        <MenuItem  component={Link} to="/DoctorDashboard">
+        <MenuItem  component={Link} href="/DoctorDashboard">
           Doctor Dashboard
         </MenuItem>
-        <MenuItem  component={Link} to="/FamilyDashboard">
+        <MenuItem  component={Link} href="/FamilyDashboard">
           Family Dashboard
         </MenuItem>
         

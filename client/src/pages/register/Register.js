@@ -170,7 +170,11 @@ const Register = () => {
 
 <Toolbar >
           <img style = {{ width :32, height :32, margin : 4}} alt = "logo" src = {Logo}/>
-          <Title variant="h4" component="div" sx={{ flexGrow: 1 }}>Golden Ager</Title>
+          <Title variant="h4" component="div" sx={{ flexGrow: 1 }}>
+          <Link underline="none" href="/">
+              Golden Ager
+            </Link>
+          </Title>
         </Toolbar>
 
                 
@@ -284,7 +288,7 @@ const Register = () => {
                 <Grid item >
                   
                     
-                    <Typography sx = {{color : '#2cdaf6'}} as={Link} href="/login" >
+                    <Typography sx = {{color : '#2cdaf6'}} as={Link} underline="none" href="/login" >
                        Already have an account? Login here
                     </Typography>
                   
