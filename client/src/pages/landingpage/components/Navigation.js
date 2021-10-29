@@ -17,9 +17,16 @@ import Collapse from '@mui/material/Collapse';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import Logo from './logo.png';
+import { styled} from '@mui/styles';
 
 
-
+const Title = styled(Typography)({
+  fontSize : 30,
+  fontWeight: 2500,
+  background: "linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(0,212,255,1) 0%, rgba(162,222,131,1) 70%)",
+  WebkitBackgroundClip: "text",
+  WebkitTextFillColor: "transparent"
+});
 
 export default function NavBar() {
 
@@ -149,33 +156,44 @@ export default function NavBar() {
       <AppBar elevation ={0} color= "inherit"  sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
         <Toolbar >
           
-          <img style = {{ width :32, height :32, margin : 4}} alt = "logo" src = {Logo}/>
-         
-          <Typography variant="h5" component="div" sx={{ flexGrow: 1 }}>
-            Golden Ager
-          </Typography>
-          {isMobile ? (<div></div>
+            <Link underline="none" href="/">
+              <img style = {{ width :32, height :32, margin : 4}} alt = "logo" src = {Logo} />
+            </Link>
+          
+            <Box sx={{ flexGrow: 1 }}>
+            <Title as={Link} underline="none" href="/" variant="h5" >
+           
+                  Golden Ager
             
-            ) : (<div>
+          </Title>
+            </Box>
+
+          
+          {isMobile ? (<></>
+            
+            ) : (
               <Box
         sx={{
           display: 'flex',
-          alignItems: 'center',
+          alignItems: 'right',
           width: 'fit-content',
+          edge: 'right'
         }}
       >
 
           <Button onClick={handleClick}  color="inherit">Donate</Button>
           <Button onClick={handleClick2} color="inherit">DemoPages</Button>
           <Divider orientation="vertical" flexItem />
-          <Button color="primary" component={Link} href="/login">Login</Button>
+          <Button color="primary" component={Link} href="/login">
+                Login
+          </Button>
           <Button color="primary" variant = "outlined" component={Link} href="/register" >Signup</Button>
 
       </Box>
 
 
 
-          </div>)}
+          )}
           
           {/* <Box sx={{ ...commonStyles, borderRadius: '16px' }} > */}
           <IconButton
