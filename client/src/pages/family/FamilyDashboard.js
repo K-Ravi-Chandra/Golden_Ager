@@ -16,7 +16,7 @@ import { useHistory } from "react-router-dom";
 
 const drawerWidth = 240;
 
-const FamilyDashboard = () => {
+const FamilyDashboard = (props) => {
 
   let history = useHistory();
 
@@ -48,7 +48,7 @@ const logout = () => {
       case '3':
         return  <div>Notifications</div> ;
       case '4':
-            return  <div>Your Profile ! Hello Family</div> ;
+            return  <div>{props.data}</div> ;
       default:
         return <div>Help Requests</div>;
     }

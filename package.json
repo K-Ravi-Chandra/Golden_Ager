@@ -15,6 +15,7 @@
   "author": "vivek",
   "license": "ISC",
   "dependencies": {
+    "@mui/styles": "^5.0.2",
     "bcryptjs": "^2.4.3",
     "concurrently": "^6.3.0",
     "dotenv": "^10.0.0",

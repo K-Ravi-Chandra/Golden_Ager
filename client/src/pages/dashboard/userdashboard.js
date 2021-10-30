@@ -46,7 +46,7 @@ const UserDashBoard = ({history}) => {
       switch(role) {
         
         case '0':
-          return <VolunteerDashboard/>
+          return <VolunteerDashboard data={privateData}/>
 ;
         
         case '1':
@@ -57,10 +57,10 @@ const UserDashBoard = ({history}) => {
                  </>;
         
         case '2':
-          return <DoctorDashboard/>;
+          return <DoctorDashboard data={privateData}/>;
         
         case '3':
-          return <FamilyDashboard/> 
+          return <FamilyDashboard data={privateData}/> 
 
         default:
           return <div></div>;
