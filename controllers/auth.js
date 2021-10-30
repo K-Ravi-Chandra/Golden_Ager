@@ -74,11 +74,13 @@ exports.forgotpassword = async (req ,res , next) => {
         await user.save();
 
         const resetUrl = `http://localhost:3000/resetpassword/${resetToken}`;
+        const resetUrl2 = `https://golden-ager-by-team-6.herokuapp.com/resetpassword/${resetToken}`;
 
         const message = `
             <h1> You have requested a password reset<h1>
-            <p> refer this link</p>
+            <p>Click the link to reset your password</p>
             <a href = ${resetUrl} clicktracking=off> ${resetUrl} </a>
+            <a href = ${resetUrl2} clicktracking=off> ${resetUrl2} </a>
         `
 
         try {

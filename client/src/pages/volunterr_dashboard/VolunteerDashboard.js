@@ -17,7 +17,7 @@ import HelpRequests from './components/HelpRequests';
 import Registration from './components/Registration';
 const drawerWidth = 240;
 
-const VolunteerDashboard = () => {
+const VolunteerDashboard = (props) => {
 
   let history = useHistory();
 
@@ -43,7 +43,7 @@ const VolunteerDashboard = () => {
       case '3':
         return  <div>Donations Received</div> ;
       case '4':
-            return  <div>Your Profile</div> ;
+            return  <div>{props.data}</div> ;
       default:
         return <div>Help Requests</div>;
     }
