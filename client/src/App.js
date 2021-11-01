@@ -17,40 +17,33 @@ function App() {
   return (
       <Router>
             <Switch> 
-            <PrivateRoute exact path = "/" component = {UserDashBoard}/>
-              <Route exact path= "/login">
-                  <Login/>
-              </Route>
-              <Route exact path= "/forgotpassword">
-                <ForgotPassword/>
-              </Route>
-             <Route exact path= "/resetpassword/:resetToken">
-                <ResetPassword/>
-              </Route>
-              <Route  exact path= "/FamilyDashboard">
+            
+              <Route  path= "/login" component = {Login}/>
+              <Route  path= "/register" component = {Register}/>
+              <Route  path= "/forgotpassword" component = {ForgotPassword}/>
+              <Route  path= "/resetpassword/:resetToken" component = {ResetPassword}/>
+
+
+              <Route  path= "/FamilyDashboard">
                   <FamilyDashboard/>
               </Route>
-              <Route exact path= "/register">
-                  <Register/>
-              </Route>
-              <Route  exact path= "/SeniorCitizenDashboard">
+ 
+              <Route   path= "/SeniorCitizenDashboard">
                   <SeniorCitizenDashboard/>
               </Route>
-              <Route exact path= "/VolunterDashboard">
+              <Route  path= "/VolunterDashboard">
                   <VolunteerDashboard/>
               </Route>
-              <Route exact path= "/DoctorDashboard">
+              <Route  path= "/DoctorDashboard">
                   <DoctorDashboard/>
               </Route>
-              <Route exact path= "/donaterequirements">
+              <Route  path= "/donaterequirements">
                 <DonateRequirements/>
               </Route>
-              <Route exact path= "/donatemoney">
-                <DonateMoney/>
-              </Route>
-              <Route>
-                <div>Page not found</div>
-              </Route>
+
+              <PrivateRoute  path = "/" component = {UserDashBoard}/>
+
+
 
             </Switch>
         </Router>
