@@ -51,8 +51,6 @@ const UserDashBoard = ({history}) => {
         
         case '1':
           return <>
-                    <div>{privateData}</div>
-                    <button onClick={logout}>Logout</button>
                     <SeniorCitizenDashboard/>   
                  </>;
         
