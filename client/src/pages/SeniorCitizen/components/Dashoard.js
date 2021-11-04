@@ -24,7 +24,6 @@ import MoneyIcon from '@mui/icons-material/Money';
     marginBottom: theme.spacing(3),
   }));
   
-  
   function FinancialHelp_Card() {
     return (
       <FinancialHelp_RootStyle sx={{cursor : 'pointer'}} onClick={() => {console.log("Financial Help")}}>
@@ -53,17 +52,9 @@ import MoneyIcon from '@mui/icons-material/Money';
   const FeelingLoneliness_IconWrapperStyle = styled('div')(({ theme }) => ({
     margin: 'auto',
     display: 'flex',
-    borderRadius: '50%',
     alignItems: 'center',
-    width: theme.spacing(10),
-    height: theme.spacing(8),
     justifyContent: 'center',
-    marginBottom: theme.spacing(5),
-    color: theme.palette.warning.dark,
-    backgroundImage: `linear-gradient(135deg, ${alpha(theme.palette.warning.dark, 0)} 0%, ${alpha(
-      theme.palette.warning.dark,
-      0.24
-    )} 100%)`
+    marginBottom: theme.spacing(3),
   }));
   
   function FeelingLoneliness_Card() {
@@ -93,17 +84,9 @@ import MoneyIcon from '@mui/icons-material/Money';
   const HealthCheckup_IconWrapperStyle = styled('div')(({ theme }) => ({
     margin: 'auto',
     display: 'flex',
-    borderRadius: '50%',
     alignItems: 'center',
-    width: theme.spacing(8),
-    height: theme.spacing(8),
     justifyContent: 'center',
-    marginBottom: theme.spacing(5),
-    color: theme.palette.primary.dark,
-    backgroundImage: `linear-gradient(135deg, ${alpha(theme.palette.primary.dark, 0)} 0%, ${alpha(
-      theme.palette.primary.dark,
-      0.24
-    )} 100%)`
+    marginBottom: theme.spacing(3),
   }));
   
   function HealthCheckup_Card() {
@@ -133,17 +116,9 @@ import MoneyIcon from '@mui/icons-material/Money';
   const OtherHelp_IconWrapperStyle = styled('div')(({ theme }) => ({
     margin: 'auto',
     display: 'flex',
-    borderRadius: '50%',
     alignItems: 'center',
-    width: theme.spacing(8),
-    height: theme.spacing(8),
     justifyContent: 'center',
-    marginBottom: theme.spacing(5),
-    color: theme.palette.error.dark,
-    backgroundImage: `linear-gradient(135deg, ${alpha(theme.palette.error.dark, 0)} 0%, ${alpha(
-      theme.palette.error.dark,
-      0.24
-    )} 100%)`
+    marginBottom: theme.spacing(3),
   }));
   
   function OtherHelp_Card() {
