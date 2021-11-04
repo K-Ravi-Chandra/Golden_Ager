@@ -110,9 +110,8 @@ const SeniorCitizenDashboard = () => {
             </Box>
           </AccountStyle>
 
-       
-
       </Toolbar>
+      
       </RootStyle>
 
       <Box
@@ -129,3 +128,10 @@ const SeniorCitizenDashboard = () => {
 }
 
 export default SeniorCitizenDashboard
+
+
+
+
+
+
+
