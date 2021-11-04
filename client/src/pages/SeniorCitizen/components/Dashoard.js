@@ -3,8 +3,11 @@ import { alpha, styled } from '@mui/material/styles';
 import { Grid, Container, Typography,Card} from '@mui/material';
 import PeopleIcon from '@mui/icons-material/People';
 import ThemeConfig from '../../../components/theme'
-import ConnectWithoutContactIcon from '@mui/icons-material/ConnectWithoutContact';
 import MoneyIcon from '@mui/icons-material/Money';
+import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
+import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
+import AccessibleForwardIcon from '@mui/icons-material/AccessibleForward';
+import AttributionIcon from '@mui/icons-material/Attribution';
 
 // 1) Financial Help ---------------------------------------------------------------
 
@@ -29,7 +32,7 @@ import MoneyIcon from '@mui/icons-material/Money';
       <FinancialHelp_RootStyle sx={{cursor : 'pointer'}} onClick={() => {console.log("Financial Help")}}>
         
           <FinancialHelp_IconWrapperStyle>
-            <ConnectWithoutContactIcon sx={{ fontSize: 80 }} />
+            <MonetizationOnIcon sx={{ fontSize: 80 }} />
           </FinancialHelp_IconWrapperStyle>
         
           <Typography variant="h4"> Financial Help </Typography>
@@ -62,7 +65,7 @@ import MoneyIcon from '@mui/icons-material/Money';
       <FeelingLoneliness_RootStyle sx={{cursor : 'pointer'}} onClick={() => {console.log("Feeling Loneliness")}}>
 
         <FeelingLoneliness_IconWrapperStyle>
-          <MoneyIcon/>
+          <AttributionIcon sx={{ fontSize: 80 }}/>
         </FeelingLoneliness_IconWrapperStyle>
 
         <Typography variant="h4"> Feeling Loneliness </Typography>
@@ -94,7 +97,7 @@ import MoneyIcon from '@mui/icons-material/Money';
       <HealthCheckup_RootStyle sx={{cursor : 'pointer'}} onClick={() => {console.log("Health Checkup")}}>
 
         <HealthCheckup_IconWrapperStyle>
-            <PeopleIcon/>
+            <LocalHospitalIcon sx={{ fontSize: 80 }}/>
         </HealthCheckup_IconWrapperStyle>
 
         <Typography variant="h4"> Health Checkup </Typography>
@@ -126,7 +129,7 @@ import MoneyIcon from '@mui/icons-material/Money';
       <OtherHelp_RootStyle sx={{cursor : 'pointer'}} onClick={() => {console.log("Other Help")}}>
 
         <OtherHelp_IconWrapperStyle>
-          <PeopleIcon/>
+          <AccessibleForwardIcon sx={{ fontSize: 80 }}/>
         </OtherHelp_IconWrapperStyle>
 
         <Typography variant="h4">Other Help</Typography>
