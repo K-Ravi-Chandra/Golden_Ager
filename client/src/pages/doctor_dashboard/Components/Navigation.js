@@ -29,8 +29,6 @@ const Navigation = () => {
   let history = useHistory();
 
   const { pathname } = useLocation();
-  const match = (path) => (path ? !!matchPath({ path, end: false }, pathname) : false);
-
   const logout = () => {
 
     localStorage.removeItem("authToken");
@@ -39,63 +37,63 @@ const Navigation = () => {
   return (
     <Box >
       <List>
-          <ListItem disablePadding selected={Selected("/dashboard")} component={NavLink} sx ={{color: 'text.primary'}} to= "/dashboard" >
-            <ListItemButton>
+          <ListItem  disablePadding selected={Selected("/dashboard")} component={NavLink} sx ={{color: 'text.primary'}} to= "/dashboard" >
+            <ListItemButton sx={{p :2}} >
               <ListItemIcon>
                 <DashboardIcon color = {Selected("/dashboard")? "primary" : "" }/>
               </ListItemIcon>
               <ListItemText>
-                <Typography color = {Selected("/dashboard")? "primary" : "" } >
+                <Typography variant="body1" fontSize={18} color = {Selected("/dashboard")? "primary" : "" } >
                     Dashboard
                 </Typography>
               </ListItemText>
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding selected={Selected("/patients")} component={NavLink} sx ={{color: 'text.primary'}} to= "/patients" >
-            <ListItemButton>
+            <ListItemButton sx={{p :2}} >
               <ListItemIcon>
                 <PeopleIcon color = {Selected("/patients")? "primary" : "" } />
               </ListItemIcon>
 
               <ListItemText>
-                <Typography color = {Selected("/patients")? "primary" : "" }>
+                <Typography variant="body1" fontSize={18}  color = {Selected("/patients")? "primary" : "" }>
                 Patients
                 </Typography>
               </ListItemText>
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding selected={Selected( "/criticalpatients")} component={NavLink} sx ={{color: 'text.primary'}} to= "/criticalpatients" >
-            <ListItemButton>
+            <ListItemButton sx={{p :2}} >
               <ListItemIcon>
                 <MedicalServicesIcon color = {Selected("/criticalpatients")? "primary" : "" } />
               </ListItemIcon>
  
               <ListItemText>
-                <Typography color = {Selected("/criticalpatients")? "primary" : "" }>
+                <Typography variant="body1" fontSize={18}  color = {Selected("/criticalpatients")? "primary" : "" }>
                 Critical Patients
                 </Typography>
               </ListItemText>
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding selected={Selected("/notifications")} component={NavLink} sx ={{color: 'text.primary'}} to= "/notifications" >
-            <ListItemButton>
+            <ListItemButton sx={{p :2}} >
               <ListItemIcon>
                 <NotificationsActiveIcon color = {Selected("/notifications")? "primary" : "" } />
               </ListItemIcon>
               <ListItemText>
-                <Typography color = {Selected("/notifications")? "primary" : "" }>
+                <Typography variant="body1" fontSize={18}  color = {Selected("/notifications")? "primary" : "" }>
                     Notifications
                 </Typography>
               </ListItemText>
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding selected={Selected("/user")} component={NavLink} sx ={{color: 'text.primary'}} to= "/user" >
-            <ListItemButton>
+            <ListItemButton sx={{p :2}} >
               <ListItemIcon>
                 <AccountBoxIcon color = {Selected("/user")? "primary" : "" } />
               </ListItemIcon>
               < ListItemText  >
-                  <Typography color = {Selected("/user")? "primary" : "" }>
+                  <Typography variant="body1" fontSize={18}  color = {Selected("/user")? "primary" : "" }>
                   My Profile
                   </Typography>
                 </ListItemText>
@@ -103,11 +101,11 @@ const Navigation = () => {
           </ListItem>
 
           <ListItem disablePadding sx ={{color: 'text.primary'}} >
-            <ListItemButton onClick={logout}>
+            <ListItemButton sx={{p :2}}  onClick={logout}>
               <ListItemIcon>
                 <LogoutIcon/>
               </ListItemIcon>
-              < ListItemText  >
+              < ListItemText as={Typography} variant="body1" fontSize={18}  >
                   Logout
                 </ListItemText>
             </ListItemButton>

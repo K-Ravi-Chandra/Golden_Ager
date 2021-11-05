@@ -7,18 +7,18 @@ import PropTypes from 'prop-types';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
-import { useTheme,  alpha, styled } from '@mui/material/styles';
+import { alpha, styled } from '@mui/material/styles';
 import Drawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
 import {Avatar} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import { Card, CardHeader,  Link} from '@mui/material';
+import { Link} from '@mui/material';
 import Logo from "../../components/logo.png"
 import { grey } from '@mui/material/colors';
 import Navigation from './Components/Navigation';
-import ThemeConfig from './theme'
+import ThemeConfig from '../../components/theme'
 //---------------
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
@@ -27,10 +27,9 @@ import Badge from '@mui/material/Badge';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 
-
 //---------------------------------------------------------------
 
-const drawerWidth = 240;
+const drawerWidth = 250;
 
 const RootStyle = styled(AppBar)(({ theme }) => ({
   boxShadow: 'none',
@@ -45,138 +44,24 @@ const RootStyle = styled(AppBar)(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 
-const switchRoutes = (
-  <Switch>
-    {routes.map((prop, key) => {
-      
-        return (
-          <Route
-            path={prop.path}
-            component={prop.component}
-            key={key}
-          />
-        );
-
-    })}
-    <Redirect from="/" to="/dashboard" />
-  </Switch>
-);
 
 const AccountStyle = styled('div')(({ theme }) => ({
-  marginTop : 5,
   display: 'flex',
   alignItems: 'center',
-  padding: 15,
-  borderRadius: 15,
-  backgroundColor: grey[100]
+  padding: theme.spacing(2, 2.5),
+  borderRadius: theme.shape.borderRadiusSm,
+  backgroundColor: theme.palette.grey[200]
 }));
 
-const DoctorDashboard = () => {
+const DoctorDashboard = (props) => {
+
+  const data = props.data
 
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
-
-  //------------------------------------------------------------------
-  
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-
-  const isMenuOpen = Boolean(anchorEl);
-  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-
-  const handleProfileMenuOpen = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleMobileMenuClose = () => {
-    setMobileMoreAnchorEl(null);
-  };
-
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-    handleMobileMenuClose();
-  };
-
-  const handleMobileMenuOpen = (event) => {
-    setMobileMoreAnchorEl(event.currentTarget);
-  };
-
-  const menuId = 'primary-search-account-menu';
-  const renderMenu = (
-    <Menu
-      anchorEl={anchorEl}
-      anchorOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
-      id={menuId}
-      keepMounted
-      transformOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
-      open={isMenuOpen}
-      onClose={handleMenuClose}
-    >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-    </Menu>
-  );
-
-  const mobileMenuId = 'primary-search-account-menu-mobile';
-  const renderMobileMenu = (
-    <Menu
-      anchorEl={mobileMoreAnchorEl}
-      anchorOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
-      id={mobileMenuId}
-      keepMounted
-      transformOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
-      open={isMobileMenuOpen}
-      onClose={handleMobileMenuClose}
-    >
-      <MenuItem>
-        <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="error">
-            <MailIcon />
-          </Badge>
-        </IconButton>
-        <p>Messages</p>
-      </MenuItem>
-      <MenuItem>
-        <IconButton
-          size="large"
-          aria-label="show 17 new notifications"
-          color="inherit"
-        >
-          <Badge badgeContent={17} color="error">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <p>Notifications</p>
-      </MenuItem>
-      <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          size="large"
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-        >
-          <AccountCircle />
-        </IconButton>
-        <p>Profile</p>
-      </MenuItem>
-    </Menu>
-  );
 
 
   //------------------------------------------------------------------
@@ -191,46 +76,17 @@ const DoctorDashboard = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
-  function stringToColor(string) {
-    let hash = 0;
-    let i;
-  
-    /* eslint-disable no-bitwise */
-    for (i = 0; i < string.length; i += 1) {
-      hash = string.charCodeAt(i) + ((hash << 5) - hash);
-    }
-  
-    let color = '#';
-  
-    for (i = 0; i < 3; i += 1) {
-      const value = (hash >> (i * 8)) & 0xff;
-      color += `00${value.toString(16)}`.substr(-2);
-    }
-    /* eslint-enable no-bitwise */
-  
-    return color;
-  }
 
-  function stringAvatar(name) {
-    return {
-      sx: {
-        bgcolor: stringToColor(name),
-      },
-      children: `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`,
-    };
-  }
 
   const drawer = (
     <div>
-
-
       <Box sx={{ mb: 1, mx: 2.5 , mt : 2}}>
         <Link underline="none" component={Link} to="/">
           <AccountStyle>
-          <Avatar {...stringAvatar('Charan P')} />
+          <Avatar />
             <Box sx={{ ml: 2 }}>
               <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
-                Charan Palepu
+                {props.data.name}
               </Typography>
               <Typography variant="body2" sx={{ color: 'text.secondary' }}>
                 Doctor
@@ -264,7 +120,7 @@ const DoctorDashboard = () => {
       <Link underline="none" href="/">
             <img style = {{ width :32, height :32, margin : 4}} alt = "logo" src = {Logo} />
         </Link>  
-        <Typography  variant="h3" sx={{ flexGrow: 1 , fontWeight : 5}}>
+        <Typography  variant="h3" sx={{ flexGrow: 1 , fontWeight : 50}}>
               <Link  underline="none" href="/dashboard">
                   Golden Ager
               </Link>
@@ -330,7 +186,20 @@ const DoctorDashboard = () => {
       >
         <Toolbar />
         
-        {switchRoutes}
+        <Switch>
+              {routes.map(({component: Cmp, ...route}, key) => {
+                
+                  return (
+                    <Route
+                      {...route}
+                      key={key}
+                      render={props => <Cmp {...props}  data={data} />}
+                    />
+                  );
+
+              })}
+              <Redirect from="/" to="/dashboard" />
+            </Switch>
       </Box>
     </Box>
       </ThemeConfig>

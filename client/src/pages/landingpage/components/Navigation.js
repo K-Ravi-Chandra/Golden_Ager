@@ -33,6 +33,7 @@ export default function NavBar() {
   const isMobile = useMediaQuery(useTheme().breakpoints.down("sm"))
 
 
+
   const [state, setState] = useState(false);
 
   const toggleDrawer = (open) => (event) => {
@@ -209,7 +210,7 @@ export default function NavBar() {
           {/* </Box> */}
           <Drawer
             anchor='top'
-            open={state & isMobile}
+            open={state && isMobile}
             ModalProps={{
               keepMounted: true, // Better open performance on mobile.
             }}
