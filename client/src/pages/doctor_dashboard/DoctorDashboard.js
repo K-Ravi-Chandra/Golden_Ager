@@ -44,22 +44,6 @@ const RootStyle = styled(AppBar)(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 
-const switchRoutes = (
-  <Switch>
-    {routes.map((prop, key) => {
-      
-        return (
-          <Route
-            path={prop.path}
-            component={prop.component}
-            key={key}
-          />
-        );
-
-    })}
-    <Redirect from="/" to="/dashboard" />
-  </Switch>
-);
 
 const AccountStyle = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -69,7 +53,9 @@ const AccountStyle = styled('div')(({ theme }) => ({
   backgroundColor: theme.palette.grey[200]
 }));
 
-const DoctorDashboard = () => {
+const DoctorDashboard = (props) => {
+
+  const data = props.data
 
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
@@ -90,46 +76,17 @@ const DoctorDashboard = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
-  function stringToColor(string) {
-    let hash = 0;
-    let i;
-  
-    /* eslint-disable no-bitwise */
-    for (i = 0; i < string.length; i += 1) {
-      hash = string.charCodeAt(i) + ((hash << 5) - hash);
-    }
-  
-    let color = '#';
-  
-    for (i = 0; i < 3; i += 1) {
-      const value = (hash >> (i * 8)) & 0xff;
-      color += `00${value.toString(16)}`.substr(-2);
-    }
-    /* eslint-enable no-bitwise */
-  
-    return color;
-  }
 
-  function stringAvatar(name) {
-    return {
-      sx: {
-        bgcolor: stringToColor(name),
-      },
-      children: `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`,
-    };
-  }
 
   const drawer = (
     <div>
-
-
       <Box sx={{ mb: 1, mx: 2.5 , mt : 2}}>
         <Link underline="none" component={Link} to="/">
           <AccountStyle>
-          <Avatar {...stringAvatar('Charan P')} />
+          <Avatar />
             <Box sx={{ ml: 2 }}>
               <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
-                Charan Palepu
+                {props.data.name}
               </Typography>
               <Typography variant="body2" sx={{ color: 'text.secondary' }}>
                 Doctor
@@ -229,7 +186,20 @@ const DoctorDashboard = () => {
       >
         <Toolbar />
         
-        {switchRoutes}
+        <Switch>
+              {routes.map(({component: Cmp, ...route}, key) => {
+                
+                  return (
+                    <Route
+                      {...route}
+                      key={key}
+                      render={props => <Cmp {...props}  data={data} />}
+                    />
+                  );
+
+              })}
+              <Redirect from="/" to="/dashboard" />
+            </Switch>
       </Box>
     </Box>
       </ThemeConfig>

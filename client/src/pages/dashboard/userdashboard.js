@@ -26,8 +26,8 @@ const UserDashBoard = ({history}) => {
   
         try {
           const { data } = await axios.get("/api/private", config);
-          console.log({data})
-          setPrivateData(data.data);
+          setPrivateData(data); 
+          localStorage.setItem("email", data.email)
           setRole(data.role);
         } catch (error) {
           localStorage.removeItem("authToken");
@@ -47,15 +47,12 @@ const UserDashBoard = ({history}) => {
         
         case '0':
           return <VolunteerDashboard data={privateData}/>
-;
-        
+   
         case '1':
-          return <>
-                    <SeniorCitizenDashboard/>   
-                 </>;
+          return <SeniorCitizenDashboard data={privateData}/>   
         
         case '2':
-          return <DoctorDashboard data={privateData}/>;
+          return <DoctorDashboard data={privateData}/>
         
         case '3':
           return <FamilyDashboard data={privateData}/> 

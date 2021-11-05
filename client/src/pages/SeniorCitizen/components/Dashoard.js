@@ -1,11 +1,12 @@
 import React from 'react'
 import { alpha, styled } from '@mui/material/styles';
-import { Grid, Container, Typography,Card} from '@mui/material';
+import { Grid, Container, Typography,Card, Button} from '@mui/material';
 import PeopleIcon from '@mui/icons-material/People';
 import ThemeConfig from '../../../components/theme'
 import MoneyIcon from '@mui/icons-material/Money';
 import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
-import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
+import LocalHospitalOutlinedIcon from '@mui/icons-material/LocalHospitalOutlined';
+import ConnectWithoutContactIcon from '@mui/icons-material/ConnectWithoutContact';
 import AccessibleForwardIcon from '@mui/icons-material/AccessibleForward';
 import AttributionIcon from '@mui/icons-material/Attribution';
 
@@ -14,7 +15,7 @@ import AttributionIcon from '@mui/icons-material/Attribution';
   const FinancialHelp_RootStyle = styled(Card)(({ theme }) => ({
     boxShadow: 'none',
     textAlign: 'center',
-    padding: theme.spacing(10, 0),
+    padding: theme.spacing(5, 0),
     color: theme.palette.info.darker,
     backgroundColor: theme.palette.info.lighter
   }));
@@ -32,10 +33,10 @@ import AttributionIcon from '@mui/icons-material/Attribution';
       <FinancialHelp_RootStyle sx={{cursor : 'pointer'}} onClick={() => {console.log("Financial Help")}}>
         
           <FinancialHelp_IconWrapperStyle>
-            <MonetizationOnIcon sx={{ fontSize: 80 }} />
+            <MoneyIcon sx={{ fontSize: 80}} />
           </FinancialHelp_IconWrapperStyle>
         
-          <Typography variant="h4"> Financial Help </Typography>
+          <Typography variant="h6"> Financial Help </Typography>
 
       </FinancialHelp_RootStyle>
     );
@@ -47,7 +48,7 @@ import AttributionIcon from '@mui/icons-material/Attribution';
   const FeelingLoneliness_RootStyle = styled(Card)(({ theme }) => ({
     boxShadow: 'none',
     textAlign: 'center',
-    padding: theme.spacing(10, 0),
+    padding: theme.spacing(5, 0),
     color: theme.palette.warning.darker,
     backgroundColor: theme.palette.warning.lighter
   }));
@@ -68,7 +69,7 @@ import AttributionIcon from '@mui/icons-material/Attribution';
           <AttributionIcon sx={{ fontSize: 80 }}/>
         </FeelingLoneliness_IconWrapperStyle>
 
-        <Typography variant="h4"> Feeling Loneliness </Typography>
+        <Typography variant="h6"> Feeling Loneliness </Typography>
 
       </FeelingLoneliness_RootStyle>
     );
@@ -79,7 +80,7 @@ import AttributionIcon from '@mui/icons-material/Attribution';
   const HealthCheckup_RootStyle = styled(Card)(({ theme }) => ({
     boxShadow: 'none',
     textAlign: 'center',
-    padding: theme.spacing(10, 0),
+    padding: theme.spacing(5, 0),
     color: theme.palette.primary.darker,
     backgroundColor: theme.palette.primary.lighter
   }));
@@ -97,10 +98,10 @@ import AttributionIcon from '@mui/icons-material/Attribution';
       <HealthCheckup_RootStyle sx={{cursor : 'pointer'}} onClick={() => {console.log("Health Checkup")}}>
 
         <HealthCheckup_IconWrapperStyle>
-            <LocalHospitalIcon sx={{ fontSize: 80 }}/>
+            <LocalHospitalOutlinedIcon sx={{ fontSize: 80 }}/>
         </HealthCheckup_IconWrapperStyle>
 
-        <Typography variant="h4"> Health Checkup </Typography>
+        <Typography variant="h6"> Health Checkup </Typography>
 
       </HealthCheckup_RootStyle>
     )
@@ -111,7 +112,7 @@ import AttributionIcon from '@mui/icons-material/Attribution';
   const OtherHelp_RootStyle = styled(Card)(({ theme }) => ({
     boxShadow: 'none',
     textAlign: 'center',
-    padding: theme.spacing(10, 0),
+    padding: theme.spacing(5, 0),
     color: theme.palette.error.darker,
     backgroundColor: theme.palette.error.lighter
   }));
@@ -126,13 +127,13 @@ import AttributionIcon from '@mui/icons-material/Attribution';
   
   function OtherHelp_Card() {
     return (
-      <OtherHelp_RootStyle sx={{cursor : 'pointer'}} onClick={() => {console.log("Other Help")}}>
+      <OtherHelp_RootStyle  sx={{cursor : 'pointer'}} onClick={() => {console.log("Other Help")}}>
 
         <OtherHelp_IconWrapperStyle>
-          <AccessibleForwardIcon sx={{ fontSize: 80 }}/>
+          <ConnectWithoutContactIcon sx={{ fontSize: 80 }}/>
         </OtherHelp_IconWrapperStyle>
 
-        <Typography variant="h4">Other Help</Typography>
+        <Typography variant="h6">Other Help</Typography>
 
       </OtherHelp_RootStyle>
     );

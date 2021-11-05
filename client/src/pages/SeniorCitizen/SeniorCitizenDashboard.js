@@ -1,11 +1,7 @@
 import React from 'react'
-import { useTheme,alpha, styled } from '@mui/material/styles';
-import { Box, Grid, Container,CardHeader , Typography,Card} from '@mui/material';
+import { alpha, styled } from '@mui/material/styles';
+import { Box, Typography} from '@mui/material';
 import { Switch, Route, Redirect } from "react-router-dom";
-import PeopleIcon from '@mui/icons-material/People';
-import MedicalServicesIcon from '@mui/icons-material/MedicalServices';
-import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
-import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import ThemeConfig from '../../components/theme'
 import AppBar from '@mui/material/AppBar';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -15,19 +11,19 @@ import Logo from "../../components/logo.png"
 import Dashboard from './components/Dashoard'
 import {Avatar} from '@mui/material';
 
-// const switchRoutes = (
-//   <Switch>
+const switchRoutes = (
+  <Switch>
    
-//     <Route
-//       path="/dashboard"
-//       component= {Dashboard}
-//       key="Dashboard"
-//     />
+    <Route
+      path="/dashboard"
+      component= {Dashboard}
+      key="Dashboard"
+    />
     
-//     <Redirect from="/" to="/dashboard" />
+    <Redirect from="/" to="/dashboard" />
     
-//   </Switch>
-// );
+  </Switch>
+);
 
 
 const RootStyle = styled(AppBar)(({ theme }) => ({
@@ -50,7 +46,7 @@ function stringToColor(string) {
   let hash = 0;
   let i;
 
-  /* eslint-disable no-bitwise */
+  
   for (i = 0; i < string.length; i += 1) {
     hash = string.charCodeAt(i) + ((hash << 5) - hash);
   }
@@ -61,7 +57,7 @@ function stringToColor(string) {
     const value = (hash >> (i * 8)) & 0xff;
     color += `00${value.toString(16)}`.substr(-2);
   }
-  /* eslint-enable no-bitwise */
+  
 
   return color;
 }
@@ -75,7 +71,8 @@ function stringAvatar(name) {
   };
 }
 
-const SeniorCitizenDashboard = () => {
+const SeniorCitizenDashboard = (props) => {
+  console.log(props)
   return (
     <ThemeConfig>
         <Box sx={{ display: 'flex' }}>
@@ -99,10 +96,10 @@ const SeniorCitizenDashboard = () => {
         </Typography>
 
         <AccountStyle>
-          <Avatar {...stringAvatar('Ravi K')} />
+          <Avatar />
             <Box sx={{ ml: 2 }}>
               <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
-                Ravi Chandra
+                {props.data.name}
               </Typography>
               <Typography variant="body2" sx={{ color: 'text.secondary' }}>
                 Senior Citizen
@@ -120,7 +117,7 @@ const SeniorCitizenDashboard = () => {
       >
         <Toolbar />
         
-        <Dashboard/>
+        {switchRoutes}
       </Box>
     </Box>
       </ThemeConfig>
