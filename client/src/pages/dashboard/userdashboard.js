@@ -27,8 +27,8 @@ const UserDashBoard = ({history}) => {
         try {
           const { data } = await axios.get("/api/private", config);
           setPrivateData(data); 
-          localStorage.setItem("email", data.email)
           setRole(data.role);
+          
         } catch (error) {
           localStorage.removeItem("authToken");
           setError("You are not authorized please login");

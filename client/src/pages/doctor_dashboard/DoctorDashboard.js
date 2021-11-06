@@ -16,12 +16,10 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { Link} from '@mui/material';
 import Logo from "../../components/logo.png"
-import { grey } from '@mui/material/colors';
 import Navigation from './Components/Navigation';
 import ThemeConfig from '../../components/theme'
 //---------------
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import MailIcon from '@mui/icons-material/Mail';
+
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import Badge from '@mui/material/Badge';
 import MenuItem from '@mui/material/MenuItem';
@@ -43,7 +41,22 @@ const RootStyle = styled(AppBar)(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
+const switchRoutes = (
+  <Switch>
+    {routes.map((prop, key) => {
 
+        return (
+          <Route
+            path={prop.path}
+            component={prop.component}
+            key={key}
+          />
+        );
+
+    })}
+    <Redirect from="/" to="/dashboard" />
+  </Switch>
+);
 
 const AccountStyle = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -191,6 +204,7 @@ const DoctorDashboard = (props) => {
                 
                   return (
                     <Route
+                      exact = {true}
                       {...route}
                       key={key}
                       render={props => <Cmp {...props}  data={data} />}

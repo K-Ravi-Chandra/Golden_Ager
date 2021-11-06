@@ -1,4 +1,3 @@
-import React from 'react'
 import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -17,11 +16,7 @@ import { useHistory } from "react-router-dom";
 const drawerWidth = 240;
 
 const VolunteerDashboard = () => {
-    return (
-        <div>
-            You are seeing Volunteer Dashboard
-        </div>
-    )
+
 
   let history = useHistory();
 
@@ -35,7 +30,7 @@ const VolunteerDashboard = () => {
     history.push("/");
 }
 
-export default VolunteerDashboard
+
 
   const renderSwitch = (item) => {
     switch(item) {
