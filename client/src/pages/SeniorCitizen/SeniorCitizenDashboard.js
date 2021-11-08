@@ -10,6 +10,7 @@ import { Link} from '@mui/material';
 import Logo from "../../components/logo.png"
 import Dashboard from './components/Dashoard'
 import {Avatar} from '@mui/material';
+import Profile from './components/Profile';
 
 const switchRoutes = (
   <Switch>
@@ -18,6 +19,11 @@ const switchRoutes = (
       path="/dashboard"
       component= {Dashboard}
       key="Dashboard"
+    />
+    <Route
+      path="/profile"
+      component= {Profile}
+      key="Profile"
     />
     
     <Redirect from="/" to="/dashboard" />
@@ -42,34 +48,7 @@ const AccountStyle = styled('div')(({ theme }) => ({
   backgroundColor: theme.palette.grey[200]
 }));
 
-function stringToColor(string) {
-  let hash = 0;
-  let i;
 
-  
-  for (i = 0; i < string.length; i += 1) {
-    hash = string.charCodeAt(i) + ((hash << 5) - hash);
-  }
-
-  let color = '#';
-
-  for (i = 0; i < 3; i += 1) {
-    const value = (hash >> (i * 8)) & 0xff;
-    color += `00${value.toString(16)}`.substr(-2);
-  }
-  
-
-  return color;
-}
-
-function stringAvatar(name) {
-  return {
-    sx: {
-      bgcolor: stringToColor(name),
-    },
-    children: `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`,
-  };
-}
 
 const SeniorCitizenDashboard = (props) => {
   console.log(props)
@@ -95,7 +74,8 @@ const SeniorCitizenDashboard = (props) => {
               </Link>
         </Typography>
 
-        <AccountStyle>
+        <Link underline= "none" href="/profile">
+        <AccountStyle >
           <Avatar />
             <Box sx={{ ml: 2 }}>
               <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
@@ -106,6 +86,7 @@ const SeniorCitizenDashboard = (props) => {
               </Typography>
             </Box>
           </AccountStyle>
+        </Link>
 
       </Toolbar>
       
