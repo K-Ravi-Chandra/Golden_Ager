@@ -59,16 +59,3 @@ const columns = [
       </div>
     );
   }
-const FinancialRequests = () => {
-    return (
-        
-        
-        <h1>Financial REQUESTS</h1>
-         // DataGridDemo();
-          
-          
-    )
-}
-
-export default FinancialRequests
-

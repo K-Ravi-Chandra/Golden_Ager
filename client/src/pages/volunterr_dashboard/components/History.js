@@ -1,5 +1,4 @@
 import React from 'react'
-import * as React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 
 const columns = [
@@ -50,12 +49,4 @@ export default function DataTable() {
     </div>
   );
 }
-function History() {
-    return (
-        <div>
-            
-        </div>
-    )
-}
 
-export default History

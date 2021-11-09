@@ -59,15 +59,5 @@ const columns = [
       </div>
     );
   }
-const HelpRequests = () => {
-    return (
-        
-        
-        <h1>HELP REQUESTS</h1>
-         // DataGridDemo();
-          
-          
-    )
-}
 
-export default HelpRequests
+

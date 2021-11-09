@@ -1,17 +1,11 @@
 import { Navigate, useRoutes } from 'react-router-dom';
-
-
-import DashboardPage from './Components/Dashboard';
-import Registration from './Components/Registration';
-import History from './Components/History';
-import HelpRequests from './Components/HelpRequests';
-import Financialrequests from './Components/Financialrequests';
+import Registration from './components/Registration';
+import History from './components/History';
+import HelpRequests from './components/HelpRequests';
+import Financialrequests from './components/Financialrequests';
 
 const dashboardRoutes = [
-  {
-    path: "/dashboard",
-    component: DashboardPage,
-  },
+
   {
     path: "/Registration",
     component: Registration,
