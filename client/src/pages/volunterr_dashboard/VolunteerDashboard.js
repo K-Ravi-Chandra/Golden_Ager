@@ -1,130 +1,176 @@
 import * as React from 'react';
+import { Switch, Route, Redirect } from "react-router-dom";
+import routes from "./routes"
+import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
-import Divider from '@mui/material/Divider';
+import { alpha, styled } from '@mui/material/styles';
 import Drawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
+import {Avatar} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import Logo from '../landingpage/components/logo.png';
-import { useHistory } from "react-router-dom";
-const drawerWidth = 240;
+import { Link} from '@mui/material';
+import Logo from "../../components/logo.png"
+import Navigation from './Components/Navigation';
+import ThemeConfig from '../../components/theme'
+//---------------
 
-const VolunteerDashboard = () => {
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import Badge from '@mui/material/Badge';
+import MenuItem from '@mui/material/MenuItem';
+import Menu from '@mui/material/Menu';
+
+//---------------------------------------------------------------
+
+const drawerWidth = 250;
+
+const RootStyle = styled(AppBar)(({ theme }) => ({
+  boxShadow: 'none',
+  backdropFilter: 'blur(6px)',
+  WebkitBackdropFilter: 'blur(6px)', // Fix on Mobile
+  backgroundColor: alpha(theme.palette.background.default, 0.72),
+  
+}));
 
 
-  let history = useHistory();
+
+// ----------------------------------------------------------------------
+
+const switchRoutes = (
+  <Switch>
+    {routes.map((prop, key) => {
+
+        return (
+          <Route
+            path={prop.path}
+            component={prop.component}
+            key={key}
+          />
+        );
+
+    })}
+    <Redirect from="/" to="/dashboard" />
+  </Switch>
+);
+
+const AccountStyle = styled('div')(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  padding: theme.spacing(2, 2.5),
+  borderRadius: theme.shape.borderRadiusSm,
+  backgroundColor: theme.palette.grey[200]
+}));
+
+const VolunteerDashboard = (props) => {
+
+  const data = props.data
 
   const [mobileOpen, setMobileOpen] = React.useState(false);
-
-  const [item, setItem] = React.useState('0')
-
-  const logout = () => {
-
-    localStorage.removeItem("authToken");
-    history.push("/");
-}
-
-
-
-  const renderSwitch = (item) => {
-    switch(item) {
-      case '0':
-        return <div>Help Requests</div>;
-      case '1':
-        return  <div>Register a Senior Citizen</div>;
-      case '2':
-        return  <div>Financial Requests</div>;
-      case '3':
-        return  <div>Donations Received</div> ;
-      case '4':
-            return  <div>Your Profile</div> ;
-      default:
-        return <div>Help Requests</div>;
-    }
-  }
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
-  const handleClick = (index) => {
-      setItem(index)
-      setMobileOpen(!mobileOpen);
-  }
+
+  //------------------------------------------------------------------
+
+
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    if (mobileOpen) {
+      handleDrawerToggle();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pathname]);
+
+
 
   const drawer = (
     <div>
-        <Toolbar sx={{ toolbar: (theme) => theme.mixins.toolbar }}/>
-
-      <List>
-
-          <ListItem selected= {item === '0'}  button onClick={() => handleClick('0')} key= "Help Requests">
-            <ListItemText primary= "Help Requests"/>
-          </ListItem>
-          <ListItem  selected= {item === '1'} button onClick={() => handleClick('1')} key= "Register a Senior Citizen" >
-            <ListItemText primary= "Register a Senior Citizen" />
-          </ListItem>
-          <ListItem  selected= {item === '2'} button onClick={() => handleClick('2')} key= "Financial Requests" >
-            <ListItemText primary= "Financial Requests" />
-          </ListItem>
-          <ListItem  selected= {item === '3'} button onClick={() => handleClick('3')} key= "Donations Received">
-            <ListItemText primary= "Donations Received" />
-          </ListItem>
-
-      </List>
-      <Divider />
-      <List>
-
-          <ListItem selected= {item === '4'} button onClick={() => handleClick('4')} key= "My Profile">
-            <ListItemText primary= "My Profile"/>
-          </ListItem>
-          <ListItem  button onClick={logout} key= " Logout" >
-            <ListItemText primary= "Logout" />
-          </ListItem>
-      </List>
+      <Box sx={{ mb: 1, mx: 2.5 , mt : 2}}>
+        <Link underline="none" component={Link} to="/">
+          <AccountStyle>
+          <Avatar />
+            <Box sx={{ ml: 2 }}>
+              <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
+                {props.data.name}
+              </Typography>
+              <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                Volunteer
+              </Typography>
+            </Box>
+          </AccountStyle>
+        </Link>
+      </Box>
+      <Navigation/>
     </div>
   );
 
 
 
   return (
-    <Box sx={{ display: 'flex' }}>
+
+      <ThemeConfig>
+        <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <AppBar  sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
+      <RootStyle
+        elevation = {0}
+        color = "inherit"
+        position="fixed"
+        sx={{
+          pt : 2,
+          width: { sm: `calc(100% - ${drawerWidth}px)` },
+          ml: { sm: `${drawerWidth}px` },
+        }}
       >
-        <Toolbar>
-          <IconButton
+      <Toolbar >   
+      <Link underline="none" href="/">
+            <img style = {{ width :32, height :32, margin : 4}} alt = "logo" src = {Logo} />
+        </Link>  
+        <Typography  variant="h3" sx={{ flexGrow: 1 , fontWeight : 50}}>
+              <Link  underline="none" href="/dashboard">
+                  Golden Ager
+              </Link>
+        </Typography>
+
+        <IconButton component={Link} href="/notifications" color="default">
+            <Badge  badgeContent={99} color="error">
+            <NotificationsIcon />
+          </Badge>
+        </IconButton>
+
+        <IconButton
             color="inherit"
             aria-label="open drawer"
+            edge="end"
             onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: 'none' } }}
+            sx={{ mr : 2, display: { sm: 'none' } }}
           >
             <MenuIcon />
-          </IconButton>
-          <img style = {{ width :32, height :32, margin : 4}} alt = "logo" src = {Logo}/>
-          <Typography variant="h6" noWrap component="div">
-            Golden Ager
-          </Typography>
-        </Toolbar>
+          </IconButton>  
+
+        
 
 
-      </AppBar>
+
+      </Toolbar>
+      </RootStyle>
       <Box
         component="nav"
         sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
-        aria-label="mailbox folders"
       >
-
+        {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <Drawer
-
+          
           variant="temporary"
           open={mobileOpen}
+          anchor={'right'}
           onClose={handleDrawerToggle}
           ModalProps={{
             keepMounted: true, // Better open performance on mobile.
@@ -152,11 +198,31 @@ const VolunteerDashboard = () => {
         sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
       >
         <Toolbar />
-        {renderSwitch(item)}
+        
+        <Switch>
+              {routes.map(({component: Cmp, ...route}, key) => {
+                
+                  return (
+                    <Route
+                      exact = {true}
+                      {...route}
+                      key={key}
+                      render={props => <Cmp {...props}  data={data} />}
+                    />
+                  );
+
+              })}
+              <Redirect from="/" to="/dashboard" />
+            </Switch>
       </Box>
     </Box>
-  );
+      </ThemeConfig>
+
+      
+
+  )
 }
 
-export default VolunteerDashboard;
-
+export default VolunteerDashboard
+ 
+ 
