@@ -23,6 +23,8 @@ exports.protect = async(req,res,next) => {
         }
         req.user = user;
 
+        // next();
+
         console.log(user);
 
         res.status(200).json({

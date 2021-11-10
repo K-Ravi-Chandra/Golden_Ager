@@ -109,73 +109,69 @@ const Contact = () => {
               Contact us
             </Typography>
 
-            <Divider/>
 
             <Box component="form"  onSubmit={handleSubmit}     sx={{
-        display: 'flex',
-        flexDirection: 'column', p:5}} noValidate autoComplete="off">
+                display: 'flex',
+                flexDirection: 'column'}} noValidate autoComplete="off">
 
-      <FormControl  margin = "normal" fullWidth variant="outlined">
-          <InputLabel htmlFor="name">Full Name </InputLabel>
-          <OutlinedInput
-            id="name"
-            type='text'
-            value={name}
-            onChange={handleName }
-            label="Full Name"
-          />
-        </FormControl>
+                <FormControl  margin = "normal" fullWidth variant="outlined">
+                  <InputLabel htmlFor="name">Full Name </InputLabel>
+                  <OutlinedInput
+                    id="name"
+                    type='text'
+                    value={name}
+                    onChange={handleName }
+                    label="Full Name"
+                  />
+                </FormControl>
 
-        <FormControl  margin = "normal" fullWidth variant="outlined">
-          <InputLabel htmlFor="email">Email Address</InputLabel>
-          <OutlinedInput
-            id="email"
-            type='text'
-            value={email}
-            onChange={handleEmail }
-            label="Email Address"
-          />
-        </FormControl>
+                <FormControl  margin = "normal" fullWidth variant="outlined">
+                  <InputLabel htmlFor="email">Email Address</InputLabel>
+                  <OutlinedInput
+                    id="email"
+                    type='text'
+                    value={email}
+                    onChange={handleEmail }
+                    label="Email Address"
+                  />
+                </FormControl>
 
-        <FormControl  margin = "normal" fullWidth variant="outlined">
-          <InputLabel htmlFor="message">Message</InputLabel>
-          <OutlinedInput
-            id="message"
-            type='text'
-            multiline
-            minRows = {4}
-            value={message}
-            onChange={handleMessage }
-            label="Message"
-          />
-        </FormControl>
-            <Button variant="contained" type="submit">Submit</Button>
-            </Box>
+              <FormControl  margin = "normal" fullWidth variant="outlined">
+                <InputLabel htmlFor="message">Message</InputLabel>
+                <OutlinedInput
+                  id="message"
+                  type='text'
+                  multiline
+                  minRows = {4}
+                  value={message}
+                  onChange={handleMessage }
+                  label="Message"
+                />
+              </FormControl>
 
-         
-
-
+              <Button variant="contained" type="submit">Submit</Button>
+              </Box>
             
-        </Box>
-        <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">
-          {"Submitted Successfully"}
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-           your form has been received. We will get back to you quickly.
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} autoFocus>
-            Ok
-          </Button>
-        </DialogActions>
+          </Box>
+          <Dialog
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+            <DialogTitle id="alert-dialog-title">
+              {"Submitted Successfully"}
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+              your form has been received. We will get back to you quickly.
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose} autoFocus>
+                Ok
+              </Button>
+            </DialogActions>
       </Dialog>
     </Paper>
     )

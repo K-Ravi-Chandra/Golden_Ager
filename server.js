@@ -21,6 +21,8 @@ app.use('/api/donate', require('./routes/donate'));
 
 app.use('/api/contact', require('./routes/contact'));  
 
+app.use('/api/seniorcitizen', require('./routes/senior_citizen'))
+
 app.use('/api/help', require('./routes/help'))
 
 // Error Handler (last piece of middleware)
