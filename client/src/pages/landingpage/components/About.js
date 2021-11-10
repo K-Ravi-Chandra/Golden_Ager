@@ -1,11 +1,7 @@
 import React , {useState} from 'react';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
-import Grid from '@mui/material/Grid';
-import Link from '@mui/material/Link';
 import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
-import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import { Collapse, Divider } from '@mui/material';
 import {
@@ -14,11 +10,15 @@ import {
     ThemeProvider,
   } from '@mui/material/styles';
 
-  let headerTheme = createTheme();
+import { blue, grey } from '@mui/material/colors';
+
+
+// For responsiveness 
+let headerTheme = createTheme();
 headerTheme = responsiveFontSizes(headerTheme);
 
-  let theme = createTheme();
-  theme.typography.body1 = {
+let theme = createTheme();
+theme.typography.body1 = {
     fontSize: '1.2rem',
     '@media (min-width:600px)': {
       fontSize: '1.3rem',
@@ -50,7 +50,7 @@ export default function About() {
             <Paper 
                 sx={{
                     position: 'relative',
-                    backgroundColor: '#dedede',
+                    backgroundColor: grey[200],
                     color: 'black',
                 }}
             >
