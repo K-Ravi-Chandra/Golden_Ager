@@ -16,7 +16,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { Link} from '@mui/material';
 import Logo from "../../components/logo.png"
-import Navigation from './Components/Navigation';
+import Navigation from './components/Navigation';
 import ThemeConfig from '../../components/theme'
 //---------------
 

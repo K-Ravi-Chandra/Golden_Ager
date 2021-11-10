@@ -49,7 +49,7 @@ const Navigation = () => {
               </ListItemText>
             </ListItemButton>
           </ListItem>
-          <ListItem disablePadding selected={Selected("/History")} component={NavLink} sx ={{color: 'text.primary'}} to= "/patients" >
+          <ListItem disablePadding selected={Selected("/History")} component={NavLink} sx ={{color: 'text.primary'}} to= "/History" >
             <ListItemButton sx={{p :2}} >
               <ListItemIcon>
                 <PeopleIcon color = {Selected("/History")? "primary" : "" } />
@@ -62,7 +62,7 @@ const Navigation = () => {
               </ListItemText>
             </ListItemButton>
           </ListItem>
-          <ListItem disablePadding selected={Selected( "/HelpRequests")} component={NavLink} sx ={{color: 'text.primary'}} to= "/criticalpatients" >
+          <ListItem disablePadding selected={Selected( "/HelpRequests")} component={NavLink} sx ={{color: 'text.primary'}} to= "/HelpRequests" >
             <ListItemButton sx={{p :2}} >
               <ListItemIcon>
                 <MedicalServicesIcon color = {Selected("/HelpRequests")? "primary" : "" } />
@@ -75,7 +75,7 @@ const Navigation = () => {
               </ListItemText>
             </ListItemButton>
           </ListItem>
-          <ListItem disablePadding selected={Selected("/Registration")} component={NavLink} sx ={{color: 'text.primary'}} to= "/notifications" >
+          <ListItem disablePadding selected={Selected("/Registration")} component={NavLink} sx ={{color: 'text.primary'}} to= "/Registration" >
             <ListItemButton sx={{p :2}} >
               <ListItemIcon>
                 <NotificationsActiveIcon color = {Selected("/Registration")? "primary" : "" } />
@@ -87,7 +87,7 @@ const Navigation = () => {
               </ListItemText>
             </ListItemButton>
           </ListItem>
-          <ListItem disablePadding selected={Selected("/Financialrequests")} component={NavLink} sx ={{color: 'text.primary'}} to= "/user" >
+          <ListItem disablePadding selected={Selected("/Financialrequests")} component={NavLink} sx ={{color: 'text.primary'}} to= "/Financialrequests" >
             <ListItemButton sx={{p :2}} >
               <ListItemIcon>
                 <AccountBoxIcon color = {Selected("/Financialrequests")? "primary" : "" } />
