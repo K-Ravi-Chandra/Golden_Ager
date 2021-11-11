@@ -1,66 +1,52 @@
-import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import Paper from '@mui/material/Paper';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useState } from "react";
+import React, { useState } from 'react';
+import { Formik, Form } from 'formik';
+import * as Yup from 'yup';
+import Logo from '../../../components/logo.png'
+import { styled} from '@mui/styles';
+import { AppBar, Box ,Toolbar,Typography, Stack , Button, Paper, Container, Grid} from '@mui/material'
+import Textfield from '../../../components/formUI/Textfield';
+import SubmitButton from '../../../components/formUI/Button';
+import Alert from '@mui/material/Alert';
+import IconButton from '@mui/material/IconButton';
+import Collapse from '@mui/material/Collapse';
+import CloseIcon from '@mui/icons-material/Close';
+import AlertTitle from '@mui/material/AlertTitle';
 import axios from "axios";
-import OutlinedInput from '@mui/material/OutlinedInput';
-import InputLabel from '@mui/material/InputLabel';
-import FormControl from '@mui/material/FormControl';
-import Divider  from '@mui/material/Divider';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-
+import { blue, grey } from '@mui/material/colors';
 
 
 
 const Contact = () => {
 
-  const [name,setName] = useState("");
-  const [email,setEmail] = useState("");
-  const [message , setMessage] = useState("");
-
-
   const [open, setOpen] = React.useState(false);
 
-    
-      const handleClose = () => {
-        setName("")
-        setEmail("")
-        setMessage("")
-        setOpen(false);
-      };
-
-  const handleName =  (event) => {
-    setName(event.target.value);
+  const handleClose = () => {
+    setOpen(false);
   };
 
-  const handleEmail =  (event) => {
-    setEmail(event.target.value);
+
+  const INITIAL_FORM_STATE = {
+    name: '',
+    email: '',
+    message: '',
   };
+  
+  const FORM_VALIDATION = Yup.object().shape({
+    name: Yup.string()
+      .required('Required'),
+    email: Yup.string()
+      .email('Invalid email.')
+      .required('Required'),
+    message: Yup.string()
+      .required('Required'),
+  });
 
-  const handleMessage = (event) => {
-    setMessage(event.target.value);
-  }
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    // eslint-disable-next-line no-console
-    console.log({
-      name,
-      email,
-      message
-    });
+  const onSubmit = async (values, props) => {
 
     const config = {
       header: {
@@ -71,86 +57,93 @@ const Contact = () => {
     try {
       const { data } = await axios.post(
         "/api/contact",
-        {name ,email, message},
+        {values},
         config
       );
 
       console.log(data.data)
       setOpen(true)
 
+      props.resetForm()
+
     } catch (error) {
       console.log(error);
     }
+  }
+  
 
-  };
+  
+  
 
     return (
-<Paper 
-      sx={{
-        position: 'relative',
-        backgroundColor: '#dedede',
-        color: 'black',
-      }}
-    >
-            <Box
-            sx={{
-              position: 'relative',
-              p: 5,
-            }}
-          >
-             <Typography
-              component="h1"
-              variant="h4"
-              align="center"
-              color="inherit"
-              gutterBottom
-              paragraph
-            >
-              Contact us
-            </Typography>
+        <Paper sx={{position: 'relative',backgroundColor: grey[200],color: 'black',}}>
+                <Box sx={{position: 'relative',p: 5,}}>
+                <Typography
+                  component="h1"
+                  variant="h4"
+                  align="center"
+                  color="inherit"
+                  gutterBottom
+                  paragraph
+                >
+                    Contact us
+                </Typography>
 
 
-            <Box component="form"  onSubmit={handleSubmit}     sx={{
-                display: 'flex',
-                flexDirection: 'column'}} noValidate autoComplete="off">
+                <Formik
+                      initialValues={{
+                        ...INITIAL_FORM_STATE
+                      }}
+                      validationSchema={FORM_VALIDATION}
+                      onSubmit={onSubmit}
+                    >
+                      <Form>
 
-                <FormControl  margin = "normal" fullWidth variant="outlined">
-                  <InputLabel htmlFor="name">Full Name </InputLabel>
-                  <OutlinedInput
-                    id="name"
-                    type='text'
-                    value={name}
-                    onChange={handleName }
-                    label="Full Name"
-                  />
-                </FormControl>
+                        <Grid container spacing={2} rowSpacing = {2}>
 
-                <FormControl  margin = "normal" fullWidth variant="outlined">
-                  <InputLabel htmlFor="email">Email Address</InputLabel>
-                  <OutlinedInput
-                    id="email"
-                    type='text'
-                    value={email}
-                    onChange={handleEmail }
-                    label="Email Address"
-                  />
-                </FormControl>
 
-              <FormControl  margin = "normal" fullWidth variant="outlined">
-                <InputLabel htmlFor="message">Message</InputLabel>
-                <OutlinedInput
-                  id="message"
-                  type='text'
-                  multiline
-                  minRows = {4}
-                  value={message}
-                  onChange={handleMessage }
-                  label="Message"
-                />
-              </FormControl>
+                          <Grid item xs={12}>
+                            <Textfield
+                              required
+                              name="name"
+                              label="Name"
+                            />
+                          </Grid>
 
-              <Button variant="contained" type="submit">Submit</Button>
-              </Box>
+
+
+                          <Grid item xs={12}>
+                            <Textfield
+                            required
+                              name="email"
+                              label="Email"
+                            />
+                          </Grid>
+
+
+                          <Grid item xs={12}>
+                            <Textfield
+                            required
+                              name="message"
+                              label="Message"
+                              multiline={true}
+                              rows={4}
+                            />
+                          </Grid>
+
+                        </Grid>
+
+                        <Stack
+                            sx={{ p: 2}}
+                            direction="row"
+                            spacing={2}
+                            justifyContent="center"
+                          >
+                            <SubmitButton>Submit</SubmitButton>
+                          </Stack>
+
+                      </Form>
+                    </Formik>
             
           </Box>
           <Dialog

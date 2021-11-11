@@ -54,18 +54,15 @@ sx={{
             loading="lazy"
           />
           <Typography
-              component="h1"
               variant="h6"
               align="center"
               color="inherit"
               gutterBottom
+              fontWeight={300}
             >
               {item.title}
             </Typography>
-          {/* <ImageListItemBar component = "Typog"
-            title={item.title}
-            position="below"
-          /> */}
+
         </ImageListItem>
       ))}
     </ImageList>
@@ -80,22 +77,18 @@ sx={{
 const itemData = [
     {
       img: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80',
-      title: 'Vivek',
-      author: '@bkristastucchio',
+      title: 'Vivek P',
     },
     {
       img: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80',
-      title: 'Aditya',
-      author: '@rollelflex_graphy726',
+      title: 'Aditya I',
     },
     {
       img: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80',
-      title: 'Goutam',
-      author: '@helloimnik',
+      title: 'Gautam B',
     },
     {
       img: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80',
-      title: 'Ravi',
-      author: '@nolanissac',
+      title: 'Ravi K',
     }
 ];
