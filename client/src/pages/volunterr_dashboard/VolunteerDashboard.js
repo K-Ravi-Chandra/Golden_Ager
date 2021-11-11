@@ -41,22 +41,6 @@ const RootStyle = styled(AppBar)(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-const switchRoutes = (
-  <Switch>
-    {routes.map((prop, key) => {
-
-        return (
-          <Route
-            path={prop.path}
-            component={prop.component}
-            key={key}
-          />
-        );
-
-    })}
-    <Redirect from="/" to="/dashboard" />
-  </Switch>
-);
 
 const AccountStyle = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -117,8 +101,9 @@ const VolunteerDashboard = (props) => {
   return (
 
       <ThemeConfig>
+        <CssBaseline />
         <Box sx={{ display: 'flex' }}>
-      <CssBaseline />
+      
       <RootStyle
         elevation = {0}
         color = "inherit"

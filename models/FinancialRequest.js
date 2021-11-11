@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 
-const HelpRequestSchema = new mongoose.Schema({
+const FinancialRequestSchema = new mongoose.Schema({
     name : {
         type : String,
         required : [true, "Insuficient details"]
@@ -18,10 +18,6 @@ const HelpRequestSchema = new mongoose.Schema({
         type : String,
         required : [true, "Insuficient details"]
     },
-    doctor : {
-        type : String,
-        required : [true, "Insuficient details"]
-    },
     date : {
         type : Date,
         required : [true, "Insuficient details"]
@@ -30,6 +26,6 @@ const HelpRequestSchema = new mongoose.Schema({
 });
 
 
-const HelpRequest  = mongoose.model("HelpRequests",HelpRequestSchema);
+const FinancialRequest  = mongoose.model("FinancialRequests",FinancialRequestSchema);
 
-module.exports = HelpRequest ;
+module.exports = FinancialRequest ;

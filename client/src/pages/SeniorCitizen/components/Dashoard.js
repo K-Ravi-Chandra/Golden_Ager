@@ -9,10 +9,10 @@ import LocalHospitalOutlinedIcon from '@mui/icons-material/LocalHospitalOutlined
 import ConnectWithoutContactIcon from '@mui/icons-material/ConnectWithoutContact';
 import AccessibleForwardIcon from '@mui/icons-material/AccessibleForward';
 import AttributionIcon from '@mui/icons-material/Attribution';
-
+import axios from "axios";
 // 1) Financial Help ---------------------------------------------------------------
 
-  const FinancialHelp_RootStyle = styled(Card)(({ theme }) => ({
+  const FinancialHelpRootStyle = styled(Card)(({ theme }) => ({
     boxShadow: 'none',
     textAlign: 'center',
     padding: theme.spacing(5, 0),
@@ -20,7 +20,7 @@ import AttributionIcon from '@mui/icons-material/Attribution';
     backgroundColor: theme.palette.info.lighter
   }));
   
-  const FinancialHelp_IconWrapperStyle = styled('div')(({ theme }) => ({
+  const FinancialHelpIconWrapperStyle = styled('div')(({ theme }) => ({
     margin: 'auto',
     display: 'flex',
     alignItems: 'center',
@@ -28,17 +28,45 @@ import AttributionIcon from '@mui/icons-material/Attribution';
     marginBottom: theme.spacing(3),
   }));
   
-  function FinancialHelp_Card() {
+  function FinancialHelpCard() {
+
+    const FinancialHelp = async () => {
+      const config = {
+        header: {
+          "Content-Type": "application/json",
+        },
+      };
+      const name = "Ravi K"
+      const email = "Email"
+      const phone = " Phone"
+      const volunter = "Volunteer"
+  
+      try{
+        const financialHelp = await axios.post(
+          "/api/help/financialhelp",
+          {
+            name ,email, phone,volunter
+          },
+          config
+        );
+        console.log("Request Sent ");
+      
+      }
+      catch (error) {
+        console.log(error.response.data)
+      }
+  
+    }
     return (
-      <FinancialHelp_RootStyle sx={{cursor : 'pointer'}} onClick={() => {console.log("Financial Help")}}>
+      <FinancialHelpRootStyle sx={{cursor : 'pointer'}} onClick={FinancialHelp}>
         
-          <FinancialHelp_IconWrapperStyle>
+          <FinancialHelpIconWrapperStyle>
             <MoneyIcon sx={{ fontSize: 80}} />
-          </FinancialHelp_IconWrapperStyle>
+          </FinancialHelpIconWrapperStyle>
         
           <Typography variant="h6"> Financial Help </Typography>
 
-      </FinancialHelp_RootStyle>
+      </FinancialHelpRootStyle>
     );
   }
 
@@ -107,9 +135,10 @@ import AttributionIcon from '@mui/icons-material/Attribution';
     )
   }
  
-// 4) Other Help ----------------------------------------------------------------------
+// 4) Reques tHelp ----------------------------------------------------------------------
 
-  const OtherHelp_RootStyle = styled(Card)(({ theme }) => ({
+  
+  const RequestHelpRootStyle = styled(Card)(({ theme }) => ({
     boxShadow: 'none',
     textAlign: 'center',
     padding: theme.spacing(5, 0),
@@ -117,7 +146,7 @@ import AttributionIcon from '@mui/icons-material/Attribution';
     backgroundColor: theme.palette.error.lighter
   }));
   
-  const OtherHelp_IconWrapperStyle = styled('div')(({ theme }) => ({
+  const RequestHelpIconWrapperStyle = styled('div')(({ theme }) => ({
     margin: 'auto',
     display: 'flex',
     alignItems: 'center',
@@ -125,17 +154,47 @@ import AttributionIcon from '@mui/icons-material/Attribution';
     marginBottom: theme.spacing(3),
   }));
   
-  function OtherHelp_Card() {
+  function RequestHelpCard() {
+
+    const RequestHelp = async () => {
+      const config = {
+        header: {
+          "Content-Type": "application/json",
+        },
+      };
+      const name = "Ravi K"
+      const email = "Email"
+      const phone = " Phone"
+      const volunter = "Volunteer"
+      const doctor = "Doctor"
+  
+      try{
+        const requestHelp = await axios.post(
+          "/api/help/normalhelp",
+          {
+            name ,email, phone,volunter, doctor
+          },
+          config
+        );
+        console.log("Request Sent ");
+      
+      }
+      catch (error) {
+        console.log(error.response.data)
+      }
+  
+    }
+
     return (
-      <OtherHelp_RootStyle  sx={{cursor : 'pointer'}} onClick={() => {console.log("Other Help")}}>
+      <RequestHelpRootStyle  sx={{cursor : 'pointer'}} onClick={RequestHelp}>
 
-        <OtherHelp_IconWrapperStyle>
+        <RequestHelpIconWrapperStyle>
           <ConnectWithoutContactIcon sx={{ fontSize: 80 }}/>
-        </OtherHelp_IconWrapperStyle>
+        </RequestHelpIconWrapperStyle>
 
-        <Typography variant="h6">Other Help</Typography>
+        <Typography variant="h6">Request Help</Typography>
 
-      </OtherHelp_RootStyle>
+      </RequestHelpRootStyle>
     );
   }
 
@@ -149,7 +208,7 @@ const DashboardPage = () => {
         <Grid sx={{pt : 6}} container spacing={3}>
 
           <Grid item xs={12} sm={6}  md={3}>
-                <FinancialHelp_Card/>
+                <FinancialHelpCard/>
           </Grid>
 
           <Grid item xs={12} sm={6}  md={3}>
@@ -161,7 +220,7 @@ const DashboardPage = () => {
           </Grid>
 
           <Grid item xs={12} sm={6}  md={3}>
-                <OtherHelp_Card/>
+                <RequestHelpCard/>
           </Grid>
           
 

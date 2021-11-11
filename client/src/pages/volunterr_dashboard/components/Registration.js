@@ -1,292 +1,309 @@
-import React from 'react'
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import { Link } from '@mui/material';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import { useState } from "react";
+import * as React from 'react';
+import { Formik, Form } from 'formik';
+import * as Yup from 'yup';
+import Logo from '../../../components/logo.png'
+import { styled} from '@mui/styles';
+import { Paper,Link, Box ,Toolbar,Typography, Stack , Grid} from '@mui/material'
+import CssBaseline from '@mui/material/CssBaseline';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useHistory } from "react-router-dom";
 import axios from "axios";
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import InputLabel from '@mui/material/InputLabel';
-import InputAdornment from '@mui/material/InputAdornment';
-import FormHelperText from '@mui/material/FormHelperText';
-import FormControl from '@mui/material/FormControl';
+import Textfield from '../../../components/formUI/Textfield';
+import SubmitButton from '../../../components/formUI/Button';
+import Alert from '@mui/material/Alert';
 import IconButton from '@mui/material/IconButton';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
+import Collapse from '@mui/material/Collapse';
+import CloseIcon from '@mui/icons-material/Close';
+
+const phoneRegExp=/^[2-9]{2}[0-9]{8}/
+
+const Title = styled(Typography)({
+  fontSize : 35,
+  background: "linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(0,212,255,1) 0%, rgba(162,222,131,1) 100%)",
+  WebkitBackgroundClip: "text",
+  WebkitTextFillColor: "transparent"
+});
+
+const StyledSubmitButton = styled(SubmitButton)({
+  background: "linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(0,212,255,1) 0%, rgba(162,222,131,1) 100%)",
+  border: 0,
+  borderRadius: 3,
+  boxShadow: '0 3px 5px 2px rgba(2, 212, 225, .3)',
+  color: 'white',
+  height: 48,
+  padding: '0 30px',
+});
 
 
-const Registration = () => {
-
-    const [username,setUserName] = useState("");
-    const [email,setEmail] = useState("");
-    const [phone, setPhone] = useState("");
-    const [age, setAge] = useState("");
-    const [address , setAddress] = useState("");
-    const [password,setPassword] = useState("");
-    const[showPassword,setShowPassword] = React.useState(false)
-    const handleUsername =  (event) => {
-      setUserName(event.target.value);
-    };
-
-    const handleEmail =  (event) => {
-      setEmail(event.target.value);
-    };
-
-    const handlePhone = (event) =>  {
-      setPhone(event.target.value);
-    };
 
 
-    const handleAge = (event) => {
-      setAge(event.target.value);
-    }
 
-    const handleAddress = (event) => {
-        setAddress(event.target.value);
-      }
+const theme = createTheme();
 
-      const handlePassword = (event) =>  {
-        setPassword(event.target.value);
-      };
+const Registration = (props) => {
+
+  const INITIAL_FORM_STATE = {
+    username: '',
+    age : '',
+    email: '',
+    phone: '',
+    password: '',
+    confirmPassword : '',
+    doctor : '',
+    address : '',
+    volunter : `${props.data.email}`
   
-      const handleShowPassword = () => {
-        setShowPassword(!showPassword);
-      }
+  };
   
-      const handleMouseDownPassword = (event) => {
-        event.preventDefault();
-      };
-
-      const [open, setOpen] = React.useState(false);
-
-    
-      const handleClose = () => {
-        setAddress("")
-        setAge("")
-        setEmail("")
-        setPassword("")
-        setPhone("")
-        setUserName("")
-        setOpen(false);
-      };
-
-      const [open2, setOpen2] = React.useState(false);
-
-
-      const handleClose2 = () => {
-        setOpen2(false);
-      };
-
-      
-
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-
-
-        console.log({
-            username,
-            email,
-            password,
-            age,
-            phone,
-            address
-          });
-
-          const config = {
-            header: {
-              "Content-Type": "application/json",
-            },
-          };
-
-          try {
-            const role = "1"
-            const { data } = await axios.post(
-              "/api/auth/register",
-              {
-                username,
-                email,
-                password,
-                role,
-                age,
-                phone,
-                address
-              },
-              config
-            );
-      
-            console.log("Registered Sineor Citizensucessfully");
-            setOpen(true)
-            // history.push("/");
   
-          } catch (error) {
-            console.log(error);
-            setOpen2(true)
+  const FORM_VALIDATION = Yup.object().shape({
+    username: Yup.string()
+      .required('Required'),
+    age : Yup.string()
+    .required('Required'),
+    doctor : Yup.string()
+    .email('Invalid email.')
+    .required('Required'),
+    address : Yup.string()
+    .required('Required'),
+    email: Yup.string()
+      .email('Invalid email.')
+      .required('Required'),
+    phone: Yup.string()
+      .max(10, 'Enter a valid phone number')
+      .matches(phoneRegExp,"Enter valid Phone number")
+      .required("Required"),
+    password: Yup.string()
+      .min(6, "Minimum characters should be 6")
+      .required('Required'),
+    confirmPassword:Yup.string().oneOf([Yup.ref('password')],"Password not matches").required('Required')
+  
+  });
+  
+
+
+
+  //Sucess or error messages
+  const [success, setSuccess] = React.useState("");
+  const [showSuccess, setShowSuccess] = React.useState(false);
+  const [error, setError] = React.useState("An Unknown Error Occured");
+  const [showError, setShowError] = React.useState(false);
+
+
+  const CloseSuccess = () => {
+    setShowSuccess(false);
+  };
+
+  const CloseError = () => {
+    setShowError(false);
+  };
+
+    const onSubmit  = async (values, props) => {
+
+      const config = {
+        header: {
+          "Content-Type": "application/json",
+        },
+      };
+
+
+      try {
+        const { data } = await axios.post(
+          "/api/volunter/registerseniorcitizen",
+          values,
+          config
+        );
+  
+        console.log(data.data)
+
+        setSuccess(data.data)
+        setShowSuccess(true)
+        setShowError(false)
+        setError("An Unknown Error Occured")
+        props.resetForm()
+        setTimeout(CloseSuccess, 5000);
+
+      } catch (error) {
+
+        if(error.response.data.error) {
+          if(error.response.data.error === 'Duplicate field Value Enter'){
+            setError('Account Already Exists')
           }
+          else{
+            setError(error.response.data.error)
+          }
+        }
+        else{
+          setError("An Unknown error Occured")
+        }
+        setShowSuccess(false)
+        setSuccess("")
+        setShowError(true)
+        console.log(error.response.data);
+        setTimeout(CloseError, 5000);
+      }
+    };
 
-    }
+    return(
+      <>
+        <Grid container sx = {{pt :2}} rowSpacing={2} >
+
+          <Grid item xs ={12}>
+                <Typography    variant="h5">
+                      Senior Citizen Registration
+                </Typography>
+          </Grid>
+
+          <Grid item xs={12}>
+
+          <Box sx={{ width: '100%' , pt : 1}}>
+                                                        <Collapse in={showSuccess} >
+                                                          <Alert 
+                                                            action={
+                                                              <IconButton
+                                                                aria-label="close"
+                                                                color="inherit"
+                                                                size="small"
+                                                                onClick={() => {
+                                                                  setShowSuccess(false);
+                                                                }}
+                                                              >
+                                                                <CloseIcon fontSize="inherit" />
+                                                              </IconButton>
+                                                            }
+                                                            sx={{ mb: 2 }}
+                                                          >   
+                                                            {success} 
+                                                          </Alert>
+                                                        </Collapse>
+                                          </Box>
+
+                                          <Box sx={{ width: '100%' , pt : 1}}>
+                                                        <Collapse in={showError} >
+                                                          <Alert severity="error"
+                                                            action={
+                                                              <IconButton
+                                                                aria-label="close"
+                                                                color="inherit"
+                                                                size="small"
+                                                                onClick={() => {
+                                                                  setShowError(false);
+                                                                }}
+                                                              >
+                                                                <CloseIcon fontSize="inherit" />
+                                                              </IconButton>
+                                                            }
+                                                            sx={{ mb: 2 }}
+                                                          >   
+                                                            {error} 
+                                                          </Alert>
+                                                        </Collapse>
+                                          </Box>
+
+                <div >
+
+                      <Formik
+                        initialValues={{
+                          ...INITIAL_FORM_STATE
+                        }}
+                        validationSchema={FORM_VALIDATION}
+                        onSubmit={onSubmit}
+                      >
+                          <Form>
+
+                              <Grid container spacing={2} rowSpacing = {2}>
+
+                                    <Grid item xs={12} md = {6}>
+                                        <Textfield
+                                          required
+                                          name="username"
+                                          label="Full Name"
+                                        />
+                                      </Grid>
+
+                                      
+                                      <Grid item xs={12} md = {6}>
+                                        <Textfield
+                                        required
+                                          name="age"
+                                          label="Age"
+                                        />
+                                      </Grid>
+
+                                      <Grid item xs={12} md = {6}>
+                                        <Textfield
+                                        required
+                                          name="phone"
+                                          label="Phone Number"
+                                        />
+                                      </Grid>
+
+                                      <Grid item xs={12} md = {6}>
+                                        <Textfield
+                                          required
+                                          name="email"
+                                          label="Email Address"
+                                        />
+                                      </Grid>
 
 
-    return (
+                                      <Grid item xs={12} md = {6}>
+                                        <Textfield
+                                        required
+                                        type="password"
+                                          name="password"
+                                          label="Password"
+                                        />
+                                      </Grid>
 
+                            
+                                      <Grid item xs={12} md = {6}>
+                                        <Textfield
+                                        required
+                                        type="password"
+                                          name="confirmPassword"
+                                          label="Confirm Password"
+                                        />
+                                      </Grid>
 
-        <Box
-        sx={{
-          my: 8,
-          mx: 4,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-        }}
-      >
-        <Typography component="h1" variant="h5">
-          Register a Senior Citizen
-        </Typography>
-        <Box component="form"  noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
-        <FormControl  margin = "normal" fullWidth variant="outlined">
-      <InputLabel htmlFor="senior-citizen-name">Full Name</InputLabel>
-      <OutlinedInput
-        id="senior-citizen-name"
-        type='text'
-        value={username}
-        onChange={handleUsername }
-        label="Full Name"
-      />
-    </FormControl>
-      <FormControl  margin = "normal" fullWidth variant="outlined">
-      <InputLabel htmlFor="senior-citizen-email">Email Address</InputLabel>
-      <OutlinedInput
-        id="senior-citizen-email"
-        type='text'
-        value={email}
-        onChange={handleEmail }
-        label="Email Address"
-      />
-    </FormControl>
-    <FormControl  margin = "normal" fullWidth variant="outlined">
-      <InputLabel htmlFor="senior-citizen-age">Age</InputLabel>
-      <OutlinedInput
-        id="senior-citizen-age"
-        type='text'
-        value={age}
-        onChange={handleAge }
-        label= "Age"
-      />
-    </FormControl>
+                                      <Grid item xs={12} >
+                                        <Textfield
+                                        required
+                                          name="address"
+                                          label="Address"
+                                          multiline
+                                          rows = {3}
+                                        />
+                                      </Grid>
 
-    <FormControl  margin = "normal" fullWidth variant="outlined">
-      <InputLabel htmlFor="senior-citizen-phone">Phone Number</InputLabel>
-      <OutlinedInput
-        id="senior-citizen-phone"
-        type='text'
-        value={phone}
-        onChange={handlePhone }
-        label="Phone Number"
-      />
-    </FormControl>
+                                      <Grid item xs={12}>
+                                        <Textfield
+                                          required
+                                          name="doctor"
+                                          label="Doctor"
+                                        />
+                                      </Grid>
+                              </Grid>
 
-    <FormControl margin = "normal"  fullWidth variant="outlined">
-          <InputLabel htmlFor="senior-citizen-password">Password</InputLabel>
-          <OutlinedInput
-            id="senior-citizen-password"
-            type={showPassword ? 'text' : 'password'}
-            value={password}
-            onChange={handlePassword}
-            endAdornment={
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={handleShowPassword}
-                  onMouseDown={handleMouseDownPassword}
-                  edge="end"
-                >
-                  {showPassword ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
-              </InputAdornment>
-            }
-            label="Password"
-          />
-        </FormControl>
+                
+                              <Stack
+                                  sx={{ p: 2}}
+                                  direction="row"
+                                  spacing={2}
+                                  justifyContent="center">
+                                      <StyledSubmitButton >Register</StyledSubmitButton>
+                              </Stack>
 
+                          </Form>
+                      </Formik>
+                </div>
 
-    <FormControl  margin = "normal" fullWidth variant="outlined">
-      <InputLabel htmlFor="senior-citizen-address">Address</InputLabel>
-      <OutlinedInput
-        required
-        multiline
-        id="senior-citizen-address"
-        type='text'
-        value={address}
-        onChange={handleAddress }
-        label="Address"
-      />
-    </FormControl>
-      
+            </Grid>
+          </Grid>
 
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-          >
-            Register
-          </Button>
-          
-        </Box>
-        <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">
-          {"Registration Suceesful"}
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-           Now senior citizen can login using their credentials
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} autoFocus>
-            Ok
-          </Button>
-        </DialogActions>
-      </Dialog>
-      <Dialog
-        open={open2}
-        onClose={handleClose2}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">
-          {"Registration Failed"}
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-                {"An unknown error occured"}
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          
-          <Button onClick={handleClose2} autoFocus>
-            Ok
-          </Button>
-        </DialogActions>
-      </Dialog>
-
-      </Box>
-
-   
+      </>
     )
 }
 
 export default Registration
+

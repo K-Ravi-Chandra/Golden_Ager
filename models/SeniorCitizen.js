@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const ProfileSchema = new mongoose.Schema({
-    name : {
+    username : {
         type : String,
         required : [true, "Senior Citizen Profile Schema : Name not provided"]   ,
     },

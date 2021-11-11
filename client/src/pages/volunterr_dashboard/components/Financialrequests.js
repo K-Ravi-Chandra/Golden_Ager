@@ -1,5 +1,7 @@
 import React from 'react'
 import { DataGrid } from '@mui/x-data-grid';
+import { Box } from '@mui/system';
+import { Paper } from '@mui/material';
 const columns = [
     { field: 'id', headerName: 'ID', width: 90 },
     {
@@ -27,10 +29,6 @@ const columns = [
       description: 'This column has a value getter and is not sortable.',
       sortable: false,
       width: 160,
-      valueGetter: (params) =>
-        `${params.getValue(params.id, 'firstName') || ''} ${
-          params.getValue(params.id, 'lastName') || ''
-        }`,
     },
   ];
   const rows = [
@@ -47,15 +45,10 @@ const columns = [
   
   export default function DataGridDemo() {
     return (
-      <div style={{ height: 400, width: '100%' }}>
-        <DataGrid
-          rows={rows}
-          columns={columns}
-          pageSize={5}
-          rowsPerPageOptions={[5]}
-          checkboxSelection
-          disableSelectionOnClick
-        />
-      </div>
+        <Box>
+          <Paper>
+            Financial Requests
+          </Paper>
+        </Box>
     );
   }

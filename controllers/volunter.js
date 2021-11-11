@@ -3,17 +3,29 @@ const SeniorCitizen = require('../models/SeniorCitizen')
 const sendEmail = require('../utils/sendEmail');
 
 // Senior citizen registration
-exports.register = async (req ,res , next) => {
+exports.registerseniorcitizen = async (req ,res , next) => {
 
-    const {profile, email, volunter, doctor, password} = req.body;
-    // const {username, email, password,role,age,phone,address,email, volunteer, doctor} = req.body;
 
+    const data = req.body
+
+    const username = data.username
+    const age =  data.age
+    const phone = data.phone
+    const address = data.address
+
+    const email = data.email
+    const password = data.password
+    const volunter = data.volunter
+    const doctor = data.doctor
+
+    const profile = {username , age, phone , address}
+
+    
     try {
         const senior = await SeniorCitizen.create({
             profile, email,volunter, doctor
         });
 
-        const username = profile.name;
         const role = "1"
 
         try {

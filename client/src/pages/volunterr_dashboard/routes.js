@@ -3,8 +3,14 @@ import Registration from './components/Registration';
 import History from './components/History';
 import HelpRequests from './components/HelpRequests';
 import Financialrequests from './components/Financialrequests';
+import Dashboard from './components/Dashboard';
 
 const dashboardRoutes = [
+
+  {
+    path : "/dashboard",
+    component : Dashboard
+  },
 
   {
     path: "/Registration",

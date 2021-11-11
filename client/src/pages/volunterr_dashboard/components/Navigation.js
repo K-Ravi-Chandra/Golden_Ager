@@ -49,6 +49,18 @@ const Navigation = () => {
               </ListItemText>
             </ListItemButton>
           </ListItem>
+          <ListItem disablePadding selected={Selected("/Registration")} component={NavLink} sx ={{color: 'text.primary'}} to= "/Registration" >
+            <ListItemButton sx={{p :2}} >
+              <ListItemIcon>
+                <NotificationsActiveIcon color = {Selected("/Registration")? "primary" : "" } />
+              </ListItemIcon>
+              <ListItemText>
+                <Typography variant="body1"  noWrap={true} color = {Selected("/Registration")? "primary" : "" }>
+                    SeniorCitizen Registration
+                </Typography>
+              </ListItemText>
+            </ListItemButton>
+          </ListItem>
           <ListItem disablePadding selected={Selected("/History")} component={NavLink} sx ={{color: 'text.primary'}} to= "/History" >
             <ListItemButton sx={{p :2}} >
               <ListItemIcon>
@@ -71,18 +83,6 @@ const Navigation = () => {
               <ListItemText>
                 <Typography variant="body1" fontSize={18}  color = {Selected("/HelpRequests")? "primary" : "" }>
                 HelpRequests
-                </Typography>
-              </ListItemText>
-            </ListItemButton>
-          </ListItem>
-          <ListItem disablePadding selected={Selected("/Registration")} component={NavLink} sx ={{color: 'text.primary'}} to= "/Registration" >
-            <ListItemButton sx={{p :2}} >
-              <ListItemIcon>
-                <NotificationsActiveIcon color = {Selected("/Registration")? "primary" : "" } />
-              </ListItemIcon>
-              <ListItemText>
-                <Typography variant="body1" fontSize={18}  color = {Selected("/Registration")? "primary" : "" }>
-                    Registration
                 </Typography>
               </ListItemText>
             </ListItemButton>
