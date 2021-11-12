@@ -120,7 +120,7 @@ const Registration = (props) => {
         setShowSuccess(true)
         setShowError(false)
         setError("An Unknown Error Occured")
-        props.resetForm()
+        // props.resetForm()
         setTimeout(CloseSuccess, 5000);
 
       } catch (error) {

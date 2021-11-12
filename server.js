@@ -19,7 +19,7 @@ app.use('/api/private', require('./routes/private'));
 
 app.use('/api/donate', require('./routes/donate'));
 
-app.use('/api/contact', require('./routes/contact'));  
+app.use('/api/contact', require('./routes/contact'));    
 
 app.use('/api/volunter', require('./routes/volunter'))
 

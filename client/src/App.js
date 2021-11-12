@@ -22,24 +22,10 @@ function App() {
               <Route  path= "/register" component = {Register}/>
               <Route  path= "/forgotpassword" component = {ForgotPassword}/>
               <Route  path= "/resetpassword/:resetToken" component = {ResetPassword}/>
-
-
-              <Route  path= "/FamilyDashboard">
-                  <FamilyDashboard/>
-              </Route>
- 
-              <Route   path= "/SeniorCitizenDashboard">
-                  <SeniorCitizenDashboard/>
-              </Route>
-              <Route  path= "/VolunterDashboard">
-                  <VolunteerDashboard/>
-              </Route>
-              <Route  path= "/DoctorDashboard">
-                  <DoctorDashboard/>
-              </Route>
               <Route  path= "/donaterequirements">
                 <DonateRequirements/>
               </Route>
+              <Route path = "/familymember/:familyMemberToken" component = {FamilyDashboard} />
 
               <PrivateRoute  path = "/" component = {UserDashBoard}/>
 

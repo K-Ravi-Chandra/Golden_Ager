@@ -11,6 +11,7 @@ import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import { useHistory } from "react-router-dom";
 import LogoutIcon from '@mui/icons-material/Logout';
+import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown';
 // ----------------------------------------------------------------------
 
 
@@ -26,7 +27,15 @@ const Selected = (path) => {
 
 const Navigation = () => {
 
+  const data = [
+    { label: 'Authentication' },
+    { label: 'Database' },
+    { label: 'Storage' },
+    { label: 'Hosting' },
+  ];
+
   let history = useHistory();
+  const [open, setOpen] = React.useState(true);
 
   const { pathname } = useLocation();
   const logout = () => {
@@ -49,6 +58,55 @@ const Navigation = () => {
               </ListItemText>
             </ListItemButton>
           </ListItem>
+
+          <ListItemButton
+                alignItems="flex-start"
+                onClick={() => setOpen(!open)}
+                sx={{
+                  p: 2,
+                  pb: open ? 0 : 2.5,
+                  '&:hover, &:focus': { '& svg': { opacity: open ? 1 : 0 } },
+                }}
+              >
+                <ListItemText
+                  primary="Register"
+                  primaryTypographyProps={{
+                    fontSize: 15,
+                    fontWeight: 'medium',
+                    lineHeight: '20px',
+                    mb: '2px',
+                  }}
+                  secondary="Authentication, Firestore Database, Realtime Database, Storage, Hosting, Functions, and Machine Learning"
+                  secondaryTypographyProps={{
+                    noWrap: true,
+                    fontSize: 12,
+                    lineHeight: '16px',
+                    color: open ? 'rgba(0,0,0,0)' : '',
+                  }}
+                  sx={{ my: 0 }}
+                />
+                <KeyboardArrowDown
+                  sx={{
+                    mr: -1,
+                    opacity: 0,
+                    transform: open ? 'rotate(-180deg)' : 'rotate(0)',
+                    transition: '0.2s',
+                  }}
+                />
+              </ListItemButton>
+              {open &&
+                data.map((item) => (
+                  <ListItemButton
+                    key={item.label}
+                  >
+
+                    <ListItemText
+                      primary={item.label}
+                      primaryTypographyProps={{ fontSize: 14, fontWeight: 'medium' }}
+                    />
+                  </ListItemButton>
+                  ))}
+
           <ListItem disablePadding selected={Selected("/Registration")} component={NavLink} sx ={{color: 'text.primary'}} to= "/Registration" >
             <ListItemButton sx={{p :2}} >
               <ListItemIcon>

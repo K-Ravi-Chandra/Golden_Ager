@@ -36,14 +36,11 @@ exports.login = async (req ,res , next) => {
             const isMatch = await user.matchPassword(password);
 
             if(!isMatch ){
-                // res.status(400).json({success : false, error: "password not matched"})
+
                 return next(new ErrorResponse("Password not matched", 401))
             }
             else {
                 
-                // res.status(200).json({  
-                // success : true, 
-                // token: "yesgfawgp4"})
                 sendToken(user,200,res);
             
             }
@@ -65,6 +62,8 @@ exports.forgotpassword = async (req ,res , next) => {
         if(!user){
             return next (new ErrorResponse("User not found",404))
         }
+
+        console.log(user)
 
         const resetToken = user.getResetPasswordToken();
         console.log(resetToken)

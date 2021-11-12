@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const crypto = require('crypto');
 
 const ProfileSchema = new mongoose.Schema({
     username : {
@@ -39,11 +40,17 @@ const SeniorCitizenSchema = new mongoose.Schema({
     },
     doctor : {
         type : String,
-    }
-
+    },
+    familyMemberToken : String
 });
 
-
+SeniorCitizenSchema.methods.getFamilyMemberToken =  function(){
+    const Token = crypto.randomBytes(20).toString("hex");
+    
+    this.familyMemberToken  = crypto.createHash("sha256").update(Token).digest("hex");
+    
+    return Token ;
+}
 
 const SeniorCitizen = mongoose.model("SeniorCitizen", SeniorCitizenSchema);
 
