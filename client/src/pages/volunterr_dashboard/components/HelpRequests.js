@@ -18,8 +18,10 @@ export default function SimpleAccordion() {
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-            Issue of the Senior Citizen 1 accepted and solved
+            Need a volunteer to take me for health checkup
           </Typography>
+          <button>Accept</button>
+          <button>Reject</button>
         </AccordionDetails>
       </Accordion>
       <Accordion>
@@ -32,7 +34,7 @@ export default function SimpleAccordion() {
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-          Issue of the Senior Citizen 2 accepted and solved
+          Need a volunteer to take me to Airport
           </Typography>
           <button>Accept</button>
           <button>Reject</button>
@@ -48,8 +50,10 @@ export default function SimpleAccordion() {
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-          Issue of the Senior Citizen 3 accepted and solved
+          Need a volunteer to take me to Wonderland for roaming
           </Typography>
+          <button>Accept</button>
+          <button>Reject</button>
         </AccordionDetails>
       </Accordion>
       <Accordion>
@@ -62,8 +66,10 @@ export default function SimpleAccordion() {
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-          Issue of the Senior Citizen 4 accepted and solved
+          Need a volunteer to help me to see my health reports
           </Typography>
+          <button>Accept</button>
+          <button>Reject</button>
         </AccordionDetails>
       </Accordion>
       <Accordion disabled>

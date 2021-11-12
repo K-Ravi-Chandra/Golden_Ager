@@ -78,7 +78,7 @@ SeverityPill.propTypes = {
 const orders = [
   {
     id: uuid(),
-    ref: 'CDD1049',
+    ref: 'Senior Citizen 1',
     amount: 30.5,
     customer: {
       name: 'Ekaterina Tankova'
@@ -88,7 +88,7 @@ const orders = [
   },
   {
     id: uuid(),
-    ref: 'CDD1048',
+    ref: 'Senior Citizen 2',
     amount: 25.1,
     customer: {
       name: 'Cao Yu'
@@ -98,7 +98,7 @@ const orders = [
   },
   {
     id: uuid(),
-    ref: 'CDD1047',
+    ref: 'Senior Citizen 3',
     amount: 10.99,
     customer: {
       name: 'Alexa Richardson'
@@ -108,7 +108,7 @@ const orders = [
   },
   {
     id: uuid(),
-    ref: 'CDD1046',
+    ref: 'Senior Citizen 4',
     amount: 96.43,
     customer: {
       name: 'Anje Keizer'
@@ -118,7 +118,7 @@ const orders = [
   },
   {
     id: uuid(),
-    ref: 'CDD1045',
+    ref: 'Senior Citizen 5',
     amount: 32.54,
     customer: {
       name: 'Clarke Gillebert'
@@ -128,7 +128,7 @@ const orders = [
   },
   {
     id: uuid(),
-    ref: 'CDD1044',
+    ref: 'Senior Citizen 6',
     amount: 16.76,
     customer: {
       name: 'Adam Denisov'

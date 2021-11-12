@@ -4,6 +4,7 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { Button } from '@mui/material';
 
 export default function SimpleAccordion() {
   return (
@@ -18,8 +19,10 @@ export default function SimpleAccordion() {
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-            Issue of the Senior Citizen 1 accepted and solved
+            Need Rs 4,000 for Medicines
           </Typography>
+          <button>Accept</button>
+          <button>Reject</button>
         </AccordionDetails>
       </Accordion>
       <Accordion>
@@ -32,7 +35,7 @@ export default function SimpleAccordion() {
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-          Issue of the Senior Citizen 2 accepted and solved
+          Need Rs 60,000 just for fun
           </Typography>
           <button>Accept</button>
           <button>Reject</button>
@@ -48,8 +51,10 @@ export default function SimpleAccordion() {
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-          Issue of the Senior Citizen 3 accepted and solved
+          Need Rs 5,000 for an eye checkup
           </Typography>
+          <button>Accept</button>
+          <button>Reject</button>
         </AccordionDetails>
       </Accordion>
       <Accordion>
@@ -62,8 +67,10 @@ export default function SimpleAccordion() {
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-          Issue of the Senior Citizen 4 accepted and solved
+           Need Rs 50,000 For the Operation
           </Typography>
+          <button>Accept</button>
+          <button>Reject</button>
         </AccordionDetails>
       </Accordion>
       <Accordion disabled>
