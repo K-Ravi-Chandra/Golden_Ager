@@ -1,54 +1,87 @@
-import React from 'react'
-import { DataGrid } from '@mui/x-data-grid';
-import { Box } from '@mui/system';
-import { Paper } from '@mui/material';
-const columns = [
-    { field: 'id', headerName: 'ID', width: 90 },
-    {
-      field: 'Name',
-      headerName: 'Name',
-      width: 150,
-      editable: true,
-    },
-    {
-      field: 'Address',
-      headerName: 'Address',
-      width: 150,
-      editable: true,
-    },
-    {
-      field: 'age',
-      headerName: 'Age',
-      type: 'number',
-      width: 110,
-      editable: true,
-    },
-    {
-      field: 'Moneyissue',
-      headerName: 'Moneyissue',
-      description: 'This column has a value getter and is not sortable.',
-      sortable: false,
-      width: 160,
-    },
-  ];
-  const rows = [
-    { id: 1, Name: 'Snow', Address: 'Jon', age: 35 },
-    { id: 2, Name: 'Lannister', Address: 'Cersei', age: 42 },
-    { id: 3, Name: 'Lannister', Address: 'Jaime', age: 45 },
-    { id: 4, Name: 'Stark', Addresse: 'Arya', age: 16 },
-    { id: 5, Name: 'Targaryen', Address: 'Daenerys', age: null },
-    { id: 6, Name: 'Melisandre', Address: null, age: 150 },
-    { id: 7, Name: 'Clifford', Address: 'Ferrara', age: 44 },
-    { id: 8, Name: 'Frances', Address: 'Rossini', age: 36 },
-    { id: 9, Name: 'Roxie', Address: 'Harvey', age: 65 },
-  ];
-  
-  export default function DataGridDemo() {
-    return (
-        <Box>
-          <Paper>
-            Financial Requests
-          </Paper>
-        </Box>
-    );
-  }
+import * as React from 'react';
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import Typography from '@mui/material/Typography';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { Button } from '@mui/material';
+
+export default function SimpleAccordion() {
+  return (
+    <div>
+      <Accordion>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1a-content"
+          id="panel1a-header"
+        >
+          <Typography>Senior Citizen 1</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Typography>
+            Need Rs 4,000 for Medicines
+          </Typography>
+          <button>Accept</button>
+          <button>Reject</button>
+        </AccordionDetails>
+      </Accordion>
+      <Accordion>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel2a-content"
+          id="panel2a-header"
+        >
+          <Typography>Senior Citizen 2</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Typography>
+          Need Rs 60,000 just for fun
+          </Typography>
+          <button>Accept</button>
+          <button>Reject</button>
+        </AccordionDetails>
+      </Accordion>
+      <Accordion>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel2a-content"
+          id="panel2a-header"
+        >
+          <Typography>Senior Citizen 3</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Typography>
+          Need Rs 5,000 for an eye checkup
+          </Typography>
+          <button>Accept</button>
+          <button>Reject</button>
+        </AccordionDetails>
+      </Accordion>
+      <Accordion>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel2a-content"
+          id="panel2a-header"
+        >
+          <Typography>Senior Citizen 4</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Typography>
+           Need Rs 50,000 For the Operation
+          </Typography>
+          <button>Accept</button>
+          <button>Reject</button>
+        </AccordionDetails>
+      </Accordion>
+      <Accordion disabled>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel3a-content"
+          id="panel3a-header"
+        >
+          <Typography>Issue of Senior Citizen 5 was not accepted</Typography>
+        </AccordionSummary>
+      </Accordion>
+    </div>
+  );
+}
