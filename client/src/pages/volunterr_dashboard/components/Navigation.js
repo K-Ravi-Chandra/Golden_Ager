@@ -12,6 +12,8 @@ import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import { useHistory } from "react-router-dom";
 import LogoutIcon from '@mui/icons-material/Logout';
 import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown';
+import PerfectScrollbar from 'react-perfect-scrollbar';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
 // ----------------------------------------------------------------------
 
 
@@ -28,14 +30,13 @@ const Selected = (path) => {
 const Navigation = () => {
 
   const data = [
-    { label: 'Authentication' },
-    { label: 'Database' },
-    { label: 'Storage' },
-    { label: 'Hosting' },
+    { label: 'Senior Citizen' , path : '/registeration/seniorcitizen'},
+    { label: 'Doctor' , path : '/registeration/doctor' },
+    { label: 'Family Member' , path : '/registeration/familymember'},
   ];
 
   let history = useHistory();
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
 
   const { pathname } = useLocation();
   const logout = () => {
@@ -45,6 +46,7 @@ const Navigation = () => {
 }
   return (
     <Box >
+      <PerfectScrollbar>
       <List>
           <ListItem  disablePadding selected={Selected("/dashboard")} component={NavLink} sx ={{color: 'text.primary'}} to= "/dashboard" >
             <ListItemButton sx={{p :2}} >
@@ -60,35 +62,35 @@ const Navigation = () => {
           </ListItem>
 
           <ListItemButton
+                selected = {!open && (Selected("/registeration/seniorcitizen") || Selected("/registeration/doctor") || Selected("/registeration/familymember"))}
                 alignItems="flex-start"
                 onClick={() => setOpen(!open)}
                 sx={{
                   p: 2,
                   pb: open ? 0 : 2.5,
-                  '&:hover, &:focus': { '& svg': { opacity: open ? 1 : 0 } },
                 }}
               >
+                <ListItemIcon>
+                <PersonAddIcon />
+              </ListItemIcon>
                 <ListItemText
                   primary="Register"
                   primaryTypographyProps={{
-                    fontSize: 15,
-                    fontWeight: 'medium',
-                    lineHeight: '20px',
-                    mb: '2px',
+                    paddingTop : open ? 1 : 0
                   }}
-                  secondary="Authentication, Firestore Database, Realtime Database, Storage, Hosting, Functions, and Machine Learning"
+                  secondary="Senior Citizen, Doctor, Family Member"
                   secondaryTypographyProps={{
                     noWrap: true,
                     fontSize: 12,
                     lineHeight: '16px',
-                    color: open ? 'rgba(0,0,0,0)' : '',
+                    color: open ? 'rgba(0,0,0,0)' : 'grey',
                   }}
-                  sx={{ my: 0 }}
+                  
                 />
                 <KeyboardArrowDown
                   sx={{
                     mr: -1,
-                    opacity: 0,
+                    mt: 1,
                     transform: open ? 'rotate(-180deg)' : 'rotate(0)',
                     transition: '0.2s',
                   }}
@@ -96,29 +98,17 @@ const Navigation = () => {
               </ListItemButton>
               {open &&
                 data.map((item) => (
-                  <ListItemButton
-                    key={item.label}
-                  >
-
-                    <ListItemText
-                      primary={item.label}
-                      primaryTypographyProps={{ fontSize: 14, fontWeight: 'medium' }}
-                    />
-                  </ListItemButton>
+                  <ListItem disablePadding selected={Selected(item.path)} component={NavLink} sx ={{color: 'text.primary'}} to= {item.path}>
+                      <ListItemButton sx={{p: 2}} key={item.label} selected = {Selected(item.path)}>
+                        <ListItemText sx ={{pl : 2.5}}>
+                          <Typography variant="body1"  noWrap={true} color = {Selected(item.path)? "primary" : "" }>
+                            {item.label}
+                          </Typography>
+                        </ListItemText>
+                    </ListItemButton>
+                  </ListItem>
                   ))}
 
-          <ListItem disablePadding selected={Selected("/Registration")} component={NavLink} sx ={{color: 'text.primary'}} to= "/Registration" >
-            <ListItemButton sx={{p :2}} >
-              <ListItemIcon>
-                <NotificationsActiveIcon color = {Selected("/Registration")? "primary" : "" } />
-              </ListItemIcon>
-              <ListItemText>
-                <Typography variant="body1"  noWrap={true} color = {Selected("/Registration")? "primary" : "" }>
-                    SeniorCitizen Registration
-                </Typography>
-              </ListItemText>
-            </ListItemButton>
-          </ListItem>
           <ListItem disablePadding selected={Selected("/History")} component={NavLink} sx ={{color: 'text.primary'}} to= "/History" >
             <ListItemButton sx={{p :2}} >
               <ListItemIcon>
@@ -169,6 +159,7 @@ const Navigation = () => {
             </ListItemButton>
           </ListItem>
         </List>
+      </PerfectScrollbar>
     </Box>
     )
 }

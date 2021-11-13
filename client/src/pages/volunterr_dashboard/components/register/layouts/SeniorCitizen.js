@@ -1,15 +1,12 @@
 import * as React from 'react';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
-import Logo from '../../../components/logo.png'
 import { styled} from '@mui/styles';
 import { Paper,Link, Box ,Toolbar,Typography, Stack , Grid} from '@mui/material'
-import CssBaseline from '@mui/material/CssBaseline';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useHistory } from "react-router-dom";
 import axios from "axios";
-import Textfield from '../../../components/formUI/Textfield';
-import SubmitButton from '../../../components/formUI/Button';
+import Textfield from '../../../../../components/formUI/Textfield';
+import SubmitButton from '../../../../../components/formUI/Button';
 import Alert from '@mui/material/Alert';
 import IconButton from '@mui/material/IconButton';
 import Collapse from '@mui/material/Collapse';
@@ -27,9 +24,9 @@ const StyledSubmitButton = styled(SubmitButton)({
   padding: '0 30px',
 });
 
-const theme = createTheme();
 
-const Registration = (props) => {
+
+const SeniorCitizen = (props) => {
 
   const INITIAL_FORM_STATE = {
     username: '',
@@ -294,5 +291,6 @@ const Registration = (props) => {
     )
 }
 
-export default Registration
+export default SeniorCitizen
+
 

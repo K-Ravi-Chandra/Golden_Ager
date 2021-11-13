@@ -1,15 +1,12 @@
 import * as React from 'react';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
-import Logo from '../../../components/logo.png'
 import { styled} from '@mui/styles';
 import { Paper,Link, Box ,Toolbar,Typography, Stack , Grid} from '@mui/material'
-import CssBaseline from '@mui/material/CssBaseline';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useHistory } from "react-router-dom";
 import axios from "axios";
-import Textfield from '../../../components/formUI/Textfield';
-import SubmitButton from '../../../components/formUI/Button';
+import Textfield from '../../../../../components/formUI/Textfield';
+import SubmitButton from '../../../../../components/formUI/Button';
 import Alert from '@mui/material/Alert';
 import IconButton from '@mui/material/IconButton';
 import Collapse from '@mui/material/Collapse';
@@ -27,19 +24,18 @@ const StyledSubmitButton = styled(SubmitButton)({
   padding: '0 30px',
 });
 
-const theme = createTheme();
 
-const Registration = (props) => {
+
+const Doctor = (props) => {
 
   const INITIAL_FORM_STATE = {
     username: '',
-    age : '',
     email: '',
     phone: '',
+    hospital : '',
     password: '',
     confirmPassword : '',
-    doctor : '',
-    address : '',
+    hospitalAddress : '',
     volunter : `${props.data.email}`
   
   };
@@ -48,12 +44,9 @@ const Registration = (props) => {
   const FORM_VALIDATION = Yup.object().shape({
     username: Yup.string()
       .required('Required'),
-    age : Yup.string()
-    .required('Required'),
-    doctor : Yup.string()
-    .email('Invalid email.')
-    .required('Required'),
-    address : Yup.string()
+    hospital: Yup.string()
+      .required('Required'),
+    hospitalAddress : Yup.string()
     .required('Required'),
     email: Yup.string()
       .email('Invalid email.')
@@ -89,48 +82,10 @@ const Registration = (props) => {
 
     const onSubmit  = async (values, props) => {
 
-      const config = {
-        header: {
-          "Content-Type": "application/json",
-        },
-      };
-
-
-      try {
-        const { data } = await axios.post(
-          "/api/volunter/registerseniorcitizen",
-          values,
-          config
-        );
-  
-        console.log(data.data)
-
-        setSuccess(data.data)
+        
+        setSuccess("Doctor Registration Successful")
         setShowSuccess(true)
-        setShowError(false)
-        setError("An Unknown Error Occured")
-        // props.resetForm()
-        setTimeout(CloseSuccess, 5000);
 
-      } catch (error) {
-
-        if(error.response.data.error) {
-          if(error.response.data.error === 'Duplicate field Value Enter'){
-            setError('Account Already Exists')
-          }
-          else{
-            setError(error.response.data.error)
-          }
-        }
-        else{
-          setError("An Unknown error Occured")
-        }
-        setShowSuccess(false)
-        setSuccess("")
-        setShowError(true)
-        console.log(error.response.data);
-        setTimeout(CloseError, 5000);
-      }
     };
 
     return(
@@ -139,55 +94,55 @@ const Registration = (props) => {
 
           <Grid item xs ={12}>
                 <Typography    variant="h5">
-                      Senior Citizen Registration
+                     Doctor Registration
                 </Typography>
           </Grid>
 
           <Grid item xs={12}>
 
           <Box sx={{ width: '100%' , pt : 1}}>
-                                                        <Collapse in={showSuccess} >
-                                                          <Alert 
-                                                            action={
-                                                              <IconButton
-                                                                aria-label="close"
-                                                                color="inherit"
-                                                                size="small"
-                                                                onClick={() => {
-                                                                  setShowSuccess(false);
-                                                                }}
-                                                              >
-                                                                <CloseIcon fontSize="inherit" />
-                                                              </IconButton>
-                                                            }
-                                                            sx={{ mb: 2 }}
-                                                          >   
-                                                            {success} 
-                                                          </Alert>
-                                                        </Collapse>
-                                          </Box>
+                <Collapse in={showSuccess} >
+                    <Alert 
+                    action={
+                        <IconButton
+                        aria-label="close"
+                        color="inherit"
+                        size="small"
+                        onClick={() => {
+                            setShowSuccess(false);
+                        }}
+                        >
+                        <CloseIcon fontSize="inherit" />
+                        </IconButton>
+                    }
+                    sx={{ mb: 2 }}
+                    >   
+                    {success} 
+                    </Alert>
+                </Collapse>
+    </Box>
 
-                                          <Box sx={{ width: '100%' , pt : 1}}>
-                                                        <Collapse in={showError} >
-                                                          <Alert severity="error"
-                                                            action={
-                                                              <IconButton
-                                                                aria-label="close"
-                                                                color="inherit"
-                                                                size="small"
-                                                                onClick={() => {
-                                                                  setShowError(false);
-                                                                }}
-                                                              >
-                                                                <CloseIcon fontSize="inherit" />
-                                                              </IconButton>
-                                                            }
-                                                            sx={{ mb: 2 }}
-                                                          >   
-                                                            {error} 
-                                                          </Alert>
-                                                        </Collapse>
-                                          </Box>
+    <Box sx={{ width: '100%' , pt : 1}}>
+                <Collapse in={showError} >
+                    <Alert severity="error"
+                    action={
+                        <IconButton
+                        aria-label="close"
+                        color="inherit"
+                        size="small"
+                        onClick={() => {
+                            setShowError(false);
+                        }}
+                        >
+                        <CloseIcon fontSize="inherit" />
+                        </IconButton>
+                    }
+                    sx={{ mb: 2 }}
+                    >   
+                    {error} 
+                    </Alert>
+                </Collapse>
+    </Box>
 
                 <div >
 
@@ -210,14 +165,14 @@ const Registration = (props) => {
                                         />
                                       </Grid>
 
-                                      
                                       <Grid item xs={12} md = {6}>
                                         <Textfield
-                                        required
-                                          name="age"
-                                          label="Age"
+                                          required
+                                          name="hospital"
+                                          label="Hospital"
                                         />
                                       </Grid>
+    
 
                                       <Grid item xs={12} md = {6}>
                                         <Textfield
@@ -258,20 +213,13 @@ const Registration = (props) => {
                                       <Grid item xs={12} >
                                         <Textfield
                                         required
-                                          name="address"
+                                          name="hospitalAddress"
                                           label="Address"
                                           multiline
                                           rows = {3}
                                         />
                                       </Grid>
-
-                                      <Grid item xs={12}>
-                                        <Textfield
-                                          required
-                                          name="doctor"
-                                          label="Doctor"
-                                        />
-                                      </Grid>
+    
                               </Grid>
 
                 
@@ -294,5 +242,6 @@ const Registration = (props) => {
     )
 }
 
-export default Registration
+export default Doctor
+
 

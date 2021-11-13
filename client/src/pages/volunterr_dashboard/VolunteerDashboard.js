@@ -27,7 +27,7 @@ import Menu from '@mui/material/Menu';
 
 //---------------------------------------------------------------
 
-const drawerWidth = 250;
+const drawerWidth = 260;
 
 const RootStyle = styled(AppBar)(({ theme }) => ({
   boxShadow: 'none',
@@ -189,7 +189,7 @@ const VolunteerDashboard = (props) => {
                 
                   return (
                     <Route
-                      exact = {true}
+                      
                       {...route}
                       key={key}
                       render={props => <Cmp {...props}  data={data} />}
