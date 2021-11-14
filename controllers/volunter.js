@@ -1,8 +1,7 @@
 const User = require('../models/User');
 const SeniorCitizen = require('../models/SeniorCitizen')
+const FinancialRequest = require('../models/FinancialRequest')
 const ErrorResponse = require('../utils/errorResponse')
-const sendEmail = require('../utils/sendEmail');
-const crypto = require('crypto');
 
 // Senior citizen registration
 exports.registerseniorcitizen = async (req ,res , next) => {
@@ -62,26 +61,40 @@ exports.registerseniorcitizen = async (req ,res , next) => {
     } 
 }
 
-exports.familymember = async (req ,res , next) => {
-    const familyMemberToken = String(req.params.familyMemberToken)
+exports.getFinancialRequests  = async (req ,res , next) => {
+    const volunter = req.body;
 
-    try {
-        const senior = await SeniorCitizen.findOne({
-            familyMemberToken
-        })
+    console.log(volunter)
 
-        if(!senior){
-            return next(new ErrorResponse("Invalid  Token ", 400))
-        }
-
-        res.status(201).json({
-            success :true,
-            data : " Yay! you have got access",
-            email : `${senior.email}`
-        })
-    } catch (error) {
-        next(error)
+    if(!volunter){
+        return next(new ErrorResponse("Please provide email address to fetch financial requests", 400))
     }
+    else{
+        try {
+            const financialRequest = await FinancialRequest.find(volunter)
+            if(!financialRequest){
+                res.status(200).json({
+                    success :true,
+                    message: "No Financial Requests",
+                    requests : "0"
+                });
+            }
+            else{
+                console.log(financialRequest)
+                res.status(200).json({
+                    success :true,
+                    message: " Financial Requests Found",
+                    requests : financialRequest
+                });
+            }
+        } catch (error) {
+            res.status(500).json({
+                success :false,
+                error: error.message,
+            });
+        }
+    }
+
 }
 
 

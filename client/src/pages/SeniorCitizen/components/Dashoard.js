@@ -36,9 +36,9 @@ import axios from "axios";
           "Content-Type": "application/json",
         },
       };
-      const name = "Ravi K"
-      const email = "Email"
-      const phone = " Phone"
+      const name = "Senior"
+      const email = "senior@gmail.co"
+      const phone = " 98654123433"
       const volunter = "Volunteer"
   
       try{

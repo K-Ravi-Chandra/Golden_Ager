@@ -23,6 +23,8 @@ app.use('/api/contact', require('./routes/contact'));
 
 app.use('/api/volunter', require('./routes/volunter'))
 
+app.use('/api/seniorcitizen', require('./routes/seniorcitizen'))
+
 app.use('/api/help', require('./routes/help'))
 
 // Error Handler (last piece of middleware)

@@ -20,9 +20,7 @@ const UserSchema = new mongoose.Schema({
         select: false
     },
     role:String,
-    age: String,
     phone : String,
-    address: String,
     resetPasswordToken : String,
     resetPasswordExpire: Date
 
@@ -41,10 +39,6 @@ UserSchema.pre("save", async function(next) {
 UserSchema.methods.matchPassword = async function(password){
     return await bcrypt.compare(password, this.password);
 }
-
-// UserSchema.methods.getSignedToken = function(){
-//     return jwt.sign({id : this._id}, process.env.JWT_SECRET, {expiresIn : process.env.JWT_EXPIRE})
-// }
 
 UserSchema.methods.getSignedToken = function(){
     return jwt.sign({id : this._id}, process.env.JWT_SECRET, {})
