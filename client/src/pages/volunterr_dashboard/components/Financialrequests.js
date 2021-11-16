@@ -75,8 +75,8 @@ export default function SimpleAccordion() {
             <b>Mobile No :</b><li key={d.date}>{d.phone}</li>
             <b>Date :</b><li key={d.date}>{d.date}</li>
           </Typography>
-          <button>Accept</button>
-          <button>Reject</button>
+          <Button variant="contained" color="success">Accept</Button>
+          <Button variant="outlined" color="error">Reject</Button>
         </AccordionDetails>
       </Accordion>
            )}
