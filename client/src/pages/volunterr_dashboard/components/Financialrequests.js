@@ -1,7 +1,7 @@
 import * as React from 'react';
 import LinearProgress from '@mui/material/LinearProgress';
 import axios from "axios";
-import { Typography } from '@mui/material';
+import { Button,  Typography } from '@mui/material';
 
 
 export default function SimpleAccordion() {
@@ -21,8 +21,6 @@ export default function SimpleAccordion() {
         "Content-Type": "application/json",
       },
     };
-
-
       const volunteer = "Volunteer";
 
       await axios.get(
@@ -44,10 +42,6 @@ export default function SimpleAccordion() {
         console.log(error);
       });
 
-      
-    
-
-
   }, [])
 
   
@@ -58,7 +52,13 @@ export default function SimpleAccordion() {
     <div>
       {fetching ?  <LinearProgress/> : <>
       
-        {error ? <Typography> An unknown Error</Typography> : <> {data.map((d) => <li key={d.date}>{d.name} , {d.email}, {d.phone}, {d.date}</li>)}</>}
+        {error ? <Typography> An unknown Error</Typography>  : <>
+
+         <div>
+          {data.map((d) => <li key={d.date}>{d.name} , {d.email}, {d.phone}, {d.date}</li>)}
+         </div>
+         </>}
+          
       </>}
       
       

@@ -1,5 +1,6 @@
 const User = require('../models/User');
 const SeniorCitizen = require('../models/SeniorCitizen')
+const Doctor = require('../models/Doctor')
 const FinancialRequest = require('../models/FinancialRequest')
 const ErrorResponse = require('../utils/errorResponse')
 
@@ -37,9 +38,6 @@ exports.registerseniorcitizen = async (req ,res , next) => {
                 username, email, password,role
             });
 
-            
-            const token = senior.getFamilyMemberToken();
-            await senior.save();
     
             console.log("Senior Citizen Registration Successful");
 
@@ -49,6 +47,7 @@ exports.registerseniorcitizen = async (req ,res , next) => {
             });
 
         } catch (error) {
+            await SeniorCitizen.deleteOne(senior)
             console.log(error);
             next(error);
         } 
@@ -60,6 +59,87 @@ exports.registerseniorcitizen = async (req ,res , next) => {
         next(error);
     } 
 }
+
+// Senior citizen registration
+exports.registerdoctor = async (req ,res , next) => {
+
+
+    const data = req.body
+
+    const username = data.username
+    const phone = data.phone
+    const hospital = data.hospital
+    const hospitalAddress = data.hospitalAddress
+
+    const email = data.email
+    const password = data.password
+    const volunter = data.volunter
+
+
+    
+    try {
+        const doctor = await Doctor.create({
+            username, email, phone,volunter, hospital,hospitalAddress
+        });
+        
+
+        const role = "2"
+
+        try {
+            
+            const user = await User.create({
+                username, email, password,role
+            });
+    
+            console.log("Doctor Registration Successful");
+
+            res.status(200).json({
+                success :true,
+                data: "Doctor Registration Successful",
+            });
+
+        } catch (error) {
+            await Doctor.deleteOne(doctor)
+            console.log(error);
+            next(error);
+        } 
+
+    } catch (error) {
+        console.log(error);
+        next(error);
+    } 
+}
+
+exports.findDoctor  = async (req ,res , next) =>{
+    const email = req.body;
+    console.log(req.body)
+
+
+    if(!email) {
+        return next(new ErrorResponse("Please provide doctor email address ", 400))
+    }
+    else{
+        try {
+            const doctor = await Doctor.findOne(email)
+            if(!doctor){
+                res.status(200).json({
+                    success :false,
+                });
+            }
+            else{
+                res.status(200).json({
+                    success :true,
+                });
+            }
+        } catch (error) {
+            res.status(500).json({
+                success :false,
+                error: error.message,
+            });
+        }
+    }
+}
+
 
 exports.getFinancialRequests  = async (req ,res , next) => {
     const volunter = req.body;
@@ -97,8 +177,3 @@ exports.getFinancialRequests  = async (req ,res , next) => {
 
 }
 
-
-const sendToken = (user, statusCode, res)=> {
-    const token = user.getSignedToken();
-    res.status(statusCode).json({success : true, token})
-}

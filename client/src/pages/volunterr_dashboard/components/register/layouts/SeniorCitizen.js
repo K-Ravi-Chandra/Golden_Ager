@@ -2,11 +2,11 @@ import * as React from 'react';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { styled} from '@mui/styles';
-import { Paper,Link, Box ,Toolbar,Typography, Stack , Grid} from '@mui/material'
+import { Paper,InputAdornment,Button,Link, Box ,Toolbar,Typography, Stack , Grid} from '@mui/material'
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from "axios";
+import SearchIcon from '@mui/icons-material/Search';
 import Textfield from '../../../../../components/formUI/Textfield';
-import SubmitButton from '../../../../../components/formUI/Button';
 import Alert from '@mui/material/Alert';
 import IconButton from '@mui/material/IconButton';
 import Collapse from '@mui/material/Collapse';
@@ -14,19 +14,9 @@ import CloseIcon from '@mui/icons-material/Close';
 
 const phoneRegExp=/^[2-9]{2}[0-9]{8}/
 
-const StyledSubmitButton = styled(SubmitButton)({
-  background: "linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(0,212,255,1) 0%, rgba(162,222,131,1) 100%)",
-  border: 0,
-  borderRadius: 3,
-  boxShadow: '0 3px 5px 2px rgba(2, 212, 225, .3)',
-  color: 'white',
-  height: 48,
-  padding: '0 30px',
-});
-
-
-
 const SeniorCitizen = (props) => {
+
+
 
   const INITIAL_FORM_STATE = {
     username: '',
@@ -74,8 +64,8 @@ const SeniorCitizen = (props) => {
   const [showSuccess, setShowSuccess] = React.useState(false);
   const [error, setError] = React.useState("An Unknown Error Occured");
   const [showError, setShowError] = React.useState(false);
-
-
+  const [isDoctor , setIsDoctor] = React.useState(false);
+  
   const CloseSuccess = () => {
     setShowSuccess(false);
   };
@@ -84,7 +74,9 @@ const SeniorCitizen = (props) => {
     setShowError(false);
   };
 
-    const onSubmit  = async (values, props) => {
+  const onSubmit  = async (values, props) => {
+      
+      setIsDoctor(false);
 
       const config = {
         header: {
@@ -92,43 +84,80 @@ const SeniorCitizen = (props) => {
         },
       };
 
+        const email = values.doctor;
 
-      try {
-        const { data } = await axios.post(
-          "/api/volunter/registerseniorcitizen",
-          values,
-          config
-        );
-  
-        console.log(data.data)
+        
+        await axios.post(
+            "/api/volunter/finddoctor",
+            {
+              email
+            },
+            config
+          ).then(function(response) {
+            console.log(response.data.success)
+            if(response.data.success){
+              setIsDoctor(true);
+            }
+            else{
+              setIsDoctor(false);
+              setShowSuccess(false)
+              setError("Please register the Doctor and try again")
+              setSuccess("")
+              setShowError(true)
+            }
+          }).catch(function(error) {
+            setIsDoctor(false);
+            setShowSuccess(false)
+            setError("An Unknown Error Occured")
+            setSuccess("")
+            setShowError(true)
+            setTimeout(CloseError, 5000);
+            console.log(error);
+          });
 
-        setSuccess(data.data)
-        setShowSuccess(true)
-        setShowError(false)
-        setError("An Unknown Error Occured")
-        // props.resetForm()
-        setTimeout(CloseSuccess, 5000);
-
-      } catch (error) {
-
-        if(error.response.data.error) {
-          if(error.response.data.error === 'Duplicate field Value Enter'){
-            setError('Account Already Exists')
+          if(isDoctor){
+            try {
+              const { data } = await axios.post(
+                "/api/volunter/registerseniorcitizen",
+                values,
+                config
+              );
+        
+              console.log(data.data)
+      
+              setSuccess(data.data)
+              setShowSuccess(true)
+              setShowError(false)
+              setError("An Unknown Error Occured")
+              // props.resetForm()
+              setTimeout(CloseSuccess, 5000);
+      
+            } catch (error) {
+      
+              if(error.response.data.error) {
+                if(error.response.data.error === 'Duplicate field Value Enter'){
+                  setError('Account Already Exists')
+                }
+                else{
+                  setError(error.response.data.error)
+                }
+              }
+              else{
+                setError("An Unknown error Occured")
+              }
+              setShowSuccess(false)
+              setSuccess("")
+              setShowError(true)
+              console.log(error.response.data);
+              setTimeout(CloseError, 5000);
+            }
           }
-          else{
-            setError(error.response.data.error)
-          }
-        }
-        else{
-          setError("An Unknown error Occured")
-        }
-        setShowSuccess(false)
-        setSuccess("")
-        setShowError(true)
-        console.log(error.response.data);
-        setTimeout(CloseError, 5000);
-      }
     };
+
+    const findDoctor = async (values, props) =>{
+
+      console.log(values);
+    }
 
     return(
       <>
@@ -277,7 +306,7 @@ const SeniorCitizen = (props) => {
                                   direction="row"
                                   spacing={2}
                                   justifyContent="center">
-                                      <StyledSubmitButton >Register</StyledSubmitButton>
+                                      <Button type = "submit" variant= "contained"  >Register</Button>
                               </Stack>
 
                           </Form>

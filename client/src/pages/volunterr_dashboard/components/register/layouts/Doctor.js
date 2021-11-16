@@ -2,15 +2,17 @@ import * as React from 'react';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { styled} from '@mui/styles';
-import { Paper,Link, Box ,Toolbar,Typography, Stack , Grid} from '@mui/material'
+import { Paper, InputAdornment, Link, Box ,Toolbar,Typography, Stack , Grid} from '@mui/material'
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from "axios";
+import SearchIcon from '@mui/icons-material/Search';
 import Textfield from '../../../../../components/formUI/Textfield';
 import SubmitButton from '../../../../../components/formUI/Button';
 import Alert from '@mui/material/Alert';
 import IconButton from '@mui/material/IconButton';
 import Collapse from '@mui/material/Collapse';
 import CloseIcon from '@mui/icons-material/Close';
+import { useFormikContext } from 'formik';
 
 const phoneRegExp=/^[2-9]{2}[0-9]{8}/
 
@@ -26,8 +28,28 @@ const StyledSubmitButton = styled(SubmitButton)({
 
 
 
+
+
 const Doctor = (props) => {
 
+  const [search , setSearch] =React.useState('');
+
+  const inital_search_value = {
+    search : '',
+  }
+
+  const searchvalidation = Yup.object().shape({
+    search : Yup.string()
+      .email('Invalid email.')
+      .required('Required')
+  })
+
+
+
+  const Search  = async (values, props) => {
+    console.log(values)
+  }
+ 
   const INITIAL_FORM_STATE = {
     username: '',
     email: '',
@@ -82,9 +104,47 @@ const Doctor = (props) => {
 
     const onSubmit  = async (values, props) => {
 
-        
-        setSuccess("Doctor Registration Successful")
+      const config = {
+        header: {
+          "Content-Type": "application/json",
+        },
+      };
+
+      try {
+        const { data } = await axios.post(
+          "/api/volunter/registerdoctor",
+          values,
+          config
+        );
+  
+        console.log(data.data)
+
+        setSuccess(data.data)
         setShowSuccess(true)
+        setShowError(false)
+        setError("An Unknown Error Occured")
+        // props.resetForm()
+        setTimeout(CloseSuccess, 5000);
+
+      } catch (error) {
+
+        if(error.response.data.error) {
+          if(error.response.data.error === 'Duplicate field Value Enter'){
+            setError('Account Already Exists')
+          }
+          else{
+            setError(error.response.data.error)
+          }
+        }
+        else{
+          setError("An Unknown error Occured")
+        }
+        setShowSuccess(false)
+        setSuccess("")
+        setShowError(true)
+        console.log(error.response.data);
+        setTimeout(CloseError, 5000);
+      }
 
     };
 
@@ -98,6 +158,37 @@ const Doctor = (props) => {
                 </Typography>
           </Grid>
 
+          <Grid item xs ={12}>
+                  <Formik
+                        initialValues={{
+                          ...inital_search_value
+                        }}
+                        validationSchema={searchvalidation}
+                        onSubmit={Search}
+                      >
+                          <Form>
+
+                              <Grid container spacing={2} rowSpacing = {2}>
+
+                                    <Grid item xs={12} md = {6}>
+                                        <Textfield
+                                          name="search"
+                                          label="Search"
+                                        InputProps={{
+                                            endAdornment: (
+                                              <InputAdornment>
+                                                <IconButton type='submit'>
+                                                  <SearchIcon />
+                                                </IconButton>
+                                              </InputAdornment>
+                                            )
+                                          }}
+                                        />
+                                      </Grid>
+                                      </Grid> 
+                                      </Form>
+                                      </Formik>
+                                      </Grid>
           <Grid item xs={12}>
 
           <Box sx={{ width: '100%' , pt : 1}}>
