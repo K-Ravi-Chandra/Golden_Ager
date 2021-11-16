@@ -5,50 +5,20 @@ import { styled} from '@mui/styles';
 import { Paper, InputAdornment, Link, Box ,Toolbar,Typography, Stack , Grid} from '@mui/material'
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from "axios";
-import SearchIcon from '@mui/icons-material/Search';
 import Textfield from '../../../../../components/formUI/Textfield';
-import SubmitButton from '../../../../../components/formUI/Button';
 import Alert from '@mui/material/Alert';
 import IconButton from '@mui/material/IconButton';
 import Collapse from '@mui/material/Collapse';
 import CloseIcon from '@mui/icons-material/Close';
-import { useFormikContext } from 'formik';
+import LoadingButton from '@mui/lab/LoadingButton';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
 
 const phoneRegExp=/^[2-9]{2}[0-9]{8}/
 
-const StyledSubmitButton = styled(SubmitButton)({
-  background: "linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(0,212,255,1) 0%, rgba(162,222,131,1) 100%)",
-  border: 0,
-  borderRadius: 3,
-  boxShadow: '0 3px 5px 2px rgba(2, 212, 225, .3)',
-  color: 'white',
-  height: 48,
-  padding: '0 30px',
-});
-
-
-
-
-
 const Doctor = (props) => {
 
-  const [search , setSearch] =React.useState('');
+  const [loading , setLoading] = React.useState(false)
 
-  const inital_search_value = {
-    search : '',
-  }
-
-  const searchvalidation = Yup.object().shape({
-    search : Yup.string()
-      .email('Invalid email.')
-      .required('Required')
-  })
-
-
-
-  const Search  = async (values, props) => {
-    console.log(values)
-  }
  
   const INITIAL_FORM_STATE = {
     username: '',
@@ -104,6 +74,10 @@ const Doctor = (props) => {
 
     const onSubmit  = async (values, props) => {
 
+      setShowSuccess(false);
+      setShowError(false);
+      setLoading(true);
+
       const config = {
         header: {
           "Content-Type": "application/json",
@@ -121,12 +95,15 @@ const Doctor = (props) => {
 
         setSuccess(data.data)
         setShowSuccess(true)
+        setLoading(false)
         setShowError(false)
         setError("An Unknown Error Occured")
         // props.resetForm()
-        setTimeout(CloseSuccess, 5000);
+        // setTimeout(CloseSuccess, 5000);
 
       } catch (error) {
+
+        setLoading(false)
 
         if(error.response.data.error) {
           if(error.response.data.error === 'Duplicate field Value Enter'){
@@ -158,37 +135,6 @@ const Doctor = (props) => {
                 </Typography>
           </Grid>
 
-          <Grid item xs ={12}>
-                  <Formik
-                        initialValues={{
-                          ...inital_search_value
-                        }}
-                        validationSchema={searchvalidation}
-                        onSubmit={Search}
-                      >
-                          <Form>
-
-                              <Grid container spacing={2} rowSpacing = {2}>
-
-                                    <Grid item xs={12} md = {6}>
-                                        <Textfield
-                                          name="search"
-                                          label="Search"
-                                        InputProps={{
-                                            endAdornment: (
-                                              <InputAdornment>
-                                                <IconButton type='submit'>
-                                                  <SearchIcon />
-                                                </IconButton>
-                                              </InputAdornment>
-                                            )
-                                          }}
-                                        />
-                                      </Grid>
-                                      </Grid> 
-                                      </Form>
-                                      </Formik>
-                                      </Grid>
           <Grid item xs={12}>
 
           <Box sx={{ width: '100%' , pt : 1}}>
@@ -251,6 +197,7 @@ const Doctor = (props) => {
                                     <Grid item xs={12} md = {6}>
                                         <Textfield
                                           required
+                                          disabled = {loading}
                                           name="username"
                                           label="Full Name"
                                         />
@@ -259,6 +206,7 @@ const Doctor = (props) => {
                                       <Grid item xs={12} md = {6}>
                                         <Textfield
                                           required
+                                          disabled = {loading}
                                           name="hospital"
                                           label="Hospital"
                                         />
@@ -268,6 +216,7 @@ const Doctor = (props) => {
                                       <Grid item xs={12} md = {6}>
                                         <Textfield
                                         required
+                                        disabled = {loading}
                                           name="phone"
                                           label="Phone Number"
                                         />
@@ -276,6 +225,7 @@ const Doctor = (props) => {
                                       <Grid item xs={12} md = {6}>
                                         <Textfield
                                           required
+                                          disabled = {loading}
                                           name="email"
                                           label="Email Address"
                                         />
@@ -285,6 +235,7 @@ const Doctor = (props) => {
                                       <Grid item xs={12} md = {6}>
                                         <Textfield
                                         required
+                                        disabled = {loading}
                                         type="password"
                                           name="password"
                                           label="Password"
@@ -295,6 +246,7 @@ const Doctor = (props) => {
                                       <Grid item xs={12} md = {6}>
                                         <Textfield
                                         required
+                                        disabled = {loading}
                                         type="password"
                                           name="confirmPassword"
                                           label="Confirm Password"
@@ -304,6 +256,7 @@ const Doctor = (props) => {
                                       <Grid item xs={12} >
                                         <Textfield
                                         required
+                                        disabled = {loading}
                                           name="hospitalAddress"
                                           label="Address"
                                           multiline
@@ -319,7 +272,15 @@ const Doctor = (props) => {
                                   direction="row"
                                   spacing={2}
                                   justifyContent="center">
-                                      <StyledSubmitButton >Register</StyledSubmitButton>
+                                      <LoadingButton
+                                            type = "submit"
+                                            loading = {loading}
+                                            loadingPosition="start"
+                                            startIcon={<PersonAddIcon />}
+                                            variant="contained"
+                                          >
+                                            Register
+                                          </LoadingButton>
                               </Stack>
 
                           </Form>

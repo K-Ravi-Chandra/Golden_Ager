@@ -11,6 +11,9 @@ import Alert from '@mui/material/Alert';
 import IconButton from '@mui/material/IconButton';
 import Collapse from '@mui/material/Collapse';
 import CloseIcon from '@mui/icons-material/Close';
+import LoadingButton from '@mui/lab/LoadingButton';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
+
 
 const phoneRegExp=/^[2-9]{2}[0-9]{8}/
 
@@ -34,7 +37,8 @@ const FamilyMember = (props) => {
     phone: '',
     password: '',
     confirmPassword : '',
-    senior : ''
+    senior : '',
+    volunter : `${props.data.email}`
   };
   
   
@@ -67,6 +71,8 @@ const FamilyMember = (props) => {
   const [error, setError] = React.useState("An Unknown Error Occured");
   const [showError, setShowError] = React.useState(false);
 
+  const [loading , setLoading] = React.useState(false)
+  
 
   const CloseSuccess = () => {
     setShowSuccess(false);
@@ -78,10 +84,81 @@ const FamilyMember = (props) => {
 
     const onSubmit  = async (values, props) => {
 
+      setShowSuccess(false);
+      setShowError(false);
+      setLoading(true);
 
-        setSuccess("Access given to the Registed Family Member")
-        setShowSuccess(true)
-        setTimeout(CloseSuccess, 5000);
+      const config = {
+        header: {
+          "Content-Type": "application/json",
+        },
+      };
+
+      const email = values.senior;
+
+      try {
+
+        const Senior = await axios.post(
+          "/api/volunter/findseniorcitizen",
+          {
+            email
+          },
+          config
+        )
+
+        if(Senior.data.success){
+
+          try {
+            const { data } = await axios.post(
+              "/api/volunter/registerfamilymember",
+              values,
+              config
+            );
+      
+            console.log(data.data)
+
+            setSuccess(data.data)
+            setShowSuccess(true)
+            setShowError(false)
+            setLoading(false)
+            setError("An Unknown Error Occured")
+            // props.resetForm()
+    
+          } catch (error) {
+            setLoading(false)
+            if(error.response.data.error) {
+              if(error.response.data.error === 'Duplicate field Value Enter'){
+                setError('Account Already Exists')
+              }
+              else{
+                setError(error.response.data.error)
+              }
+            }
+            else{
+              setError("An Unknown error Occured")
+            }
+            setShowSuccess(false)
+            setSuccess("")
+            setShowError(true)
+            console.log(error.response.data);
+          }
+        }
+        else{
+            setLoading(false);
+            setShowSuccess(false)
+            setError("Senior Citizen not found")
+            setSuccess("")
+            setShowError(true)
+        }
+        
+      } catch (error) {
+          setLoading(false);
+          setShowSuccess(false)
+          setError("An Unknown Error Occured")
+          setSuccess("")
+          setShowError(true)
+          console.log(error);
+      }
       
     };
 
@@ -158,6 +235,7 @@ const FamilyMember = (props) => {
                                     <Grid item xs={12} >
                                         <Textfield
                                         required
+                                        disabled = {loading}
                                         name="username"
                                         label="Full Name"
                                         />
@@ -168,6 +246,7 @@ const FamilyMember = (props) => {
                                     <Grid item xs={12} >
                                         <Textfield
                                         required
+                                        disabled = {loading}
                                         name="senior"
                                         label="Senior Citzen Email"
                                         />
@@ -176,6 +255,7 @@ const FamilyMember = (props) => {
                                     <Grid item xs={12} >
                                         <Textfield
                                         required
+                                        disabled = {loading}
                                         name="phone"
                                         label="Phone Number"
                                         />
@@ -185,6 +265,7 @@ const FamilyMember = (props) => {
                                     <Grid item xs={12} >
                                         <Textfield
                                         required
+                                        disabled = {loading}
                                         name="email"
                                         label="Email Address"
                                         />
@@ -193,6 +274,7 @@ const FamilyMember = (props) => {
                                     <Grid item xs={12} >
                                         <Textfield
                                         required
+                                        disabled = {loading}
                                         type="password"
                                         name="password"
                                         label="Password"
@@ -203,6 +285,7 @@ const FamilyMember = (props) => {
                                     <Grid item xs={12} >
                                         <Textfield
                                         required
+                                        disabled = {loading}
                                         type="password"
                                         name="confirmPassword"
                                         label="Confirm Password"
@@ -219,7 +302,15 @@ const FamilyMember = (props) => {
                                     direction="row"
                                     spacing={2}
                                     justifyContent="center">
-                                    <StyledSubmitButton >Register</StyledSubmitButton>
+                                    <LoadingButton
+                                            type = "submit"
+                                            loading = {loading}
+                                            loadingPosition="start"
+                                            startIcon={<PersonAddIcon />}
+                                            variant="contained"
+                                          >
+                                            Register
+                                          </LoadingButton>
                                     </Stack>
                               </Container>
 

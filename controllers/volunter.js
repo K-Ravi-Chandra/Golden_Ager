@@ -1,6 +1,7 @@
 const User = require('../models/User');
 const SeniorCitizen = require('../models/SeniorCitizen')
 const Doctor = require('../models/Doctor')
+const FamilyMember = require('../models/FamilyMember')
 const FinancialRequest = require('../models/FinancialRequest')
 const ErrorResponse = require('../utils/errorResponse')
 
@@ -60,7 +61,7 @@ exports.registerseniorcitizen = async (req ,res , next) => {
     } 
 }
 
-// Senior citizen registration
+// Doctor registration
 exports.registerdoctor = async (req ,res , next) => {
 
 
@@ -140,6 +141,82 @@ exports.findDoctor  = async (req ,res , next) =>{
     }
 }
 
+// Family Member Registeration
+exports.registerfamilymember = async (req ,res , next) => {
+
+
+    const data = req.body
+
+    const username = data.username
+    const phone = data.phone
+    const senior = data.senior
+
+    const email = data.email
+    const password = data.password
+    const volunter = data.volunter
+
+
+    
+    try {
+        const familymember = await FamilyMember.create({
+            username, email, phone,volunter, senior
+        });
+        
+
+        const role = "3"
+
+        try {
+            
+            const user = await User.create({
+                username, email, password,role
+            });
+    
+            console.log("Family Member Registration Successful");
+
+            res.status(200).json({
+                success :true,
+                data: "Family Member Registration Successful",
+            });
+
+        } catch (error) {
+            await FamilyMember.deleteOne(familymember)
+            console.log(error);
+            next(error);
+        } 
+
+    } catch (error) {
+        console.log(error);
+        next(error);
+    } 
+}
+
+exports.findSeniorCitizen  = async (req ,res , next) =>{
+    const email = req.body;
+
+    if(!email) {
+        return next(new ErrorResponse("Please provide senior email address ", 400))
+    }
+    else{
+        try {
+            const senior = await SeniorCitizen.findOne(email)
+            if(!senior){
+                res.status(200).json({
+                    success :false,
+                });
+            }
+            else{
+                res.status(200).json({
+                    success :true,
+                });
+            }
+        } catch (error) {
+            res.status(500).json({
+                success :false,
+                error: error.message,
+            });
+        }
+    }
+}
 
 exports.getFinancialRequests  = async (req ,res , next) => {
     const volunter = req.body;

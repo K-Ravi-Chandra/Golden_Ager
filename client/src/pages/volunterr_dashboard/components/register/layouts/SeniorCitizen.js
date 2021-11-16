@@ -11,12 +11,12 @@ import Alert from '@mui/material/Alert';
 import IconButton from '@mui/material/IconButton';
 import Collapse from '@mui/material/Collapse';
 import CloseIcon from '@mui/icons-material/Close';
+import LoadingButton from '@mui/lab/LoadingButton';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
 
 const phoneRegExp=/^[2-9]{2}[0-9]{8}/
 
 const SeniorCitizen = (props) => {
-
-
 
   const INITIAL_FORM_STATE = {
     username: '',
@@ -30,7 +30,6 @@ const SeniorCitizen = (props) => {
     volunter : `${props.data.email}`
   
   };
-  
   
   const FORM_VALIDATION = Yup.object().shape({
     username: Yup.string()
@@ -56,27 +55,21 @@ const SeniorCitizen = (props) => {
   
   });
   
-
-
-
   //Sucess or error messages
   const [success, setSuccess] = React.useState("");
   const [showSuccess, setShowSuccess] = React.useState(false);
   const [error, setError] = React.useState("An Unknown Error Occured");
   const [showError, setShowError] = React.useState(false);
-  const [isDoctor , setIsDoctor] = React.useState(false);
-  
-  const CloseSuccess = () => {
-    setShowSuccess(false);
-  };
 
-  const CloseError = () => {
-    setShowError(false);
-  };
+  const [loading , setLoading] = React.useState(false)
+  
+
 
   const onSubmit  = async (values, props) => {
       
-      setIsDoctor(false);
+      setShowSuccess(false);
+      setShowError(false);
+      setLoading(true);
 
       const config = {
         header: {
@@ -86,36 +79,18 @@ const SeniorCitizen = (props) => {
 
         const email = values.doctor;
 
-        
-        await axios.post(
+        try {
+
+          const Doctor= await axios.post(
             "/api/volunter/finddoctor",
             {
               email
             },
             config
-          ).then(function(response) {
-            console.log(response.data.success)
-            if(response.data.success){
-              setIsDoctor(true);
-            }
-            else{
-              setIsDoctor(false);
-              setShowSuccess(false)
-              setError("Please register the Doctor and try again")
-              setSuccess("")
-              setShowError(true)
-            }
-          }).catch(function(error) {
-            setIsDoctor(false);
-            setShowSuccess(false)
-            setError("An Unknown Error Occured")
-            setSuccess("")
-            setShowError(true)
-            setTimeout(CloseError, 5000);
-            console.log(error);
-          });
+          )
 
-          if(isDoctor){
+          if(Doctor.data.success){
+
             try {
               const { data } = await axios.post(
                 "/api/volunter/registerseniorcitizen",
@@ -124,16 +99,16 @@ const SeniorCitizen = (props) => {
               );
         
               console.log(data.data)
-      
+
               setSuccess(data.data)
               setShowSuccess(true)
               setShowError(false)
+              setLoading(false)
               setError("An Unknown Error Occured")
               // props.resetForm()
-              setTimeout(CloseSuccess, 5000);
       
             } catch (error) {
-      
+              setLoading(false)
               if(error.response.data.error) {
                 if(error.response.data.error === 'Duplicate field Value Enter'){
                   setError('Account Already Exists')
@@ -149,15 +124,26 @@ const SeniorCitizen = (props) => {
               setSuccess("")
               setShowError(true)
               console.log(error.response.data);
-              setTimeout(CloseError, 5000);
             }
           }
+          else{
+              setLoading(false);
+              setShowSuccess(false)
+              setError("Please register the Doctor and try again")
+              setSuccess("")
+              setShowError(true)
+          }
+          
+        } catch (error) {
+            setLoading(false);
+            setShowSuccess(false)
+            setError("An Unknown Error Occured")
+            setSuccess("")
+            setShowError(true)
+            console.log(error);
+        }
+          
     };
-
-    const findDoctor = async (values, props) =>{
-
-      console.log(values);
-    }
 
     return(
       <>
@@ -233,6 +219,7 @@ const SeniorCitizen = (props) => {
                                           required
                                           name="username"
                                           label="Full Name"
+                                          disabled = {loading}
                                         />
                                       </Grid>
 
@@ -242,6 +229,7 @@ const SeniorCitizen = (props) => {
                                         required
                                           name="age"
                                           label="Age"
+                                          disabled = {loading}
                                         />
                                       </Grid>
 
@@ -250,6 +238,7 @@ const SeniorCitizen = (props) => {
                                         required
                                           name="phone"
                                           label="Phone Number"
+                                          disabled = {loading}
                                         />
                                       </Grid>
 
@@ -258,6 +247,7 @@ const SeniorCitizen = (props) => {
                                           required
                                           name="email"
                                           label="Email Address"
+                                          disabled = {loading}
                                         />
                                       </Grid>
 
@@ -267,6 +257,7 @@ const SeniorCitizen = (props) => {
                                         required
                                         type="password"
                                           name="password"
+                                          disabled = {loading}
                                           label="Password"
                                         />
                                       </Grid>
@@ -278,6 +269,7 @@ const SeniorCitizen = (props) => {
                                         type="password"
                                           name="confirmPassword"
                                           label="Confirm Password"
+                                          disabled = {loading}
                                         />
                                       </Grid>
 
@@ -286,6 +278,7 @@ const SeniorCitizen = (props) => {
                                         required
                                           name="address"
                                           label="Address"
+                                          disabled = {loading}
                                           multiline
                                           rows = {3}
                                         />
@@ -295,6 +288,7 @@ const SeniorCitizen = (props) => {
                                         <Textfield
                                           required
                                           name="doctor"
+                                          disabled = {loading}
                                           label="Doctor"
                                         />
                                       </Grid>
@@ -306,7 +300,16 @@ const SeniorCitizen = (props) => {
                                   direction="row"
                                   spacing={2}
                                   justifyContent="center">
-                                      <Button type = "submit" variant= "contained"  >Register</Button>
+                                    <LoadingButton
+                                            type = "submit"
+                                            loading = {loading}
+                                            loadingPosition="start"
+                                            startIcon={<PersonAddIcon />}
+                                            variant="contained"
+                                          >
+                                            Register
+                                          </LoadingButton>
+                                      
                               </Stack>
 
                           </Form>
