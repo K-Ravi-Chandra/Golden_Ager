@@ -2,7 +2,10 @@ import * as React from 'react';
 import LinearProgress from '@mui/material/LinearProgress';
 import axios from "axios";
 import { Button,  Typography } from '@mui/material';
-
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 export default function SimpleAccordion() {
 
@@ -55,7 +58,28 @@ export default function SimpleAccordion() {
         {error ? <Typography> An unknown Error</Typography>  : <>
 
          <div>
-          {data.map((d) => <li key={d.date}>{d.name} , {d.email}, {d.phone}, {d.date}</li>)}
+          {data.map((d) =>
+          <Accordion>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1a-content"
+          id="panel1a-header"
+        >
+          <Typography><li key = {d.date}>{d.name}</li></Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Typography>
+            Need a volunteer to take me for health checkup<br/>
+            <b>Name :</b> : <li key={d.date}>{d.name}</li> 
+            <b>Email :</b><li key={d.date}>{d.email}</li>
+            <b>Mobile No :</b><li key={d.date}>{d.phone}</li>
+            <b>Date :</b><li key={d.date}>{d.date}</li>
+          </Typography>
+          <button>Accept</button>
+          <button>Reject</button>
+        </AccordionDetails>
+      </Accordion>
+           )}
          </div>
          </>}
           
