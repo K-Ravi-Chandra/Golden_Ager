@@ -69,11 +69,11 @@ export default function SimpleAccordion() {
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
+            <li key={d.date}><b>Name :</b>{d.name}</li> 
+            <li key={d.date}><b>Email :</b>{d.email}</li>
+            <li key={d.date}><b>Mobile No :</b>{d.phone}</li>
+            <li key={d.date}><b>Date :</b>{d.date}</li>
             <b>Issue :</b>Need a volunteer to take me for health checkup<br/>
-            <b>Name :</b> : <li key={d.date}>{d.name}</li> 
-            <b>Email :</b><li key={d.date}>{d.email}</li>
-            <b>Mobile No :</b><li key={d.date}>{d.phone}</li>
-            <b>Date :</b><li key={d.date}>{d.date}</li>
           </Typography>
           <Button variant="contained" color="success">Accept</Button>
           <Button variant="outlined" color="error">Reject</Button>
