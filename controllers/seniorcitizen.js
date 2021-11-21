@@ -21,3 +21,4 @@ exports.bookAppointment = async (req ,res , next) => {
         next(error);
     } 
 }
+

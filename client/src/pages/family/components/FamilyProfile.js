@@ -40,7 +40,7 @@ export default function FamilyProfile() {
     return (
         <Box sx={{width:'100%'}}>
             <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-                <Grid item xs={6} style={{padding:"20px"}}>
+                <Grid item xs={12} md={6} style={{padding:"20px"}}>
                     <Paper elevation={1} square className={classes.root}>
                         <div className={classes.profileShow}>
                             <Card className={classes.profileIcon}>
@@ -80,7 +80,7 @@ export default function FamilyProfile() {
 
 
 
-                <Grid item xs={6} style={{padding:"20px"}}>
+                <Grid item xs={12} md={6} style={{padding:"20px"}}>
                     <Paper elevation={1} square className={classes.root}>
                         <div className={classes.profileShow}>
                             <Card className={classes.profileIcon}>
@@ -91,7 +91,7 @@ export default function FamilyProfile() {
                                     variant = "h6"
                                     component = "div"
                                 >
-                                    <strong>Family Member Details</strong>
+                                    <strong>Senior Citizen Details</strong>
                                 </Typography>
                                 <Typography
                                     variant = "subtitle1"
@@ -117,7 +117,7 @@ export default function FamilyProfile() {
                     </Paper>
                 </Grid>
 
-                <Grid item xs={6} style={{padding:"20px"}}>
+                <Grid item xs={12} md={6} style={{padding:"20px"}}>
                     <Paper elevation={1} square className={classes.root}>
                         <div className={classes.profileShow}>
                             <Card className={classes.profileIcon}>
@@ -155,7 +155,7 @@ export default function FamilyProfile() {
                 </Grid>
 
 
-                <Grid item xs={6} style={{padding:"20px"}}>
+                <Grid item xs={12} md={6} style={{padding:"20px"}}>
                     <Paper elevation={1} square className={classes.root}>
                         <div className={classes.profileShow}>
                             <Card className={classes.profileIcon}>

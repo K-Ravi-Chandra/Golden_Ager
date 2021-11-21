@@ -12,7 +12,7 @@ const useStyles = makeStyles( theme =>({
     },
     searchInput : {
         marginTop : theme.spacing(3),
-        width : '100%',
+        width : "95%",
     }
 }))
 

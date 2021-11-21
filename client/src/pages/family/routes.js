@@ -5,6 +5,14 @@ import MyFamilyHealth from './components/MyFamilyHealth';
 import FamilyProfile from './components/FamilyProfile';
 import FamilyNotifications from './components/FamilyNotifications';
 
+function Sample(){
+  return (
+    <div>
+    
+    </div>
+  );
+}
+
 function DonateMoney(){
     return (
         <div>Donate Money</div>

@@ -44,10 +44,9 @@ export default function SimpleAccordion() {
         setFetching(false);
         console.log(error);
       });
-
+      console.log(data);
   }, [])
 
-  
   
  
 
