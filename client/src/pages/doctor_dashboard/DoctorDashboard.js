@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { Switch, Route, Redirect } from "react-router-dom";
+//
 import routes from "./routes"
+//
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -15,9 +17,11 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { Link} from '@mui/material';
+
+//
 import Logo from "../../components/logo.png"
 import Navigation from './Components/Navigation';
-import ThemeConfig from '../../components/theme'
+import ThemeConfig from '../../components/theme';
 //---------------
 
 import NotificationsIcon from '@mui/icons-material/Notifications';
