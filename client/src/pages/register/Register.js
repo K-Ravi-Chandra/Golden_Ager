@@ -14,6 +14,7 @@ import Alert from '@mui/material/Alert';
 import IconButton from '@mui/material/IconButton';
 import Collapse from '@mui/material/Collapse';
 import CloseIcon from '@mui/icons-material/Close';
+import Button from '@mui/material/Button';
 
 const phoneRegExp=/^[2-9]{2}[0-9]{8}/
 
@@ -24,14 +25,12 @@ const Title = styled(Typography)({
   WebkitTextFillColor: "transparent"
 });
 
-const StyledSubmitButton = styled(SubmitButton)({
+const StyledSubmitButton = styled(Button )({
   background: "linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(0,212,255,1) 0%, rgba(162,222,131,1) 100%)",
   border: 0,
-  borderRadius: 3,
+  borderRadius: 4,
   boxShadow: '0 3px 5px 2px rgba(2, 212, 225, .3)',
   color: 'white',
-  height: 48,
-  padding: '0 30px',
 });
 
 const INITIAL_FORM_STATE = {
@@ -69,6 +68,8 @@ const Register = () => {
   const [error, setError] = React.useState("");
   const [open, setOpen] = React.useState(false);
 
+  const [loading , setLoading] = React.useState(false)
+
   const handleClose = () => {
     setOpen(false);
   };
@@ -83,8 +84,8 @@ const Register = () => {
 
     const onSubmit  = async (values, props) => {
 
-      console.log("You clicked Eight!")
-      console.log(values)
+      setOpen(false);
+      setLoading(true);
 
         const config = {
           header: {
@@ -115,13 +116,18 @@ const Register = () => {
           console.log("Registered sucessfully");
     
           history.push("/");
+          setLoading(false)
 
         } catch (error) {
-          console.log(error.response.data)
+          setLoading(false)
+          console.log(error.response)
           if(error.response.data.error === 'Duplicate field Value Enter'){
             setError('Account Already Exists')
           }
-          else{
+          else if(error.response.statusText){
+            setError(error.response.statusText)
+          }
+          else {
             setError(error.response.data.error)
           }
           setOpen(true)
@@ -214,7 +220,7 @@ const Register = () => {
 
                                                       <Grid item xs={12}>
                                                           <Textfield
-                                                            required
+                                                            disabled = {loading}
                                                             name="username"
                                                             label="Full Name"
                                                           />
@@ -222,7 +228,7 @@ const Register = () => {
 
                                                         <Grid item xs={12}>
                                                           <Textfield
-                                                            required
+                                                           disabled = {loading}
                                                             name="email"
                                                             label="Email Address"
                                                           />
@@ -230,7 +236,7 @@ const Register = () => {
 
                                                         <Grid item xs={12}>
                                                           <Textfield
-                                                          required
+                                                          disabled = {loading}
                                                             name="phone"
                                                             label="Phone Number"
                                                           />
@@ -238,7 +244,7 @@ const Register = () => {
 
                                                         <Grid item xs={12}>
                                                           <Textfield
-                                                          required
+                                                          disabled = {loading}
                                                           type="password"
                                                             name="password"
                                                             label="Password"
@@ -248,7 +254,7 @@ const Register = () => {
                                               
                                                         <Grid item xs={12}>
                                                           <Textfield
-                                                          required
+                                                          disabled = {loading}
                                                           type="password"
                                                             name="confirmPassword"
                                                             label="Confirm Password"
@@ -259,15 +265,12 @@ const Register = () => {
 
                                                 </Grid>
 
-
-                                          
-
                                                 <Stack
                                                     sx={{ p: 2}}
                                                     direction="row"
                                                     spacing={2}
                                                     justifyContent="center">
-                                                        <StyledSubmitButton >Register</StyledSubmitButton>
+                                                        <StyledSubmitButton variant="contained" type = "submit" disabled={loading} >{loading ? 'Loading...' : 'Register'}</StyledSubmitButton>
                                                 </Stack>
 
                                             </Form>

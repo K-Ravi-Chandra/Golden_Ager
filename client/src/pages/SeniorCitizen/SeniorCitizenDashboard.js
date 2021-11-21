@@ -12,24 +12,6 @@ import Dashboard from './components/Dashoard'
 import {Avatar} from '@mui/material';
 import Profile from './components/Profile';
 
-const switchRoutes = (
-  <Switch>
-   
-    <Route
-      path="/dashboard"
-      component= {Dashboard}
-      key="Dashboard"
-    />
-    <Route
-      path="/profile"
-      component= {Profile}
-      key="Profile"
-    />
-    
-    <Redirect from="/" to="/dashboard" />
-    
-  </Switch>
-);
 
 
 const RootStyle = styled(AppBar)(({ theme }) => ({
@@ -51,7 +33,8 @@ const AccountStyle = styled('div')(({ theme }) => ({
 
 
 const SeniorCitizenDashboard = (props) => {
-  console.log(props)
+  const data = props.data
+  
   return (
     <ThemeConfig>
         <Box sx={{ display: 'flex' }}>
@@ -98,7 +81,22 @@ const SeniorCitizenDashboard = (props) => {
       >
         <Toolbar />
         
-        {switchRoutes}
+        <Switch>
+   
+    <Route
+          path="/dashboard"
+          render = {props => <Dashboard {...props}  data={data}/>}
+          key="Dashboard"
+        />
+        <Route
+          path="/profile"
+          component= {Profile}
+          key="Profile"
+        />
+        
+        <Redirect from="/" to="/dashboard" />
+        
+  </Switch>
       </Box>
     </Box>
       </ThemeConfig>

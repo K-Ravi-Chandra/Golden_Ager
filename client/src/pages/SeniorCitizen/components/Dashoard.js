@@ -105,6 +105,9 @@ import axios from "axios";
 
 // 3) Health Checkup ----------------------------------------------------------------------
 
+
+  
+
   const HealthCheckup_RootStyle = styled(Card)(({ theme }) => ({
     boxShadow: 'none',
     textAlign: 'center',
@@ -121,9 +124,66 @@ import axios from "axios";
     marginBottom: theme.spacing(3),
   }));
   
-  function HealthCheckup_Card() {
+  function HealthCheckup_Card(props) {
+    const data = props.data
+    console.log(data)
+    const HealthCheckup = async () => {
+      const config = {
+        header: {
+          "Content-Type": "application/json",
+        },
+      };
+
+      const name = data.name;
+      const email = data.email;
+
+      try {
+        const fetch = await axios.post(
+          "/api/seniorcitizen/details",
+          {
+            email
+          },
+          config
+        )
+        
+        const doctor = fetch.data.details.doctor
+
+        try {
+          const bookAppointment =  await axios.post(
+            "/api/seniorcitizen/bookAppointment",
+            {
+              name, email, doctor
+            },
+            config
+          )
+
+          alert(bookAppointment.data.data)
+          
+        } catch (error) {
+          console.log(error.message)
+        }
+      } catch (error) {
+        console.log(error.message)
+      }
+
+      //  try{
+      //   const financialHelp = await axios.post(
+      //     "/api/help/financialhelp",
+      //     {
+      //       name, email
+      //     },
+      //     config
+      //   );
+      //   console.log("Request Sent ");
+      
+      // }
+      // catch (error) {
+      //    console.log(error.response.data)
+      //  }
+  
+    }
     return (
-      <HealthCheckup_RootStyle sx={{cursor : 'pointer'}} onClick={() => {console.log("Health Checkup")}}>
+      <HealthCheckup_RootStyle sx={{cursor : 'pointer'}} onClick={HealthCheckup}>
 
         <HealthCheckup_IconWrapperStyle>
             <LocalHospitalOutlinedIcon sx={{ fontSize: 80 }}/>
@@ -200,27 +260,32 @@ import axios from "axios";
 
 //----------------------------------------------------------------
 
-const DashboardPage = () => {
+const DashboardPage = (props) => {
+
+  const data = props.data
+
+
     return (
     <ThemeConfig>
+
 
       <Container maxWidth="xl">
         <Grid sx={{pt : 6}} container spacing={3}>
 
           <Grid item xs={12} sm={6}  md={3}>
-                <FinancialHelpCard/>
+                <FinancialHelpCard data={data}/>
           </Grid>
 
           <Grid item xs={12} sm={6}  md={3}>
-                <FeelingLoneliness_Card/>
+                <FeelingLoneliness_Card data={data}/>
           </Grid>
 
           <Grid item xs={12} sm={6}  md={3}>
-                <HealthCheckup_Card/>
+                <HealthCheckup_Card data={data}/>
           </Grid>
 
           <Grid item xs={12} sm={6}  md={3}>
-                <RequestHelpCard/>
+                <RequestHelpCard data={data}/>
           </Grid>
           
 

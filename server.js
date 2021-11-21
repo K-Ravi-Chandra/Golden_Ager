@@ -27,6 +27,8 @@ app.use('/api/seniorcitizen', require('./routes/seniorcitizen'))
 
 app.use('/api/help', require('./routes/help'))
 
+app.use('/api/doctor', require('./routes/doctor'))
+
 // Error Handler (last piece of middleware)
 app.use(errorHandler);
 

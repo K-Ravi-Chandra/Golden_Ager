@@ -7,10 +7,17 @@ const AppointmentsSchema = new mongoose.Schema({
         type : String,
         required : [true , "Insufficient Details"]
     },
+    email : {
+        type : String,
+        required : [true , "Insufficient Details"]
+    },
+    solution :String,
+    advice : String,
     problem : String,
     status : String,
     date : Date,
-    doctor : String
+    doctor : String,
+    checked : Boolean
 });
 
 const Appointments = mongoose.model("Appointments", AppointmentsSchema);

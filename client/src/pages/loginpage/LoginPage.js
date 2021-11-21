@@ -8,7 +8,6 @@ import Grid from '@mui/material/Grid';
 import Logo from '../../components/logo.png'
 import Typography from '@mui/material/Typography';
 import Textfield from '../../components/formUI/Textfield';
-import SubmitButton from '../../components/formUI/Button';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useEffect } from "react";
 import { Link, Toolbar  ,Stack  } from '@mui/material';
@@ -19,6 +18,7 @@ import Alert from '@mui/material/Alert';
 import IconButton from '@mui/material/IconButton';
 import Collapse from '@mui/material/Collapse';
 import CloseIcon from '@mui/icons-material/Close';
+import Button from '@mui/material/Button';
 
 const theme = createTheme();
 
@@ -29,14 +29,12 @@ const Title = styled(Typography)({
   WebkitTextFillColor: "transparent"
 });
 
-const StyledSubmitButton = styled(SubmitButton)({
+const StyledSubmitButton = styled(Button)({
   background: "linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(0,212,255,1) 0%, rgba(162,222,131,1) 100%)",
   border: 0,
   borderRadius: 4,
   boxShadow: '0 3px 5px 2px rgba(2, 212, 225, .3)',
   color: 'white',
-  height: 10,
-  padding: '0 10px',
 });
 
 const INITIAL_FORM_STATE = {
@@ -63,6 +61,8 @@ const  Login  = () => {
   const [error, setError] = React.useState("");
   const [open, setOpen] = React.useState(false);
 
+  const [loading , setLoading] = React.useState(false)
+
   const handleClose = () => {
     setOpen(false);
   };
@@ -78,6 +78,10 @@ const  Login  = () => {
 
     // submitting form
     const onSubmit  = async (values, props) => {
+
+
+      setOpen(false);
+      setLoading(true);
 
         const config = {
           header: {
@@ -101,9 +105,11 @@ const  Login  = () => {
           localStorage.setItem("authToken", data.token);
           
           console.log("Login sucessful");
+          setLoading(false)
           history.push("/")
 
         } catch (error) {
+          setLoading(false)
           setError(error.response.data.error);
           setOpen(true)
           console.log(error.response.data);
@@ -198,7 +204,8 @@ const  Login  = () => {
 
                                                 <Grid item xs={12}>
                                                   <Textfield
-                                                  required
+                                                  
+                                                  disabled = {loading}
                                                     name="email"
                                                     label="Email"
                                                   />
@@ -206,7 +213,8 @@ const  Login  = () => {
 
                                                 <Grid item xs={12}>
                                                   <Textfield
-                                                  required
+                                                 
+                                                  disabled = {loading}
                                                   type="password"
                                                     name="password"
                                                     label="Password"
@@ -227,7 +235,7 @@ const  Login  = () => {
                                                 spacing={2}
                                                 justifyContent="center"
                                               >
-                                                <StyledSubmitButton >Login</StyledSubmitButton>
+                                                <StyledSubmitButton variant="contained" type = "submit" disabled={loading} >{loading ? 'Loading...' : 'Login'}</StyledSubmitButton>
                                             </Stack>
 
                                           </Form>

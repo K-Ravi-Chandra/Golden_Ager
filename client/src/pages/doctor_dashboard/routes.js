@@ -3,7 +3,7 @@ import { Navigate, useRoutes } from 'react-router-dom';
 
 import DashboardPage from './Components/Dashboard';
 import UserProfilePage from './Components/UserProfile';
-import NotificationsPage from './Components/Notifications';
+import AppointmentsPage from './Components/Appointments';
 import Patients from './Components/Patients';
 import CriticalPatients from './Components/CriticalPatients';
 
@@ -18,8 +18,8 @@ const dashboardRoutes = [
   },
 
   {
-    path: "/notifications",
-    component: NotificationsPage,
+    path: "/appointments",
+    component: AppointmentsPage,
   },
 
   {
