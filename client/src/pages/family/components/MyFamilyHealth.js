@@ -1,9 +1,9 @@
 import React, {useState} from 'react'
 import FamilyHealthPageHeader from './FamilyHealthPageHeader';
-import PeopleOutlineTwoToneIcon from '@material-ui/icons/PeopleOutlineTwoTone';
+import PeopleOutlineTwoToneIcon from '@mui/icons-material/PeopleOutlineTwoTone';
 import { makeStyles, Paper, Toolbar, TableBody, TextField, InputAdornment, TableRow, TableCell } from '@material-ui/core';
 import useTable from './useTable';
-import { SearchIcon } from '@material-ui/icons/Search';
+import { SearchIcon } from '@mui/icons-material/Search';
 
 const useStyles = makeStyles( theme =>({
     pageContent : {

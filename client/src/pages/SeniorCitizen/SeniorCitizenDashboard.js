@@ -90,7 +90,8 @@ const SeniorCitizenDashboard = (props) => {
         />
         <Route
           path="/profile"
-          component= {Profile}
+        
+          render = {props => <Profile {...props}  data={data}/>}
           key="Profile"
         />
         

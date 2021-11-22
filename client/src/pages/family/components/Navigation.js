@@ -50,7 +50,7 @@ const Navigation = () => {
           </ListItem>
           
           
-          <ListItem disablePadding selected={Selected("/donate-money")} component={NavLink} sx ={{color: 'text.primary'}} to= "/donate-money" >
+          <ListItem disablePadding selected={Selected("/donate-money")} component={Link} sx ={{color: 'text.primary'}} href= "https://rzp.io/l/yt2s6Yf" >
             <ListItemButton sx={{p :2}} >
               <ListItemIcon>
                 <AccountBalanceIcon color = {Selected("/donate-money")? "primary" : "" } />
@@ -65,7 +65,7 @@ const Navigation = () => {
           </ListItem>
           
           
-          <ListItem disablePadding selected={Selected( "/donate-requirements")} component={NavLink} sx ={{color: 'text.primary'}} to= "/donate-requirements" >
+          <ListItem disablePadding selected={Selected( "/donate-requirements")} component={NavLink} sx ={{color: 'text.primary'}} to= "/donaterequirements" >
             <ListItemButton sx={{p :2}} >
               <ListItemIcon>
                 <WheelchairPickupIcon color = {Selected("/donate-requirements")? "primary" : "" } />

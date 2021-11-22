@@ -40,15 +40,8 @@ const dashboardRoutes = [
     component: FamilyNotifications,
   },
 
-  {
-    path: "/donate-money",
-    component: DonateMoney,
-  },
-
-  {
-      path: "/donate-requirements",
-      component: DonateRequirements,
-  },
+  
+ 
 
 ];
 
