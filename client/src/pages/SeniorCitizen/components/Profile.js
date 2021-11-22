@@ -51,28 +51,28 @@ const Profile = (props) => {
         <div>
             Profile Page <br/>
             <div>
-                Name : 
+                Name : K.Ravi Chandra
             </div>
             <div>
-                Email : 
+                Email : cs19b020@iittp.ac.in
             </div>
             <div>
-                Age : 
+                Age : 56
             </div>
             <div>
-                Address : 
+                Address : 2nd road, mehaboob nagar
             </div>
             <div>
-                Volunteer Name : 
+                Volunteer Name : Aditya
             </div>
             <div>
-                Volunteer No : 
+                Volunteer No : 1234567890
             </div>
             <div>
-                Volunteer Email : 
+                Volunteer Email : cs19b019@iittp.ac.in
             </div>
             <div>
-                Doctor : 
+                Doctor : Charan
             </div>
             <div>
             <Button variant="outlined" onClick={logout}>Logout</Button>
