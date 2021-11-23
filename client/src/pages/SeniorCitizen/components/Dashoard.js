@@ -28,7 +28,10 @@ import axios from "axios";
     marginBottom: theme.spacing(3),
   }));
   
-  function FinancialHelpCard() {
+  function FinancialHelpCard(props) {
+
+    const details = props.data
+    const profile = props.profile
 
     const FinancialHelp = async () => {
       const config = {
@@ -36,10 +39,10 @@ import axios from "axios";
           "Content-Type": "application/json",
         },
       };
-      const name = "Senior"
-      const email = "senior@gmail.co"
-      const phone = " 98654123433"
-      const volunter = "Volunteer"
+      const name = profile.username
+      const email = details.email
+      const phone = profile.phone
+      const volunter  = details.volunter
   
       try{
         const financialHelp = await axios.post(
@@ -195,7 +198,7 @@ import axios from "axios";
     )
   }
  
-// 4) Reques tHelp ----------------------------------------------------------------------
+// 4) Request tHelp ----------------------------------------------------------------------
 
   
   const RequestHelpRootStyle = styled(Card)(({ theme }) => ({
@@ -214,7 +217,10 @@ import axios from "axios";
     marginBottom: theme.spacing(3),
   }));
   
-  function RequestHelpCard() {
+  function RequestHelpCard(props) {
+
+    const details = props.data
+    const profile = props.profile
 
     const RequestHelp = async () => {
       const config = {
@@ -222,11 +228,11 @@ import axios from "axios";
           "Content-Type": "application/json",
         },
       };
-      const name = "Ravi K"
-      const email = "Email"
-      const phone = " Phone"
-      const volunter = "Volunteer"
-      const doctor = "Doctor"
+      const name = profile.username
+      const email = details.email
+      const phone = profile.phone
+      const volunter  = details.volunter
+      const doctor = details.doctor
   
       try{
         const requestHelp = await axios.post(
@@ -236,7 +242,7 @@ import axios from "axios";
           },
           config
         );
-        console.log("Request Sent ");
+        console.log("Request Sent");
       
       }
       catch (error) {
@@ -262,7 +268,46 @@ import axios from "axios";
 
 const DashboardPage = (props) => {
 
-  const data = props.data
+  const email = props.data.email
+
+  const [details, setDetails] = React.useState([]);
+  const [profile, setprofile] = React.useState([]);
+
+  const [fetching , setFetching] = React.useState(true)
+  const [error , setError] =   React.useState(false)
+
+  React.useEffect(async () => {
+    
+    
+    setError(false);
+    setFetching(true);
+
+    const config = {
+      header: {
+        "Content-Type": "application/json",
+      },
+    };
+      await axios.post( 
+        "api/seniorcitizen/details",
+        {
+          email
+        },
+        config
+      ).then(function(response) {
+        setError(false);
+        setFetching(false);
+        setDetails(response.data.details)
+        setprofile(response.data.details.profile)
+        return response;
+      })
+      .catch(function(error) {
+        setError(true);
+        setFetching(false);
+        console.log(error);
+      });
+
+  }, [])
+
 
 
     return (
@@ -273,19 +318,19 @@ const DashboardPage = (props) => {
         <Grid sx={{pt : 6}} container spacing={3}>
 
           <Grid item xs={12} sm={6}  md={3}>
-                <FinancialHelpCard data={data}/>
+                <FinancialHelpCard data={details} profile={profile}/>
           </Grid>
 
           <Grid item xs={12} sm={6}  md={3}>
-                <FeelingLoneliness_Card data={data}/>
+                <FeelingLoneliness_Card data={details}/>
           </Grid>
 
           <Grid item xs={12} sm={6}  md={3}>
-                <HealthCheckup_Card data={data}/>
+                <HealthCheckup_Card data={details}/>
           </Grid>
 
           <Grid item xs={12} sm={6}  md={3}>
-                <RequestHelpCard data={data}/>
+                <RequestHelpCard data={details}   profile={profile}/>
           </Grid>
           
 
