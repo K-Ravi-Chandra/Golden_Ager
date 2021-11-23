@@ -1,5 +1,6 @@
 import React from 'react'
 import {format} from 'date-fns'
+import axios from "axios";
 import { v4 as uuid } from 'uuid';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 
@@ -142,84 +143,114 @@ const orders = [
 
 
 
-const History = (props) => (
-  <Card {...props}>
-    <CardHeader title="Latest Requests" />
-    <PerfectScrollbar>
-      <Box sx={{ minWidth: 800 }}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>
-                Name
-              </TableCell>
-              <TableCell>
-                Issue
-              </TableCell>
-              <TableCell sortDirection="desc">
-                <Tooltip
-                  enterDelay={300}
-                  title="Sort"
-                >
-                  <TableSortLabel
-                    active
-                    direction="desc"
-                  >
-                    Date
-                  </TableSortLabel>
-                </Tooltip>
-              </TableCell>
-              <TableCell>
-                Status
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {orders.map((order) => (
-              <TableRow
-                hover
-                key={order.id}
-              >
+const History = (props) => {
+
+  const [data, setData] = React.useState([]);
+  const [updated , setUpdated] = React.useState(false)
+  //const [loading , setLoading] = React.useState(false)
+  const [fetching , setFetching] = React.useState(true)
+  const [error , setError] =   React.useState(false)
+
+  React.useEffect(async () => {
+    
+    setError(false);
+    setFetching(true);
+
+    const config = {
+      header: {
+        "Content-Type": "application/json",
+      },
+    };
+      const volunter = props.data.email;
+
+      await axios.post(
+        "/api/volunter/getHistory",
+        {
+          volunter
+        },
+        config
+      ).then(function(response) {
+        setError(false);
+        setFetching(false);
+        setData(response.data.history)
+        console.clear()
+        console.log(response.data.history)
+        return response;
+      })
+      .catch(function(error) {
+        setError(true);
+        setFetching(false);
+        console.log(error);
+      });
+      console.log(data);
+  }, [])
+
+
+  return (
+    <Card {...props}>
+      <CardHeader title="Latest Requests" />
+      <PerfectScrollbar>
+        <Box sx={{ minWidth: 800 }}>
+          <Table>
+            <TableHead>
+              <TableRow>
                 <TableCell>
-                  {order.ref}
+                  Name
                 </TableCell>
                 <TableCell>
-                  {order.customer.name}
+                  Email
                 </TableCell>
                 <TableCell>
-                  {format(order.createdAt, 'dd/MM/yyyy')}
+                  phone
+                </TableCell>
+
+                <TableCell>
+                  Date
                 </TableCell>
                 <TableCell>
-                  <SeverityPill
-                    color={(order.status === 'accepted' && 'success')
-                    || (order.status === 'rejected' && 'error')
-                    || 'warning'}
-                  >
-                    {order.status}
-                  </SeverityPill>
+                  Status
                 </TableCell>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </Box>
-    </PerfectScrollbar>
-    <Box
-      sx={{
-        display: 'flex',
-        justifyContent: 'flex-end',
-        p: 2
-      }}
-    >
-      <Button
-        color="primary"
-        endIcon={<ArrowRightIcon fontSize="small" />}
-        size="small"
-        variant="text"
-      >
-        View all
-      </Button>
-    </Box>
-  </Card>
-);
+            </TableHead>
+            <TableBody>
+              {data.map((d) => (
+                <TableRow
+                  hover
+                  key={d._id}
+                >
+         
+                  <TableCell>
+                    {d.name}
+                  </TableCell>
+                  <TableCell>
+                    {d.email}
+                  </TableCell>
+                  <TableCell>
+                    {d.phone}
+                  </TableCell>
+                  <TableCell>
+                    {d.date}
+                  </TableCell>
+      
+                 
+                  <TableCell>
+                    <SeverityPill
+                      color={(d.status === '1' && 'success')
+                      || (d.status === '-1' && 'error')
+                      || 'warning'}
+                    >
+                      {(d.status === '1' && 'Accepted')
+                      || (d.status === '-1' && 'Rejected')
+                      || 'Pending'}
+                    </SeverityPill>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </Box>
+      </PerfectScrollbar>
+    </Card>
+  );
+}
 export default History

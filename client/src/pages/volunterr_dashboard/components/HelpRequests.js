@@ -1,86 +1,175 @@
 import * as React from 'react';
+import LinearProgress from '@mui/material/LinearProgress';
+import axios from "axios";
+import { Button,  Divider,  Typography } from '@mui/material';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
-import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
+import Stack from '@mui/material/Stack';
+import DoneIcon from '@mui/icons-material/Done';
+import CancelIcon from '@mui/icons-material/Cancel';
+import ClearIcon from '@mui/icons-material/Clear';
 
-export default function SimpleAccordion() {
-  return (
-    <div>
-      <Accordion>
+
+
+function Row(props){ 
+
+    const { data } = props;
+    const [updated , setUpdated] = React.useState(false)
+    const [loading , setLoading] = React.useState(false)
+
+    const [open, setOpen] = React.useState(false);
+   
+    const Accept = async () => {
+
+      setLoading(true);
+
+      const _id = data._id;
+      const config = {
+        header: {
+          "Content-Type": "application/json",
+        },
+      };
+
+      const status = "1";
+
+      await axios.post(
+        "api/volunter/updateHelpRequest",
+        {_id , status },
+        config
+      ).then(function(response) {
+        setLoading(false);
+        setUpdated(true);
+        alert(response.data.success)
+        return response;
+      })
+      .catch(function(error) {
+        setLoading(false);
+        alert(error.message);
+      });
+
+
+
+    }
+
+   
+
+    return(
+      <>
+
+{
+          updated ?  <></> : <>          
+          <Accordion>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
-          <Typography>Senior Citizen 1</Typography>
+          <Typography>{data.name}</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <Typography>
-            Need a volunteer to take me for health checkup
+          <Typography sx={{p:2}}>
+            Name:    {data.name}
           </Typography>
-          <button>Accept</button>
-          <button>Reject</button>
+          <Typography sx={{p:2}}>
+            Email :  {data.email} 
+          </Typography>
+          <Typography sx={{p:2}}>
+            Mobile : {data.phone} 
+          </Typography>
+          <Typography sx={{p:2}}>
+            Doctor : {data.doctor} 
+          </Typography>
+          <Typography sx={{p:2}}>
+            Date :   {data.date} 
+          </Typography>
+          
+          <Stack direction="row" spacing={1}>
+          <Button color="primary" variant="contained" aria-label="add to shopping cart" onClick={Accept}>
+             <DoneIcon />Done
+          </Button>
+
+          </Stack>
         </AccordionDetails>
       </Accordion>
-      <Accordion>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel2a-content"
-          id="panel2a-header"
-        >
-          <Typography>Senior Citizen 2</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-          Need a volunteer to take me to Airport
-          </Typography>
-          <button>Accept</button>
-          <button>Reject</button>
-        </AccordionDetails>
-      </Accordion>
-      <Accordion>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel2a-content"
-          id="panel2a-header"
-        >
-          <Typography>Senior Citizen 3</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-          Need a volunteer to take me to Wonderland for roaming
-          </Typography>
-          <button>Accept</button>
-          <button>Reject</button>
-        </AccordionDetails>
-      </Accordion>
-      <Accordion>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel2a-content"
-          id="panel2a-header"
-        >
-          <Typography>Senior Citizen 4</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-          Need a volunteer to help me to see my health reports
-          </Typography>
-          <button>Accept</button>
-          <button>Reject</button>
-        </AccordionDetails>
-      </Accordion>
-      <Accordion disabled>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel3a-content"
-          id="panel3a-header"
-        >
-          <Typography>Issue of Senior Citizen 5 was not accepted</Typography>
-        </AccordionSummary>
-      </Accordion>
+   
+         </>
+        }
+
+      </>
+    )
+
+}
+
+
+export default function SimpleAccordion(props) {
+
+
+  const [data, setData] = React.useState([]);
+  const [updated , setUpdated] = React.useState(false)
+  //const [loading , setLoading] = React.useState(false)
+  const [fetching , setFetching] = React.useState(true)
+  const [error , setError] =   React.useState(false)
+
+  React.useEffect(async () => {
+    
+    setError(false);
+    setFetching(true);
+
+    const config = {
+      header: {
+        "Content-Type": "application/json",
+      },
+    };
+      const volunter = props.data.email;
+
+      await axios.post(
+        "/api/volunter/getHelpRequests",
+        {
+          volunter
+        },
+        config
+      ).then(function(response) {
+        setError(false);
+        setFetching(false);
+        setData(response.data.requests)
+        console.log(data)
+        return response;
+      })
+      .catch(function(error) {
+        setError(true);
+        setFetching(false);
+        console.log(error);
+      });
+      console.log(data);
+  }, [])
+
+  
+ 
+
+  return (
+    <div>
+      {fetching ?  <LinearProgress/> : <>
+      
+        {error ? <Typography> An unknown Error</Typography>  : <>
+
+
+          {data.map((d) => (
+            <Row key={d._id} data={d} />
+          ))}
+        
+         </>}
+        
+          
+      </>}
+      
+      
+     
+
     </div>
   );
 }

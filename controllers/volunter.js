@@ -4,7 +4,7 @@ const Doctor = require('../models/Doctor')
 const FamilyMember = require('../models/FamilyMember')
 const FinancialRequest = require('../models/FinancialRequest')
 const ErrorResponse = require('../utils/errorResponse')
-const helpRequests =require('../models/HelpRequest')
+const HelpRequests =require('../models/HelpRequest')
 
 // Senior citizen registration
 exports.registerseniorcitizen = async (req ,res , next) => {
@@ -223,9 +223,6 @@ exports.getFinancialRequests  = async (req ,res , next) => {
     
     const {volunter} = req.body;
 
-    console.log(volunter)
-    console.log(":hi")
-
     if(!volunter){
         return next(new ErrorResponse("Please provide email address to fetch financial requests", 400))
     }
@@ -286,7 +283,7 @@ exports.getHelpRequests  = async (req ,res , next) => {
     }
     else{
         try {
-            const helpRequests = await FinancialRequest.find({
+            const helpRequests = await HelpRequests.find({
                 $and : [
                     {"volunter" : volunter},
                     {"status" :  "0"}
@@ -296,7 +293,58 @@ exports.getHelpRequests  = async (req ,res , next) => {
             res.status(200).json({
                 success :true,
                 message: " Financial Requests Found",
-                requests : financialRequests
+                requests : helpRequests
+            });
+
+        } catch (error) {
+            res.status(500).json({
+                success :false,
+                error: error.message,
+            });
+        }
+    }
+
+}
+
+
+exports.updateHelpRequest  = async (req ,res , next) => {
+
+    const {_id ,  status } = req.body
+      
+
+    try {
+        const helpRequest = await HelpRequests.updateOne(
+            { _id} ,
+            {status  },{}
+         )
+
+        res.status(200).json({
+            success :true
+        });
+
+    }catch (error) {
+        console.log(error);
+        next(error);
+    } 
+}
+
+
+
+
+exports.getHistory = async (req ,res , next) => {
+    
+    const {volunter} = req.body;
+
+    if(!volunter){
+        return next(new ErrorResponse("Please provide email address to fetch financial requests", 400))
+    }
+    else{
+        try {
+            const history = await FinancialRequest.find( {"volunter" : volunter})
+
+            res.status(200).json({
+                success :true,
+                history : history
             });
 
         } catch (error) {
