@@ -1,17 +1,23 @@
 import * as React from 'react';
 import LinearProgress from '@mui/material/LinearProgress';
 import axios from "axios";
-import { Button,  Typography } from '@mui/material';
+import { Button,  Divider,  Typography } from '@mui/material';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
+import Stack from '@mui/material/Stack';
+import DoneIcon from '@mui/icons-material/Done';
+import CancelIcon from '@mui/icons-material/Cancel';
+import ClearIcon from '@mui/icons-material/Clear';
 export default function SimpleAccordion() {
 
   const [data, setData] = React.useState([]);
   const [updated , setUpdated] = React.useState(false)
-  const [loading , setLoading] = React.useState(false)
+  //const [loading , setLoading] = React.useState(false)
   const [fetching , setFetching] = React.useState(true)
   const [error , setError] =   React.useState(false)
 
@@ -62,6 +68,7 @@ export default function SimpleAccordion() {
           updated ?  <></> : <>
 
          <div>
+           <hr/>
           {data.map((d) =>
           <Accordion>
         <AccordionSummary
@@ -69,18 +76,30 @@ export default function SimpleAccordion() {
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
-          <Typography><li key = {d.date}>{d.name}</li></Typography>
+          <Typography>{d.name}</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <Typography>
-            <li key={d.date}><b>Name :</b>{d.name}</li> 
-            <li key={d.date}><b>Email :</b>{d.email}</li>
-            <li key={d.date}><b>Mobile No :</b>{d.phone}</li>
-            <li key={d.date}><b>Date :</b>{d.date}</li>
-            <b>Issue :</b>Need a volunteer to take me for health checkup<br/>
+          <Typography sx={{p:2}}>
+            Name:    {d.name}
           </Typography>
-          <Button variant="contained" color="success">Accept</Button>
-          <Button variant="outlined" color="error">Reject</Button>
+          <Typography sx={{p:2}}>
+            Email :  {d.email} 
+          </Typography>
+          <Typography sx={{p:2}}>
+            Mobile : {d.phone} 
+          </Typography>
+          <Typography sx={{p:2}}>
+            Date :   {d.date} 
+          </Typography>
+          
+          <Stack direction="row" spacing={1}>
+          <Button color="primary" variant="contained" aria-label="add to shopping cart">
+             <DoneIcon />Accept
+          </Button>
+          <Button variant="contained" aria-label="delete" color ="error">
+             <ClearIcon />Reject
+          </Button>
+          </Stack>
         </AccordionDetails>
       </Accordion>
            )}
