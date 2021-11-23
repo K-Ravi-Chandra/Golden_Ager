@@ -8,11 +8,14 @@ exports.normal= async (req, res, next) => {
 
     const {name ,email, phone,volunter, doctor } = req.body;
     const date = Date.now();
+    const status = "0"
 
-    try {
+    try {  
         const helpRequest = await HelpRequest.create({
-            name ,email,phone,volunter, doctor ,date 
+            name ,email,phone,volunter, doctor ,date ,status
         });
+
+
 
         res.status(201).json({success : true , data : "Your volunteer will get back to you"})
         console.log("Your volunteer will get back to you"); 

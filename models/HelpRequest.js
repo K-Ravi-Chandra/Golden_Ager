@@ -18,6 +18,7 @@ const HelpRequestSchema = new mongoose.Schema({
         type : String,
         required : [true, "Insuficient details"]
     },
+    status : String,
     doctor : {
         type : String,
         required : [true, "Insuficient details"]

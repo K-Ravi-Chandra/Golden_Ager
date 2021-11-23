@@ -4,6 +4,7 @@ const Doctor = require('../models/Doctor')
 const FamilyMember = require('../models/FamilyMember')
 const FinancialRequest = require('../models/FinancialRequest')
 const ErrorResponse = require('../utils/errorResponse')
+const helpRequests =require('../models/HelpRequest')
 
 // Senior citizen registration
 exports.registerseniorcitizen = async (req ,res , next) => {
@@ -219,7 +220,7 @@ exports.findSeniorCitizen  = async (req ,res , next) =>{
 }
 
 exports.getFinancialRequests  = async (req ,res , next) => {
-    const volunter = req.body;
+    const {volunter} = req.body;
 
     console.log(volunter)
 
@@ -228,22 +229,52 @@ exports.getFinancialRequests  = async (req ,res , next) => {
     }
     else{
         try {
-            const financialRequest = await FinancialRequest.find(volunter)
-            if(!financialRequest){
-                res.status(200).json({
-                    success :true,
-                    message: "No Financial Requests",
-                    requests : "0"
-                });
-            }
-            else{
-                console.log(financialRequest)
-                res.status(200).json({
-                    success :true,
-                    message: " Financial Requests Found",
-                    requests : financialRequest
-                });
-            }
+            const financialRequests = await FinancialRequest.find({
+                $and : [
+                    {"volunter" : volunter},
+                    {"status" :  "0"}
+                ]
+            })
+
+            res.status(200).json({
+                success :true,
+                message: " Financial Requests Found",
+                requests : financialRequests
+            });
+
+        } catch (error) {
+            res.status(500).json({
+                success :false,
+                error: error.message,
+            });
+        }
+    }
+
+}
+
+exports.getHelpRequests  = async (req ,res , next) => {
+    const {volunter} = req.body;
+
+    console.log(volunter)
+
+    if(!volunter){
+        return next(new ErrorResponse("Please provide email address to fetch financial requests", 400))
+    }
+    else{
+        try {
+            const helpRequests = await FinancialRequest.find({
+                $and : [
+                    {"volunter" : volunter},
+                    {"status" :  "0"}
+                ]
+            })
+
+            res.status(200).json({
+                success :true,
+                message: " Financial Requests Found",
+                requests : financialRequests
+            });
+
         } catch (error) {
             res.status(500).json({
                 success :false,
