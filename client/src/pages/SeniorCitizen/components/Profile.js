@@ -5,7 +5,8 @@ import axios from "axios";
 const Profile = (props) => {
     let history = useHistory();
     const [data, setData] = React.useState([]);
-
+    const [profile, setprofile] = React.useState([]);
+  
   const [fetching , setFetching] = React.useState(true)
   const [error , setError] =   React.useState(false)
 
@@ -30,7 +31,8 @@ const Profile = (props) => {
         setError(false);
         setFetching(false);
         setData(response.data.details)
-        console.log(response.data.details)
+        setprofile(response.data.details.profile)
+        console.log(response.data.details.profile)
         return response;
       })
       .catch(function(error) {
@@ -51,28 +53,28 @@ const Profile = (props) => {
         <div>
             Profile Page <br/>
             <div>
-                Name : K.Ravi Chandra
+                Name : {profile.username}
             </div>
             <div>
-                Email : cs19b020@iittp.ac.in
+                Email : {data.email}
             </div>
             <div>
-                Age : 56
+                Age : {profile.age}
             </div>
             <div>
-                Address : 2nd road, mehaboob nagar
+                MobileNo : {profile.phone}
             </div>
             <div>
-                Volunteer Name : Aditya
+                Address : {profile.address}
+            </div>
+            <div>
+                Volunteer Email : {data.volunter}
             </div>
             <div>
                 Volunteer No : 1234567890
             </div>
             <div>
-                Volunteer Email : cs19b019@iittp.ac.in
-            </div>
-            <div>
-                Doctor : Charan
+                Doctor Email : {data.doctor}
             </div>
             <div>
             <Button variant="outlined" onClick={logout}>Logout</Button>
