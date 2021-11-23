@@ -5,7 +5,6 @@ import DashboardPage from './Components/Dashboard';
 import UserProfilePage from './Components/UserProfile';
 import AppointmentsPage from './Components/Appointments';
 import Patients from './Components/Patients';
-import CriticalPatients from './Components/CriticalPatients';
 
 const dashboardRoutes = [
   {
@@ -26,13 +25,6 @@ const dashboardRoutes = [
     path: "/patients",
     component: Patients,
   },
-  {
-    path: "/criticalpatients",
-    component: CriticalPatients,
-  },
-
-
-
 ];
 
 export default dashboardRoutes;

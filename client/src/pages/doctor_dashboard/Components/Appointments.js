@@ -1,4 +1,9 @@
 import * as React from 'react';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
 import PropTypes from 'prop-types';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
@@ -21,6 +26,7 @@ import axios from "axios";
 import { Container ,Stack  , Button} from '@mui/material';
 import Grid from '@mui/material/Grid';
 import { styled} from '@mui/styles';
+import { red , green} from '@mui/material/colors';
 
 const StyledSubmitButton = styled(Button)({
     background: "linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(0,212,255,1) 0%, rgba(162,222,131,1) 100%)",
@@ -32,12 +38,21 @@ const StyledSubmitButton = styled(Button)({
 function Row(props) {
     
     const { data } = props;
+    const [updated , setUpdated] = React.useState(false)
     const [loading , setLoading] = React.useState(false)
   
     const [open, setOpen] = React.useState(false);
 
+    
+    const [status, setStatus] = React.useState('normal');
+
+    const handleChange = (event) => {
+    setStatus(event.target.value);
+    };
+
     const onSubmit  = async (values, props) =>{
-      const {  problem , status, advice , solution }  = values
+      setLoading(true);
+      const {  problem , advice , solution }  = values
       const _id = data._id;
       const config = {
         header: {
@@ -50,25 +65,25 @@ function Row(props) {
           {_id , problem , status, advice , solution },
           config
         ).then(function(response) {
+          setLoading(false);
+          setUpdated(true);
           alert(response.data.success)
           return response;
         })
         .catch(function(error) {
-          console.log(error);
+          setLoading(false);
+          alert(error.message);
         });
     }
 
     const INITIAL_FORM_STATE = {
         problem: '',
         advice : '',
-        status : '',
         solution : ''
     }
     const FORM_VALIDATION = Yup.object().shape({
 
         advice : Yup.string()
-        .required('Required'),
-        status : Yup.string()
         .required('Required'),
         solution : Yup.string()
         .required('Required'),
@@ -76,9 +91,12 @@ function Row(props) {
         .required('Required')
     });
 
+
   return (
     <React.Fragment>
-      <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
+      {updated ?  <></> : <> 
+
+        <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
         <TableCell>
           <IconButton
             aria-label="expand row"
@@ -97,10 +115,13 @@ function Row(props) {
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
       
           <Collapse in={open} timeout="auto" unmountOnExit>
+            
             <Box sx={{ margin: 1 }}>
               <Typography variant="h6" gutterBottom component="div">
                 Update details
               </Typography>
+              {loading ? <LinearProgress sx={{marginBottom: 2}}/> :<></>}
+              
               <Container maxWidth="md">
 
               <Formik
@@ -124,14 +145,7 @@ function Row(props) {
                                                   />
                                                 </Grid>
 
-                                                <Grid item xs={12}>
-                                                  <Textfield
-                                                  
-                                                  disabled = {loading}
-                                                    name="status"
-                                                    label="Status"
-                                                  />
-                                                </Grid>
+
 
                                                 <Grid item xs={12}>
                                                   <Textfield
@@ -150,6 +164,17 @@ function Row(props) {
                                                     name="solution"
                                                     label="Solution"
                                                   />
+                                                </Grid>
+
+                                                <Grid item xs={12}>
+                                                <FormControl component="fieldset">
+                                                    <FormLabel component="legend">Status</FormLabel>
+                                                    <RadioGroup row aria-label="status" name="row-radio-buttons-group" value={status} onChange={handleChange}>
+                                                      <FormControlLabel value="normal"  control={<Radio sx ={{color : green[600]}} />} label="Normal" />
+                                                      <FormControlLabel value="critical" control={<Radio  sx ={{color : red[600]}}  color="error"  />} label="Critical" />
+                                                     
+                                                    </RadioGroup>
+                                                  </FormControl>
                                                 </Grid>
 
 
@@ -173,6 +198,9 @@ function Row(props) {
           </Collapse>
           </TableCell>
       </TableRow>
+        
+      </>}
+      
 
     </React.Fragment>
   );

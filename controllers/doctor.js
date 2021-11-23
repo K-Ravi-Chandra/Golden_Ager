@@ -1,4 +1,7 @@
+const { ConnectionStates } = require('mongoose');
 const Appointments = require('../models/Appointments');
+const Doctor = require('../models/Doctor');
+const Senior = require('../models/SeniorCitizen')
 
 exports.updateAppointment = async (req ,res , next) => {
 
@@ -14,12 +17,6 @@ exports.updateAppointment = async (req ,res , next) => {
 
         console.log(appointment)
 
-        // appointment.insert({"problem": `${problem}`})
-        // appointment.insert({"status": `${status}`})
-
-        
-
-
         res.status(200).json({
             success :true
         });
@@ -34,7 +31,7 @@ exports.getAppointments  = async (req ,res , next) => {
     
     const {doctor} = req.body;
 
-    console.log(doctor)
+    console.log(doctor) 
 
     if(!doctor){
         return next(new ErrorResponse("Please try again! Later", 400))
@@ -43,26 +40,17 @@ exports.getAppointments  = async (req ,res , next) => {
         try { 
             const appointments = await Appointments.find( {
                 $and : [
-                    {"doctor" : req.body.doctor},
+                    {"doctor" : doctor},
                     {"checked" :  false}
                 ]
             })
-            console.log("-----------------------------------------------------------------------")
             console.log(appointments)
-            if(!appointments){
-                res.status(200).json({
+
+            res.status(200).json({
                     success :true,
-                    message: "No Appointments",
-                    requests : "0"
-                });
-            }
-            else{
-                res.status(200).json({
-                    success :true,
-                    message: " Appointments Found",
                     requests : appointments
-                });
-            }
+            });
+
         } catch (error) {
             res.status(500).json({
                 success :false,
@@ -71,4 +59,54 @@ exports.getAppointments  = async (req ,res , next) => {
         }
     }
 
+}
+
+exports.getDetails  = async (req ,res , next) =>{
+
+    const email = req.body
+    if(!email){
+        return next(new ErrorResponse("Please try again! Later", 400))
+    }
+    else {
+        try {
+            const doctor = await Doctor.findOne( email)
+            
+            res.status(200).json({
+                details : doctor ,
+                success :true,
+            });
+            
+        } catch (error) {
+            res.status(500).json({
+                success :false,
+                error: error.message,
+            });
+        }
+    }
+}
+
+
+exports.getPatients  = async (req ,res , next) =>{
+
+    const {doctor} = req.body
+
+    if(!doctor){
+        return next(new ErrorResponse("Please try again! Later", 400)) 
+    }
+    else {
+        try {
+            const patients = await Senior.find( {"doctor" : doctor} )
+            
+            res.status(200).json({
+                patients : patients ,
+                success :true,
+            });
+            
+        } catch (error) {
+            res.status(500).json({
+                success :false,
+                error: error.message,
+            });
+        }
+    }
 }

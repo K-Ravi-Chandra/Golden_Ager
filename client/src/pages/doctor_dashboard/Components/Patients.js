@@ -1,8 +1,12 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
+import { Formik, Form } from 'formik';
+import * as Yup from 'yup';
+import Textfield from '../../../components/formUI/Textfield';
 import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';
+import LinearProgress from '@mui/material/LinearProgress';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -13,37 +17,30 @@ import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import axios from "axios";
+import { Container ,Stack  , Button} from '@mui/material';
+import Grid from '@mui/material/Grid';
+import { styled} from '@mui/styles';
 
-function createData(name, calories, fat, carbs, protein, price) {
-  return {
-    name,
-    calories,
-    fat,
-    carbs,
-    protein,
-    price,
-    history: [
-      {
-        date: '2020-01-05',
-        customerId: '11091700',
-        amount: 3,
-      },
-      {
-        date: '2020-01-02',
-        customerId: 'Anonymous',
-        amount: 1,
-      },
-    ],
-  };
-}
-
+const StyledSubmitButton = styled(Button)({
+    background: "linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(0,212,255,1) 0%, rgba(162,222,131,1) 100%)",
+    border: 0,
+    borderRadius: 4,
+    boxShadow: '0 3px 5px 2px rgba(2, 212, 225, .3)',
+    color: 'white',
+  });
 function Row(props) {
-  const { row } = props;
-  const [open, setOpen] = React.useState(false);
+    
+    const { data } = props;
+    const [updated , setUpdated] = React.useState(false)
+    const [loading , setLoading] = React.useState(false)
+  
+    const [open, setOpen] = React.useState(false);
 
-  return (
+    return (
     <React.Fragment>
-      <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
+     
+        <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
         <TableCell>
           <IconButton
             aria-label="expand row"
@@ -54,70 +51,125 @@ function Row(props) {
           </IconButton>
         </TableCell>
         <TableCell component="th" scope="row">
-          {row.name}
-        </TableCell>
-        <TableCell align="right">{row.calories}</TableCell>
-        <TableCell align="right">{row.fat}</TableCell>
-        <TableCell align="right">{row.carbs}</TableCell>
-        <TableCell align="right">{row.protein}</TableCell>
+        {data.profile.username}
+        </TableCell>    
+        <TableCell align="right">{data.profile.phone}</TableCell>
+        <TableCell align="right">{data.volunter}</TableCell>
       </TableRow>
-       <Collapse in={open} timeout="auto" unmountOnExit>
+      <TableRow>
+        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+      
+          <Collapse in={open} timeout="auto" unmountOnExit>
+            
             <Box sx={{ margin: 1 }}>
               <Typography variant="h6" gutterBottom component="div">
-                History
+                Patient Details :
               </Typography>
+              <Stack spacing ={1}>
+                    
+                        <Stack direction = 'row' spacing = {1}>
+                            <Typography > Age&nbsp;:  </Typography>
+                            <Typography >{data.profile.age} </Typography>
+                        </Stack>
+                        <Stack direction = 'row' spacing = {1}>
+                            <Typography >Address&nbsp;:  </Typography>
+                            <Typography > {data.profile.address} </Typography>
+                        </Stack>
+                        <Stack direction = 'row' spacing = {1}>
+                            <Typography > Email&nbsp;ID&nbsp;:  </Typography>
+                            <Typography > {data.email} </Typography>
+                        </Stack>
+
+                  </Stack>
+              
             </Box>
           </Collapse>
-
+          </TableCell>
+      </TableRow>
+        
+     
+      
     </React.Fragment>
   );
 }
 
-Row.propTypes = {
-  row: PropTypes.shape({
-    calories: PropTypes.number.isRequired,
-    carbs: PropTypes.number.isRequired,
-    fat: PropTypes.number.isRequired,
-    history: PropTypes.arrayOf(
-      PropTypes.shape({
-        amount: PropTypes.number.isRequired,
-        customerId: PropTypes.string.isRequired,
-        date: PropTypes.string.isRequired,
-      }),
-    ).isRequired,
-    name: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    protein: PropTypes.number.isRequired,
-  }).isRequired,
-};
 
-const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0, 3.99),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3, 4.99),
-  createData('Eclair', 262, 16.0, 24, 6.0, 3.79),
-  createData('Cupcake', 305, 3.7, 67, 4.3, 2.5),
-  createData('Gingerbread', 356, 16.0, 49, 3.9, 1.5),
-];
+export default function Patients(props) {
 
-export default function Patients() {
+
+
+const [data, setData] = React.useState([]);
+const [fetching , setFetching] = React.useState(true)
+const [error , setError] =   React.useState(false)
+
+React.useEffect(async () => {
+  
+
+    setError(false);
+    setFetching(true);
+
+    const config = {
+      header: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    const doctor = props.data.email;
+    console.log(doctor)
+
+      await axios.post(
+        "/api/doctor/getPatients",
+        {
+          doctor
+        },
+        config
+      ).then(function(response) {
+        console.log(response.data.patients)
+        setError(false); 
+        setFetching(false);
+        setData(response.data.patients)
+        return response;
+      })
+      .catch(function(error) {
+        setError(true);
+        setFetching(false);
+        console.log(error);
+      });
+
+  }, [])
+
   return (
-    <TableContainer component={Paper}>
+    <div>
+    {fetching ?  <LinearProgress/> : <>
+    
+      {error ? <Typography> An unknown Error</Typography>  : <>
+
+        <TableContainer component={Paper}>
       <Table aria-label="collapsible table">
         <TableHead>
           <TableRow>
             <TableCell />
-            <TableCell>Name</TableCell>
-            <TableCell align="right">Status</TableCell>
-            <TableCell align="right">Health&nbsp;Issue</TableCell>
-            <TableCell align="right">Date</TableCell>
+            <TableCell>Patient&nbsp;Name</TableCell>
+            <TableCell align="right">Phone</TableCell>
+            <TableCell align="right">Volunter</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <Row key={row.name} row={row} />
+          {data.map((d) => (
+            <Row key={d._id} data={d} />
           ))}
         </TableBody>
       </Table>
     </TableContainer>
+       </>}
+        
+    </>}
+    
+    
+   
+
+  </div>
+    
   );
 }
+
