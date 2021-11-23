@@ -29,10 +29,11 @@ exports.financial= async (req, res, next) => {
 
     const {name ,email, phone,volunter } = req.body;
     const date = Date.now();
+    const status = "0"
 
     try {
         const financialRequest = await FinancialRequest.create({
-            name ,email,phone,volunter, date 
+            name ,email,phone,volunter, date , status
         });
 
         res.status(201).json({success : true , data : "Your volunteer will get back to you"})

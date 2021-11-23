@@ -20,7 +20,7 @@ const Profile = (props) => {
         "Content-Type": "application/json",
       },
     };
-      await axios.get(
+      await axios.post( 
         "api/seniorcitizen/details",
         {
           email

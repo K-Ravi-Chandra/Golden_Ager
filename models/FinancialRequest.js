@@ -22,6 +22,7 @@ const FinancialRequestSchema = new mongoose.Schema({
         type : Date,
         required : [true, "Insuficient details"]
     },
+    status : String
 
 });
 
