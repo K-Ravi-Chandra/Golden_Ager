@@ -14,6 +14,125 @@ import DoneIcon from '@mui/icons-material/Done';
 import CancelIcon from '@mui/icons-material/Cancel';
 import ClearIcon from '@mui/icons-material/Clear';
 
+
+
+function Row(props){ 
+
+    const { data } = props;
+    const [updated , setUpdated] = React.useState(false)
+    const [loading , setLoading] = React.useState(false)
+
+    const [open, setOpen] = React.useState(false);
+   
+    const Accept = async () => {
+
+      setLoading(true);
+
+      const _id = data._id;
+      const config = {
+        header: {
+          "Content-Type": "application/json",
+        },
+      };
+
+      const status = "1";
+
+      await axios.post(
+        "api/volunter/updateFinancialRequest",
+        {_id , status },
+        config
+      ).then(function(response) {
+        setLoading(false);
+        setUpdated(true);
+        alert(response.data.success)
+        return response;
+      })
+      .catch(function(error) {
+        setLoading(false);
+        alert(error.message);
+      });
+
+
+
+    }
+
+    const Reject = async () => {
+
+      setLoading(true);
+
+      const _id = data._id;
+      const config = {
+        header: {
+          "Content-Type": "application/json",
+        },
+      };
+
+      const status = "-1";
+
+      await axios.post(
+        "api/volunter/updateFinancialRequest",
+        {_id , status },
+        config
+      ).then(function(response) {
+        setLoading(false);
+        setUpdated(true);
+        alert(response.data.success)
+        return response;
+      })
+      .catch(function(error) {
+        setLoading(false);
+        alert(error.message);
+      });
+
+    }
+
+    return(
+      <>
+
+{
+          updated ?  <></> : <>          
+          <Accordion>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1a-content"
+          id="panel1a-header"
+        >
+          <Typography>{data.name}</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Typography sx={{p:2}}>
+            Name:    {data.name}
+          </Typography>
+          <Typography sx={{p:2}}>
+            Email :  {data.email} 
+          </Typography>
+          <Typography sx={{p:2}}>
+            Mobile : {data.phone} 
+          </Typography>
+          <Typography sx={{p:2}}>
+            Date :   {data.date} 
+          </Typography>
+          
+          <Stack direction="row" spacing={1}>
+          <Button color="primary" variant="contained" aria-label="add to shopping cart" onClick={Accept}>
+             <DoneIcon />Accept
+          </Button>
+          <Button variant="contained" aria-label="delete" color ="error" onClick={Reject}>
+             <ClearIcon />Reject
+          </Button>
+          </Stack>
+        </AccordionDetails>
+      </Accordion>
+   
+         </>
+        }
+
+      </>
+    )
+
+}
+
+
 export default function SimpleAccordion(props) {
 
 
@@ -33,12 +152,12 @@ export default function SimpleAccordion(props) {
         "Content-Type": "application/json",
       },
     };
-      const volunteer = props.data.email;
+      const volunter = props.data.email;
 
       await axios.post(
-        "api/volunter/getfinancialrequests",
+        "/api/volunter/getfinancialrequests",
         {
-          volunteer
+          volunter
         },
         config
       ).then(function(response) {
@@ -65,48 +184,11 @@ export default function SimpleAccordion(props) {
       
         {error ? <Typography> An unknown Error</Typography>  : <>
 
-        {
-          updated ?  <></> : <>
 
-         <div>
-           <hr/>
-          {data.map((d) =>
-          <Accordion>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1a-content"
-          id="panel1a-header"
-        >
-          <Typography>{d.name}</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography sx={{p:2}}>
-            Name:    {d.name}
-          </Typography>
-          <Typography sx={{p:2}}>
-            Email :  {d.email} 
-          </Typography>
-          <Typography sx={{p:2}}>
-            Mobile : {d.phone} 
-          </Typography>
-          <Typography sx={{p:2}}>
-            Date :   {d.date} 
-          </Typography>
-          
-          <Stack direction="row" spacing={1}>
-          <Button color="primary" variant="contained" aria-label="add to shopping cart">
-             <DoneIcon />Accept
-          </Button>
-          <Button variant="contained" aria-label="delete" color ="error">
-             <ClearIcon />Reject
-          </Button>
-          </Stack>
-        </AccordionDetails>
-      </Accordion>
-           )}
-         </div>
-         </>
-        }
+          {data.map((d) => (
+            <Row key={d._id} data={d} />
+          ))}
+        
          </>}
         
           

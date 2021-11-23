@@ -220,9 +220,11 @@ exports.findSeniorCitizen  = async (req ,res , next) =>{
 }
 
 exports.getFinancialRequests  = async (req ,res , next) => {
+    
     const {volunter} = req.body;
 
     console.log(volunter)
+    console.log(":hi")
 
     if(!volunter){
         return next(new ErrorResponse("Please provide email address to fetch financial requests", 400))
@@ -250,6 +252,28 @@ exports.getFinancialRequests  = async (req ,res , next) => {
         }
     }
 
+}
+
+
+exports.updateFinancialRequest  = async (req ,res , next) => {
+
+    const {_id ,  status } = req.body
+      
+
+    try {
+        const financialRequest = await FinancialRequest.updateOne(
+            { _id} ,
+            {status  },{}
+         )
+
+        res.status(200).json({
+            success :true
+        });
+
+    }catch (error) {
+        console.log(error);
+        next(error);
+    } 
 }
 
 exports.getHelpRequests  = async (req ,res , next) => {
