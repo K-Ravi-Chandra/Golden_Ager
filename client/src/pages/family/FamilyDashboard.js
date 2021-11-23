@@ -134,7 +134,7 @@ const FamilyDashboard = (props) => {
         </Link>  
         <Typography  variant="h3" sx={{ flexGrow: 1 , fontWeight : 50}}>
               <Link  underline="none" href="/dashboard">
-                  Golden Ager
+                  Golden&nbsp;Ager
               </Link>
         </Typography>
 
