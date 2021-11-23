@@ -10,12 +10,14 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 export default function SimpleAccordion() {
 
   const [data, setData] = React.useState([]);
-
+  const [updated , setUpdated] = React.useState(false)
+  const [loading , setLoading] = React.useState(false)
   const [fetching , setFetching] = React.useState(true)
   const [error , setError] =   React.useState(false)
 
   React.useEffect(async () => {
 
+    
     setError(false);
     setFetching(true);
 
@@ -56,6 +58,9 @@ export default function SimpleAccordion() {
       
         {error ? <Typography> An unknown Error</Typography>  : <>
 
+        {
+          updated ?  <></> : <>
+
          <div>
           {data.map((d) =>
           <Accordion>
@@ -80,7 +85,10 @@ export default function SimpleAccordion() {
       </Accordion>
            )}
          </div>
+         </>
+        }
          </>}
+        
           
       </>}
       
