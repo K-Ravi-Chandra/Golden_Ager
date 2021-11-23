@@ -13,7 +13,9 @@ import Stack from '@mui/material/Stack';
 import DoneIcon from '@mui/icons-material/Done';
 import CancelIcon from '@mui/icons-material/Cancel';
 import ClearIcon from '@mui/icons-material/Clear';
-export default function SimpleAccordion() {
+
+export default function SimpleAccordion(props) {
+
 
   const [data, setData] = React.useState([]);
   const [updated , setUpdated] = React.useState(false)
@@ -22,7 +24,6 @@ export default function SimpleAccordion() {
   const [error , setError] =   React.useState(false)
 
   React.useEffect(async () => {
-
     
     setError(false);
     setFetching(true);
@@ -32,9 +33,9 @@ export default function SimpleAccordion() {
         "Content-Type": "application/json",
       },
     };
-      const volunteer = "Volunteer";
+      const volunteer = props.data.email;
 
-      await axios.get(
+      await axios.post(
         "api/volunter/getfinancialrequests",
         {
           volunteer
