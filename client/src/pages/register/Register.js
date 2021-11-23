@@ -167,7 +167,7 @@ const Register = () => {
                             <img style = {{ width :32, height :32, margin : 4}} alt = "logo" src = {Logo}/>
                             <Title variant="h4" component="div" sx={{ flexGrow: 1 }}>
                                 <Link underline="none" href="/">
-                                    Golden Ager
+                                    Golden&nbsp;Ager
                                 </Link>
                             </Title>
                       </Toolbar>

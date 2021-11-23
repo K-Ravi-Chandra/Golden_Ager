@@ -150,7 +150,7 @@ export default function ForgotPassword() {
                                     </Link>
                                     <Title  variant="h4" component="div" sx={{ flexGrow: 1 }}>
                                           <Link underline="none" href="/">
-                                              Golden Ager
+                                              Golden&nbsp;Ager
                                           </Link>
                                     </Title>
                               </Toolbar>
