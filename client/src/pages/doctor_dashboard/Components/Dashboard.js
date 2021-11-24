@@ -6,7 +6,7 @@ import PeopleIcon from '@mui/icons-material/People';
 import MedicalServicesIcon from '@mui/icons-material/MedicalServices';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
-
+import axios from "axios";
 import { merge } from 'lodash';
 import ReactApexChart  from 'react-apexcharts';
 import {BaseOptionChart} from '../../../components/charts'
@@ -42,19 +42,19 @@ const ChartWrapperStyle = styled('div')(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-const CHART_DATA = [Healthy_Patients, Total_Patients, Total_Appointments, Total_Critical_Patients];
-
- function PieChart() {
+ function PieChart(props) {
   const theme = useTheme();
+
+  const CHART_DATA = [props.patients, props.totalappointments, props.appointments];
 
   const chartOptions = merge(BaseOptionChart(), {
     colors: [
-      theme.palette.primary.main,
+      
       theme.palette.info.main,
+      theme.palette.primary.main,
       theme.palette.warning.main,
-      theme.palette.error.main
     ],
-    labels: ['Healthy Patients', 'Total Patients', 'Appointments', 'Critical Patients'],
+    labels: [ 'Total Patients', 'Total Appointments', 'Appointments'],
     stroke: { colors: [theme.palette.background.paper] },
     legend: { floating: true, horizontalAlign: 'center' },
     dataLabels: { enabled: true, dropShadow: { enabled: false } },
@@ -110,13 +110,13 @@ const AppointmentsRootStyle = styled(Card)(({ theme }) => ({
     )} 100%)`
   }));
   
-function AppointmentsCard() {
+function AppointmentsCard(props) {
     return (
       <AppointmentsRootStyle>
         <AppointmentsIconWrapperStyle>
           <PeopleIcon/>
         </AppointmentsIconWrapperStyle>
-        <Typography variant="h3">{Total_Appointments}</Typography>
+        <Typography variant="h3">{props.appointments}</Typography>
         <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
           Appointments
         </Typography>
@@ -151,13 +151,13 @@ const Total_PatientsRootStyle = styled(Card)(({ theme }) => ({
   }));
   
   
-  function Total_PatientsCard() {
+  function Total_PatientsCard(props) {
     return (
       <Total_PatientsRootStyle>
         <Total_PatientsIconWrapperStyle>
           <PeopleIcon/>
         </Total_PatientsIconWrapperStyle>
-        <Typography variant="h3">{Total_Patients}</Typography>
+        <Typography variant="h3">{props.patients}</Typography>
         <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
           Total Patients
         </Typography>
@@ -167,7 +167,7 @@ const Total_PatientsRootStyle = styled(Card)(({ theme }) => ({
 
 //----------------------------------------------------------------------
 
-const Healthy_PatientsRootStyle = styled(Card)(({ theme }) => ({
+const TotalAppointmentsRootStyle = styled(Card)(({ theme }) => ({
     boxShadow: 'none',
     textAlign: 'center',
     padding: theme.spacing(5, 0),
@@ -175,7 +175,7 @@ const Healthy_PatientsRootStyle = styled(Card)(({ theme }) => ({
     backgroundColor: theme.palette.primary.lighter
   }));
 
-  const Healthy_PatientsIconWrapperStyle = styled('div')(({ theme }) => ({
+  const TotalAppointmentsIconWrapperStyle = styled('div')(({ theme }) => ({
     margin: 'auto',
     display: 'flex',
     borderRadius: '50%',
@@ -191,67 +191,135 @@ const Healthy_PatientsRootStyle = styled(Card)(({ theme }) => ({
     )} 100%)`
   }));
   
-const Healthy_PatientsStyledCard = () => {
+const TotalAppointmentsCard = (props) => {
     return (
-        <Healthy_PatientsRootStyle>
-        <Healthy_PatientsIconWrapperStyle>
+        <TotalAppointmentsRootStyle>
+        <TotalAppointmentsIconWrapperStyle>
             <PeopleIcon/>
-        </Healthy_PatientsIconWrapperStyle>
-        <Typography variant="h3">{Healthy_Patients}</Typography>
+        </TotalAppointmentsIconWrapperStyle>
+        <Typography variant="h3">{props.totalappointments}</Typography>
         <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
-            Healthy Patients
+          Total Appointments
         </Typography>
-    </Healthy_PatientsRootStyle>
+    </TotalAppointmentsRootStyle>
     )
 }
   
 // ----------------------------------------------------------------------
 
-// ----------------------------------------------------------------------
+const DashboardPage = (props) => {
+    
+const [patients, setPatients] = React.useState([]);
+const [fetching , setFetching] = React.useState(true)
+const [error , setError] =   React.useState(false)
 
-const Critical_PatientsRootStyle = styled(Card)(({ theme }) => ({
-    boxShadow: 'none',
-    textAlign: 'center',
-    padding: theme.spacing(5, 0),
-    color: theme.palette.error.darker,
-    backgroundColor: theme.palette.error.lighter
-  }));
+
+React.useEffect(async () => {
   
-  const Critical_PatientsIconWrapperStyle = styled('div')(({ theme }) => ({
-    margin: 'auto',
-    display: 'flex',
-    borderRadius: '50%',
-    alignItems: 'center',
-    width: theme.spacing(8),
-    height: theme.spacing(8),
-    justifyContent: 'center',
-    marginBottom: theme.spacing(3),
-    color: theme.palette.error.dark,
-    backgroundImage: `linear-gradient(135deg, ${alpha(theme.palette.error.dark, 0)} 0%, ${alpha(
-      theme.palette.error.dark,
-      0.24
-    )} 100%)`
-  }));
-  
-  // ----------------------------------------------------------------------
-  
+
+    setError(false);
+    setFetching(true);
+
+    const config = {
+      header: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    const doctor = props.data.email;
+    console.log(doctor)
+
+      await axios.post(
+        "/api/doctor/getPatients",
+        {
+          doctor
+        },
+        config
+      ).then(function(response) {
+        setError(false); 
+        setFetching(false);
+        setPatients(response.data.patients)
+        return response;
+      })
+      .catch(function(error) {
+        setError(true);
+        setFetching(false);
+        console.log(error);
+      });
+
+      
+
+  }, [])
+
+  const [appointments, setAppointments] = React.useState([]);
+
+ React.useEffect(async () => {
+
+    setError(false);
+    setFetching(true);
+
+    const config = {
+      header: {
+        "Content-Type": "application/json",
+      },
+    };
+    const doctor = props.data.email;
+
+      await axios.post(
+        "api/doctor/getAppointments",
+        {
+          doctor
+        },
+        config
+      ).then(function(response) {
+        setError(false); 
+        setFetching(false);
+        setAppointments(response.data.requests)
+        return response;
+      })
+      .catch(function(error) {
+        setError(true);
+        setFetching(false);
+        console.log(error);
+      });
+
+  }, [])
+
+  const [totalappointments, setTotalAppointments] = React.useState([]);
+
+  React.useEffect(async () => {
  
- function Critical_PatientsCard() {
-    return (
-      <Critical_PatientsRootStyle>
-        <Critical_PatientsIconWrapperStyle>
-          <PeopleIcon/>
-        </Critical_PatientsIconWrapperStyle>
-        <Typography variant="h3">{Total_Critical_Patients}</Typography>
-        <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
-           Critical Patients
-        </Typography>
-      </Critical_PatientsRootStyle>
-    );
-  }
+     setError(false);
+     setFetching(true);
+ 
+     const config = {
+       header: {
+         "Content-Type": "application/json",
+       },
+     };
+     const doctor = props.data.email;
+ 
+       await axios.post(
+         "api/doctor/getTotalAppointments",
+         {
+           doctor
+         },
+         config
+       ).then(function(response) {
+         setError(false); 
+         setFetching(false);
+         setTotalAppointments(response.data.requests)
+         return response;
+       })
+       .catch(function(error) {
+         setError(true);
+         setFetching(false);
+         console.log(error);
+       });
+ 
+   }, [])
 
-//----------------------------------------------------------------
-const DashboardPage = () => {
+
     return (
         <>
 
@@ -260,20 +328,18 @@ const DashboardPage = () => {
           <Typography variant="h4">Hi, Welcome back</Typography>
         </Box>
         <Grid container spacing={3}>
-          <Grid item xs={12}  md={3}>
-          <Total_PatientsCard/>
+          <Grid item xs={12}  md={4}>
+          <Total_PatientsCard patients = {patients.length}/>
           </Grid>
-          <Grid item xs={12}  md={3}>
-          <Healthy_PatientsStyledCard  />
+          <Grid item xs={12}  md={4}>
+          <TotalAppointmentsCard totalappointments={totalappointments.length} />
           </Grid>
-          <Grid item xs={12}  md={3}>
-          <Critical_PatientsCard/>
+
+          <Grid item xs={12}  md={4}>
+                <AppointmentsCard appointments={appointments.length}/>
           </Grid>
-          <Grid item xs={12}  md={3}>
-                <AppointmentsCard/>
-          </Grid>
-          <Grid item xs={12}  md={12}>
-                <PieChart/>
+          <Grid item xs={12}   md={12}>
+                <PieChart patients = {patients.length} totalappointments={totalappointments.length} appointments={appointments.length} />
           </Grid>
 
         </Grid>

@@ -27,6 +27,36 @@ exports.updateAppointment = async (req ,res , next) => {
     } 
 }
 
+exports.getTotalAppointments  = async (req ,res , next) => {
+    
+    const {doctor} = req.body;
+
+    console.log(doctor) 
+
+
+
+    if(!doctor){
+        return next(new ErrorResponse("Please try again! Later", 400))
+    }
+    else{
+        try { 
+            const totalappointments = await Appointments.find(  {"doctor" : doctor})
+
+            res.status(200).json({
+                    success :true,
+                    requests : totalappointments
+            });
+
+        } catch (error) {
+            res.status(500).json({
+                success :false,
+                error: error.message,
+            });
+        }
+    }
+
+}
+
 exports.getAppointments  = async (req ,res , next) => {
     
     const {doctor} = req.body;
