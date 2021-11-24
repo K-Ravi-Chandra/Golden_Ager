@@ -129,7 +129,8 @@ import axios from "axios";
   
   function HealthCheckup_Card(props) {
     const data = props.data
-    console.log(data)
+    const profile = data.profile;
+
     const HealthCheckup = async () => {
       const config = {
         header: {
@@ -137,14 +138,14 @@ import axios from "axios";
         },
       };
 
-      const name = data.name;
+      const name = profile.username;
       const email = data.email;
 
       try {
         const fetch = await axios.post(
           "/api/seniorcitizen/details",
           {
-            email
+            name,email
           },
           config
         )
