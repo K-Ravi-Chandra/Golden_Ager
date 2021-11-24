@@ -252,6 +252,32 @@ exports.getFinancialRequests  = async (req ,res , next) => {
 
 }
 
+exports.getTotalFinancialRequests  = async (req ,res , next) => {
+    
+    const {volunter} = req.body;
+
+    if(!volunter){
+        return next(new ErrorResponse("Please provide email address to fetch financial requests", 400))
+    }
+    else{
+        try {
+            const financialRequests = await FinancialRequest.find({"volunter" : volunter})
+
+            res.status(200).json({
+                success :true,
+                message: " Financial Requests Found",
+                requests : financialRequests
+            });
+
+        } catch (error) {
+            res.status(500).json({
+                success :false,
+                error: error.message,
+            });
+        }
+    }
+
+}
 
 exports.updateFinancialRequest  = async (req ,res , next) => {
 
@@ -390,6 +416,55 @@ exports.acceptDonations = async (req ,res , next) => {
             { _id} ,
             {"status" : true},{}
          )
+
+        res.status(200).json({
+            success :true,
+            donations : donations
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            success :false,
+            error: error.message,
+        });
+   }
+
+}
+
+
+
+exports.getSeniorCitizens = async (req ,res , next) => {
+    
+    const {volunter} = req.body;
+
+    if(!volunter){
+        return next(new ErrorResponse("Please provide email address to fetch financial requests", 400))
+    }
+    else{
+        try {
+            const seniorcitizens = await SeniorCitizen.find( {"volunter" : volunter})
+
+            res.status(200).json({
+                success :true,
+                seniorcitizens : seniorcitizens
+            });
+
+        } catch (error) {
+            res.status(500).json({
+                success :false,
+                error: error.message,
+            });
+        }
+    }
+
+}
+
+
+exports.getTotalDonations = async (req ,res , next) => {
+    
+
+    try {
+        const donations = await DonatingThings.find()
 
         res.status(200).json({
             success :true,

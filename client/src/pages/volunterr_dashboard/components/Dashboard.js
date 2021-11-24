@@ -1,3 +1,5 @@
+import * as React from 'react';
+import axios from "axios";
 import { Avatar, Box, Card,CardContent,CardHeader, Grid,Container,LinearProgress, Typography } from '@mui/material';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import MoneyIcon from '@mui/icons-material/Money';
@@ -225,7 +227,7 @@ const Totalseniorcitizenscard = (props) => (
               color="textPrimary"
               variant="h4"
             >
-              $23k
+            kkj
             </Typography>
           </Grid>
           <Grid item>
@@ -290,13 +292,153 @@ const Total_Money_Requests = 400;
     </Card>
   );
  }
-const Dashboard = () => {
+const Dashboard = (props) => {
+
+  const [financialrequests, setFinancialrequests] = React.useState('');
+  const [totalfinancialrequests, setTotalFinancialrequests] = React.useState('');
+  const [seniorcitizens , SetSeniorCitizens] = React.useState('');
+  const [donations , setDonations] = React.useState('');
+   const [fetching , setFetching]  = React.useState(true)
+  const [error , setError] =   React.useState(false)
+
+  
+React.useEffect(async () => {
+
+  setError(false);
+  setFetching(true);
+
+  const config = {
+    header: {
+      "Content-Type": "application/json",
+    },
+  };
+
+    await axios.post(
+      "api/volunter/getTotalDonations",
+      {},
+      config
+    ).then(function(response) {
+      setError(false); 
+      setFetching(false);
+      setDonations(response.data.donations.length)
+      return response;
+    })
+    .catch(function(error) {
+      setError(true);
+      setFetching(false);
+      console.log(error);
+    });
+
+}, [])
+
+
+  React.useEffect(async () => {
+    
+    setError(false);
+    setFetching(true);
+
+    const config = {
+      header: {
+        "Content-Type": "application/json",
+      },
+    };
+      const volunter = props.data.email;
+
+      await axios.post(
+        "/api/volunter/getSeniorCitizens",
+        {
+          volunter
+        },
+        config
+      ).then(function(response) {
+        setError(false);
+        setFetching(false);
+        SetSeniorCitizens(response.data.seniorcitizens.length)
+        return response;
+      })
+      .catch(function(error) {
+        setError(true);
+        setFetching(false);
+        console.log(error);
+      });
+  }, [])
+
+
+  React.useEffect(async () => {
+    
+    setError(false);
+    setFetching(true);
+
+    const config = {
+      header: {
+        "Content-Type": "application/json",
+      },
+    };
+      const volunter = props.data.email;
+
+      await axios.post(
+        "/api/volunter/getTotalFinancialRequests",
+        {
+          volunter
+        },
+        config
+      ).then(function(response) {
+        setError(false);
+        setFetching(false);
+        setTotalFinancialrequests(response.data.requests.length)
+        return response;
+      })
+      .catch(function(error) {
+        setError(true);
+        setFetching(false);
+        console.log(error);
+      });
+  }, [])
+
+  
+
+  React.useEffect(async () => {
+    
+    setError(false);
+    setFetching(true);
+
+    const config = {
+      header: {
+        "Content-Type": "application/json",
+      },
+    };
+      const volunter = props.data.email;
+
+      await axios.post(
+        "/api/volunter/getfinancialrequests",
+        {
+          volunter
+        },
+        config
+      ).then(function(response) {
+        setError(false);
+        setFetching(false);
+        setFinancialrequests(response.data.requests.length)
+        return response;
+      })
+      .catch(function(error) {
+        setError(true);
+        setFetching(false);
+        console.log(error);
+      });
+  }, [])
+
+
     return (
         <>
 
 <Container maxWidth="xl">
         <Box sx={{ pb: 5 }}>
           <Typography variant="h4">Hi, Welcome back</Typography>
+          financial requests pending : {financialrequests}{' '}
+          total requests : {totalfinancialrequests}{' '}
+          seniorcitizens : {seniorcitizens} {' '}
+          total Donations : {donations}
         </Box>
         <Grid container spacing={3}>
           <Grid item xs={12}  md={3}>

@@ -173,8 +173,6 @@ const History = (props) => {
         setError(false);
         setFetching(false);
         setData(response.data.history)
-        console.clear()
-        console.log(response.data.history)
         return response;
       })
       .catch(function(error) {
