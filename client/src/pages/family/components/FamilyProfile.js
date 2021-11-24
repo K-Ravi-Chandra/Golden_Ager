@@ -2,7 +2,7 @@ import React from 'react'
 import { Grid, Box , Paper, Typography, makeStyles, Card, Button} from '@material-ui/core'
 import { styled } from '@mui/material/styles';
 import PersonIcon from '@mui/icons-material/Person';
-
+import axios from "axios";
 
 const useStyles = makeStyles( theme =>({
     root : {
@@ -33,9 +33,107 @@ const useStyles = makeStyles( theme =>({
 }))
 
 
-export default function FamilyProfile() {
+export default function FamilyProfile(props) {
+
+    const [mydetails, setMydetails] = React.useState({});
+    const [seniordetails, setSeniordetails] = React.useState({});
+    const [seniorprofile, setSeniorprofile] = React.useState([]);
+    const [volunterdetails, setVolunterdetails] = React.useState({});
+    const [doctordetails, setDoctordetails] = React.useState({})
+    const [fetching , setFetching] = React.useState(true)
+    const [error , setError] =   React.useState(false)
+  
+    React.useEffect(async () => {
+
+      const email = props.data.email
+      setError(false);
+      setFetching(true);
+  
+      const config = {
+        header: {
+          "Content-Type": "application/json",
+        },
+      };
+        await axios.post( 
+          "api/familymember/getMyDetails",
+          {
+            email
+          },
+          config
+        ).then(function(response) {
+
+          setMydetails(response.data.details[0])
+          const email = response.data.details[0].senior
+                     axios.post( 
+                        "api/seniorcitizen/details",
+                        {
+                        email
+                        },
+                        config
+                    ).then(function(response) {
+                        
+                        setSeniordetails(response.data.details)
+                        setSeniorprofile(response.data.details.profile)
+                        
+                        let email = response.data.details.volunter
+                        const doctor = response.data.details.doctor
+ 
+                        axios.post( 
+                            "api/familymember/volunteerdetails",
+                            {
+                                email
+                            },
+                            config
+                          ).then(function(response) {
+                            setVolunterdetails(response.data.volunter)
+                            email = doctor
+                            console.log(email)
+                            axios.get(
+                                "/api/doctor/getDetails",
+                                {
+                                    email
+                                },
+                                config
+                              ).then(function(response) {
+                                setError(false);
+                                setFetching(false);
+                                setDoctordetails(response.data.details)
+                                console.log(response.data.details)
+                                return response;
+                              })
+                              .catch(function(error) {
+                                setError(true);
+                                console.log(error.message)
+                                setFetching(false);
+                                console.log(error);
+                              });
+                            return response;
+                          }).catch(function(error) {
+                            setError(true);
+                            setFetching(false);
+                            console.log(error);
+                        });
+                        
+                    })
+                    .catch(function(error) {
+                        setError(true);
+                        setFetching(false);
+                        console.log(error);
+                    });
+          return response;
+        })
+        .catch(function(error) {
+          setError(true);
+          setFetching(false);
+          console.log(error);
+        });
+    }, [])
 
     const classes = useStyles();
+
+   
+    
+
 
     return (
         <Box sx={{width:'100%'}}>
@@ -52,24 +150,24 @@ export default function FamilyProfile() {
                                     component = "div"
                                 >
                                     <strong>Your Profile Details</strong>
-                                </Typography>
+                                </Typography> 
                                 <Typography
                                     variant = "subtitle1"
                                     component = "div"
                                 >
-                                    {"MK Rao"}
+                                    {mydetails.username}
                                 </Typography>
                                 <Typography
                                     variant = "subtitle2"
                                     component = "div"
                                 >
-                                    {"mkrao@gmail.com"}
+                                    {mydetails.email}
                                 </Typography>
                                 <Typography
                                     variant = "subtitle3"
                                     component = "div"
                                 >
-                                    {"9999999999"}
+                                    {mydetails.phone}
                                 </Typography>
                                 
                             </div>
@@ -97,19 +195,19 @@ export default function FamilyProfile() {
                                     variant = "subtitle1"
                                     component = "div"
                                 >
-                                    {"TT Pal"}
+                                    {seniorprofile.username}
                                 </Typography>
                                 <Typography
                                     variant = "subtitle2"
                                     component = "div"
                                 >
-                                    {"ttpak@gmail.com"}
+                                    {seniordetails.email}
                                 </Typography>
                                 <Typography
                                     variant = "subtitle3"
                                     component = "div"
                                 >
-                                    {"88888888888"}
+                                    {seniorprofile.phone}
                                 </Typography>
                                 
                             </div>
@@ -134,19 +232,19 @@ export default function FamilyProfile() {
                                     variant = "subtitle1"
                                     component = "div"
                                 >
-                                    {"Ram"}
+                                    {volunterdetails.username}
                                 </Typography>
                                 <Typography
                                     variant = "subtitle2"
                                     component = "div"
                                 >
-                                    {"ram@service.com"}
+                                    {volunterdetails.email}
                                 </Typography>
                                 <Typography
                                     variant = "subtitle3"
                                     component = "div"
                                 >
-                                    {"7777777777"}
+                                    {volunterdetails.phone}
                                 </Typography>
                                 
                             </div>
@@ -172,19 +270,19 @@ export default function FamilyProfile() {
                                     variant = "subtitle1"
                                     component = "div"
                                 >
-                                    {"Dr. Shyam"}
+                                    {doctordetails.username}
                                 </Typography>
                                 <Typography
                                     variant = "subtitle2"
                                     component = "div"
                                 >
-                                    {"shyam@gmail.com"}
+                                    {doctordetails.email}
                                 </Typography>
                                 <Typography
                                     variant = "subtitle3"
                                     component = "div"
                                 >
-                                    {"9898989898"}
+                                    {doctordetails.phone}
                                 </Typography>
                                 
                             </div>

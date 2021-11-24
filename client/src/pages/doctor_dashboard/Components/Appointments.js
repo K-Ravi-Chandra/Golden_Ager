@@ -211,10 +211,10 @@ export default function Appointments(props) {
 
 
 
-const [data, setData] = React.useState([]);
+
 const [fetching , setFetching] = React.useState(true)
 const [error , setError] =   React.useState(false)
-
+const [data, setData] = React.useState([]);
 React.useEffect(async () => {
 
     setError(false);

@@ -1,4 +1,3 @@
-const { ConnectionStates } = require('mongoose');
 const Appointments = require('../models/Appointments');
 const Doctor = require('../models/Doctor');
 const Senior = require('../models/SeniorCitizen')
