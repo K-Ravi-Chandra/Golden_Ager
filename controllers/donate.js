@@ -15,23 +15,15 @@ exports.donatethings = async (req ,res , next) => {
     const city  = values.city;
     const state = values.state;
     const thing = values.thing;
-
-
-    console.log(values);
-
-    
-
-
-    // const {  firstName,lastName,email,phone,addressLine1,addressLine2,city,state,thing} = req.body;
-
     const date = Date.now();
+    const status = false;
 
     try {
         const donate = await DonateThings.create({
-            firstName,lastName,email,phone,addressLine1,addressLine2,city,state,thing,date
+            status, firstName,lastName,email,phone,addressLine1,addressLine2,city,state,thing,date
         });
         res.status(201).json({success : true})
-        console.log("Submitted Successfully"); 
+        console.log("Donations form submitted"); 
 
     } catch (error) {
         console.log(error);

@@ -109,6 +109,19 @@ const Navigation = () => {
                   </ListItem>
                   ))}
 
+          <ListItem  disablePadding selected={Selected("/donations")} component={NavLink} sx ={{color: 'text.primary'}} to= "/donations" >
+            <ListItemButton sx={{p :2}} >
+              <ListItemIcon>
+                <DashboardIcon color = {Selected("/donations")? "primary" : "" }/>
+              </ListItemIcon>
+              <ListItemText>
+                <Typography variant="body1" fontSize={18} color = {Selected("/donations")? "primary" : "" } >
+                    Donations
+                </Typography>
+              </ListItemText>
+            </ListItemButton>
+          </ListItem>
+
           <ListItem disablePadding selected={Selected("/History")} component={NavLink} sx ={{color: 'text.primary'}} to= "/History" >
             <ListItemButton sx={{p :2}} >
               <ListItemIcon>

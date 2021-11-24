@@ -4,12 +4,18 @@ import HelpRequests from './components/HelpRequests';
 import Financialrequests from './components/Financialrequests';
 import Dashboard from './components/Dashboard';
 import Register from './components/register/Register'
+import Donations from './components/Donations'
 const dashboardRoutes = [
 
   {
     path : "/dashboard",
     exact : true,
     component : Dashboard
+  },
+  {
+    path : "/donations",
+    exact : true,
+    component : Donations
   },
 
   {

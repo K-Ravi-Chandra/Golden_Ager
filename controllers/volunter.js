@@ -5,6 +5,7 @@ const FamilyMember = require('../models/FamilyMember')
 const FinancialRequest = require('../models/FinancialRequest')
 const ErrorResponse = require('../utils/errorResponse')
 const HelpRequests =require('../models/HelpRequest')
+const DonatingThings  =require('../models/DonatingThings')
 
 // Senior citizen registration
 exports.registerseniorcitizen = async (req ,res , next) => {
@@ -357,3 +358,49 @@ exports.getHistory = async (req ,res , next) => {
 
 }
 
+
+
+exports.getDonations = async (req ,res , next) => {
+    
+
+        try {
+            const donations = await DonatingThings.find( {"status" : false})
+
+            res.status(200).json({
+                success :true,
+                donations : donations
+            });
+
+        } catch (error) {
+            res.status(500).json({
+                success :false,
+                error: error.message,
+            });
+       }
+
+}
+
+exports.acceptDonations = async (req ,res , next) => {
+
+    
+    const {_id } = req.body
+
+    try {
+        const donations = await DonatingThings.updateOne(
+            { _id} ,
+            {"status" : true},{}
+         )
+
+        res.status(200).json({
+            success :true,
+            donations : donations
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            success :false,
+            error: error.message,
+        });
+   }
+
+}

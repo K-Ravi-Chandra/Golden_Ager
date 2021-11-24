@@ -11,7 +11,8 @@ const DonatingThingsSchema = new mongoose.Schema({
     city: String,
     state: String,
     thing: String,
-    date : Date
+    date : Date,
+    status : Boolean
 
 });
 

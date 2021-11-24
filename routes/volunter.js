@@ -1,8 +1,10 @@
 const express = require('express');
 const router = express.Router();
 
-const {getHistory,registerseniorcitizen,getHelpRequests,findSeniorCitizen ,updateHelpRequest, updateFinancialRequest,registerfamilymember,findDoctor ,registerdoctor, getFinancialRequests}   = require('../controllers/volunter')
+const {acceptDonations , getDonations,getHistory,registerseniorcitizen,getHelpRequests,findSeniorCitizen ,updateHelpRequest, updateFinancialRequest,registerfamilymember,findDoctor ,registerdoctor, getFinancialRequests}   = require('../controllers/volunter')
 
+router.route("/acceptDonations").post(acceptDonations);
+router.route("/getDonations").post(getDonations);
 router.route("/registerseniorcitizen").post(registerseniorcitizen);
 router.route("/getfinancialrequests").post(getFinancialRequests);
 router.route("/getHistory").post(getHistory);
