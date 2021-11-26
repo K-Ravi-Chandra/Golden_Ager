@@ -135,7 +135,14 @@ import { useTheme } from '@material-ui/core/styles';
   function HealthCheckup_Card(props) {
     const data = props.data
     const profile = data.profile;
-
+    
+    const [openDialog, setOpenDialog] = React.useState(false);
+    const [isSuccess, setIsSuccess] = React.useState(false);
+    const [pad, setPad] = React.useState(6);
+    const handleCloseDialog = () => {
+      setOpenDialog(false);
+    }
+    const theme = useTheme();
     const HealthCheckup = async () => {
       const config = {
         header: {
@@ -166,13 +173,19 @@ import { useTheme } from '@material-ui/core/styles';
             config
           )
 
-          alert(bookAppointment.data.data)
+          // alert(bookAppointment.data.data)
+          //successful
+          setOpenDialog(true);
+          setIsSuccess(true);
+          setPad(0);
           
         } catch (error) {
           console.log(error.message)
+          //error
         }
       } catch (error) {
         console.log(error.message)
+        //error
       }
 
       //  try{
@@ -192,6 +205,7 @@ import { useTheme } from '@material-ui/core/styles';
   
     }
     return (
+      <>
       <HealthCheckup_RootStyle sx={{cursor : 'pointer'}} onClick={HealthCheckup}>
 
         <HealthCheckup_IconWrapperStyle>
@@ -201,10 +215,43 @@ import { useTheme } from '@material-ui/core/styles';
         <Typography variant="h6"> Health Checkup </Typography>
 
       </HealthCheckup_RootStyle>
+
+      <Dialog
+        open={openDialog}
+        onClose={handleCloseDialog}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+        
+      >
+        {/* <DialogTitle id="alert-dialog-title">
+        </DialogTitle> */}
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+                <h1><center>{isSuccess?"Success":"Error"}</center> </h1>
+                <center>
+                  {isSuccess ?
+                      <CheckCircleIcon style={{color: "#26FF00", fontSize:"6em"}}/>
+                      :<CancelIcon style={{color: "#FF0000", fontSize:"6em"}}/>
+                  }
+                </center>
+                <br />
+                <div style={{paddingLeft: theme.spacing(pad), paddingRight: theme.spacing(pad)}}>
+                    <strong>
+                      {isSuccess
+                        ?"Take care, Your doctor will contact you soon"
+                        :"Oops!!  Something went wrong"
+                      }
+                    </strong>
+                </div>
+          </DialogContentText>
+        </DialogContent>
+      </Dialog>
+
+      </>
     )
   }
  
-// 4) Request tHelp ----------------------------------------------------------------------
+// 4) Request Help ----------------------------------------------------------------------
 
   
   const RequestHelpRootStyle = styled(Card)(({ theme }) => ({
