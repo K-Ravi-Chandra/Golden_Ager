@@ -1,6 +1,6 @@
 import React from 'react'
 import { alpha, styled } from '@mui/material/styles';
-import { Grid, Container, Typography,Card, Button} from '@mui/material';
+import { Grid, Container, Typography,Card, Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions} from '@mui/material';
 import PeopleIcon from '@mui/icons-material/People';
 import ThemeConfig from '../../../components/theme'
 import MoneyIcon from '@mui/icons-material/Money';
@@ -10,6 +10,11 @@ import ConnectWithoutContactIcon from '@mui/icons-material/ConnectWithoutContact
 import AccessibleForwardIcon from '@mui/icons-material/AccessibleForward';
 import AttributionIcon from '@mui/icons-material/Attribution';
 import axios from "axios";
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import CancelIcon from '@mui/icons-material/Cancel';
+import { useTheme } from '@material-ui/core/styles';
+
+
 // 1) Financial Help ---------------------------------------------------------------
 
   const FinancialHelpRootStyle = styled(Card)(({ theme }) => ({
@@ -219,10 +224,11 @@ import axios from "axios";
   }));
   
   function RequestHelpCard(props) {
-
+    const [openDialog, setOpenDialog] = React.useState(false);
     const details = props.data
     const profile = props.profile
-
+    const [isSuccess, setIsSuccess] = React.useState(false);
+    const [pad, setPad] = React.useState(6);
     const RequestHelp = async () => {
       const config = {
         header: {
@@ -244,15 +250,24 @@ import axios from "axios";
           config
         );
         console.log("Request Sent");
-      
+        setIsSuccess(true);
+        setPad(0);
       }
       catch (error) {
-        console.log(error.response.data)
+        console.log(error.response.data);
       }
-  
+      setOpenDialog(true);
     }
 
+    const handleCloseDialog = () => {
+      setOpenDialog(false);
+    }
+
+    
+    const theme = useTheme();
+
     return (
+      <>
       <RequestHelpRootStyle  sx={{cursor : 'pointer'}} onClick={RequestHelp}>
 
         <RequestHelpIconWrapperStyle>
@@ -262,6 +277,37 @@ import axios from "axios";
         <Typography variant="h6">Request Help</Typography>
 
       </RequestHelpRootStyle>
+      <Dialog
+        open={openDialog}
+        onClose={handleCloseDialog}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+        
+      >
+        {/* <DialogTitle id="alert-dialog-title">
+        </DialogTitle> */}
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+                <h1><center>{isSuccess?"Success":"Error"}</center> </h1>
+                <center>
+                  {isSuccess ?
+                      <CheckCircleIcon style={{color: "#26FF00", fontSize:"6em"}}/>
+                      :<CancelIcon style={{color: "#FF0000", fontSize:"6em"}}/>
+                  }
+                </center>
+                <br />
+                <div style={{paddingLeft: theme.spacing(pad), paddingRight: theme.spacing(pad)}}>
+                    <strong>
+                      {isSuccess
+                        ?"Hurray!! Your Request has been stored successfully"
+                        :"Oops!!  Something went wrong"
+                      }
+                    </strong>
+                </div>
+          </DialogContentText>
+        </DialogContent>
+      </Dialog>
+      </>
     );
   }
 
