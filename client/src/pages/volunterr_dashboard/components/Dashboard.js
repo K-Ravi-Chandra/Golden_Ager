@@ -430,9 +430,10 @@ React.useEffect(async () => {
 
 
     return (
-        <>
-
-<Container maxWidth="xl">
+        <>{fetching ? <LinearProgress/> : <>
+            {error ? <>An Error Occurred! Please try again.</> : <>
+            
+              <Container maxWidth="xl">
         <Box sx={{ pb: 5 }}>
           <Typography variant="h4">Hi, Welcome back</Typography>
           financial requests pending : {financialrequests}{' '}
@@ -458,7 +459,10 @@ React.useEffect(async () => {
           </Grid>
         </Grid>
       </Container>
-        
+        </>}
+        </>}
+
+
         
         
         
