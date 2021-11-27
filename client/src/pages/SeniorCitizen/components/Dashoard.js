@@ -1,6 +1,6 @@
 import React from 'react'
 import { alpha, styled } from '@mui/material/styles';
-import { Grid, Container, Typography,Card, Button} from '@mui/material';
+import { Grid, Container, Typography,Card, Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions} from '@mui/material';
 import PeopleIcon from '@mui/icons-material/People';
 import ThemeConfig from '../../../components/theme'
 import MoneyIcon from '@mui/icons-material/Money';
@@ -10,8 +10,14 @@ import ConnectWithoutContactIcon from '@mui/icons-material/ConnectWithoutContact
 import AccessibleForwardIcon from '@mui/icons-material/AccessibleForward';
 import AttributionIcon from '@mui/icons-material/Attribution';
 import axios from "axios";
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import CancelIcon from '@mui/icons-material/Cancel';
+import { useTheme } from '@material-ui/core/styles';
+
+
 // 1) Financial Help ---------------------------------------------------------------
 
+// ------------------i) Creating a styled Component FinancialHelpRootStyle using card component of MUI
   const FinancialHelpRootStyle = styled(Card)(({ theme }) => ({
     boxShadow: 'none',
     textAlign: 'center',
@@ -20,6 +26,7 @@ import axios from "axios";
     backgroundColor: theme.palette.info.lighter
   }));
   
+// ------------------ii) Creating a styled Component FinancialHelpIconWrapperStyle using card component of MUI
   const FinancialHelpIconWrapperStyle = styled('div')(({ theme }) => ({
     margin: 'auto',
     display: 'flex',
@@ -28,11 +35,21 @@ import axios from "axios";
     marginBottom: theme.spacing(3),
   }));
   
+// ------------------iii) code for Financial Help component in dashboard   
   function FinancialHelpCard(props) {
 
     const details = props.data
     const profile = props.profile
 
+    const [openDialog, setOpenDialog] = React.useState(false);
+    const [isSuccess, setIsSuccess] = React.useState(false);
+    const [pad, setPad] = React.useState(6);
+    const handleCloseDialog = () => {
+      setOpenDialog(false);
+    }
+    const theme = useTheme();
+
+    //ONCLICK LISTENER functionality for the Financial Help component
     const FinancialHelp = async () => {
       const config = {
         header: {
@@ -53,14 +70,20 @@ import axios from "axios";
           config
         );
         console.log("Request Sent ");
-      
+        setIsSuccess(true);
+        setPad(0);
+        setOpenDialog(true);
       }
       catch (error) {
-        console.log(error.response.data)
+        console.log(error.response.data);
+        setOpenDialog(true);
       }
   
     }
-    return (
+  
+    return (//returning JSX code for the component 
+      <>
+      {/*--------------Component code---------------------*/}
       <FinancialHelpRootStyle sx={{cursor : 'pointer'}} onClick={FinancialHelp}>
         
           <FinancialHelpIconWrapperStyle>
@@ -70,12 +93,47 @@ import axios from "axios";
           <Typography variant="h6"> Financial Help </Typography>
 
       </FinancialHelpRootStyle>
+
+      {/*------Dialog popup to notify if the component action was successful----*/}
+      <Dialog
+        open={openDialog}
+        onClose={handleCloseDialog}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+        
+      >
+        {/* <DialogTitle id="alert-dialog-title">
+        </DialogTitle> */}
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+                <h1><center>{isSuccess?"Success":"Error"}</center> </h1>
+                <center>
+                  {isSuccess ?
+                      <CheckCircleIcon style={{color: "#26FF00", fontSize:"6em"}}/>
+                      :<CancelIcon style={{color: "#FF0000", fontSize:"6em"}}/>
+                  }
+                </center>
+                <br />
+                <div style={{paddingLeft: theme.spacing(pad), paddingRight: theme.spacing(pad)}}>
+                    <strong>
+                      {
+                        isSuccess
+                          ?"Your voulnteer will arrange for your support soon"
+                          :"Oops!!  Something went wrong"
+                      }
+                    </strong>
+                </div>
+          </DialogContentText>
+        </DialogContent>
+      </Dialog>
+      </>
     );
   }
 
 
 // 2) Feeling Loneliness -----------------------------------------------------------------
 
+// ------------------i) Creating a styled Component FeelingLonliness_RootStyle using card component of MUI
   const FeelingLoneliness_RootStyle = styled(Card)(({ theme }) => ({
     boxShadow: 'none',
     textAlign: 'center',
@@ -83,6 +141,8 @@ import axios from "axios";
     color: theme.palette.warning.darker,
     backgroundColor: theme.palette.warning.lighter
   }));
+
+// ------------------ii) Creating a styled Component FeelingLonliness_IconWrapperStyle using card component of MUI
   
   const FeelingLoneliness_IconWrapperStyle = styled('div')(({ theme }) => ({
     margin: 'auto',
@@ -91,10 +151,33 @@ import axios from "axios";
     justifyContent: 'center',
     marginBottom: theme.spacing(3),
   }));
+
   
+// ------------------iii) code for Feeling Lonliness component in dashboard   
   function FeelingLoneliness_Card() {
-    return (
-      <FeelingLoneliness_RootStyle sx={{cursor : 'pointer'}} onClick={() => {console.log("Feeling Loneliness")}}>
+
+    const [openDialog, setOpenDialog] = React.useState(false);
+    const [isSuccess, setIsSuccess] = React.useState(false);
+    const [pad, setPad] = React.useState(6);
+    const handleCloseDialog = () => {
+      setOpenDialog(false);
+    }
+    const theme = useTheme();
+    
+    //ONCLICK LISTENER functionality for the Financial Help component
+    const handleLonliness= () => {
+      console.log("Feeling Loneliness")
+      setIsSuccess(true);
+      setPad(0);
+      setOpenDialog(true);
+    }
+
+    return (//returning JSX code for the component
+      <>
+            
+            {/*--------------Component code---------------------*/}
+      
+      <FeelingLoneliness_RootStyle sx={{cursor : 'pointer'}} onClick={handleLonliness}>
 
         <FeelingLoneliness_IconWrapperStyle>
           <AttributionIcon sx={{ fontSize: 80 }}/>
@@ -103,6 +186,42 @@ import axios from "axios";
         <Typography variant="h6"> Feeling Loneliness </Typography>
 
       </FeelingLoneliness_RootStyle>
+
+        {/*------Dialog popup to notify if the component action was successful----*/}
+
+      <Dialog
+        open={openDialog}
+        onClose={handleCloseDialog}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+        
+      >
+        {/* <DialogTitle id="alert-dialog-title">
+        </DialogTitle> */}
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+                <h1><center>{isSuccess?"Success":"Error"}</center> </h1>
+                <center>
+                  {isSuccess ?
+                      <CheckCircleIcon style={{color: "#26FF00", fontSize:"6em"}}/>
+                      :<CancelIcon style={{color: "#FF0000", fontSize:"6em"}}/>
+                  }
+                </center>
+                <br />
+                <div style={{paddingLeft: theme.spacing(pad), paddingRight: theme.spacing(pad)}}>
+                    <strong>
+                      {
+                        isSuccess
+                          ?"Take care, we will notify your companion"
+                          :"Oops!!  Something went wrong"
+                      }
+                    </strong>
+                </div>
+          </DialogContentText>
+        </DialogContent>
+      </Dialog>
+
+      </>
     );
   }
 
@@ -110,7 +229,7 @@ import axios from "axios";
 
 
   
-
+// ------------------i) Creating a styled Component HealthCheckup_RootStyle using card component of MUI
   const HealthCheckup_RootStyle = styled(Card)(({ theme }) => ({
     boxShadow: 'none',
     textAlign: 'center',
@@ -119,6 +238,7 @@ import axios from "axios";
     backgroundColor: theme.palette.primary.lighter
   }));
 
+  // ------------------ii) Creating a styled Component HealthCheckup_IconWrapperStyle using card component of MUI
   const HealthCheckup_IconWrapperStyle = styled('div')(({ theme }) => ({
     margin: 'auto',
     display: 'flex',
@@ -127,10 +247,20 @@ import axios from "axios";
     marginBottom: theme.spacing(3),
   }));
   
+// ------------------iii) code for HealthCheckup component as card in dashboard
   function HealthCheckup_Card(props) {
     const data = props.data
     const profile = data.profile;
+    
+    const [openDialog, setOpenDialog] = React.useState(false);
+    const [isSuccess, setIsSuccess] = React.useState(false);
+    const [pad, setPad] = React.useState(6);
+    const handleCloseDialog = () => {
+      setOpenDialog(false);
+    }
+    const theme = useTheme();
 
+    //ONCLICK LISTENER functionality for the HealthCheckup component
     const HealthCheckup = async () => {
       const config = {
         header: {
@@ -161,13 +291,21 @@ import axios from "axios";
             config
           )
 
-          alert(bookAppointment.data.data)
+          // alert(bookAppointment.data.data)
+          //successful
+          setOpenDialog(true);
+          setIsSuccess(true);
+          setPad(0);
           
         } catch (error) {
-          console.log(error.message)
+          console.log(error.message);
+          setOpenDialog(true);
+          //error
         }
       } catch (error) {
-        console.log(error.message)
+        console.log(error.message);
+        setOpenDialog(true);
+        //error
       }
 
       //  try{
@@ -186,7 +324,11 @@ import axios from "axios";
       //  }
   
     }
-    return (
+    return (//returning JSX code for the component
+      <>
+
+            {/*--------------Component code---------------------*/}
+
       <HealthCheckup_RootStyle sx={{cursor : 'pointer'}} onClick={HealthCheckup}>
 
         <HealthCheckup_IconWrapperStyle>
@@ -196,12 +338,49 @@ import axios from "axios";
         <Typography variant="h6"> Health Checkup </Typography>
 
       </HealthCheckup_RootStyle>
+
+      
+        {/*------Dialog popup to notify if the component action was successful----*/}
+
+      <Dialog
+        open={openDialog}
+        onClose={handleCloseDialog}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+        
+      >
+        {/* <DialogTitle id="alert-dialog-title">
+        </DialogTitle> */}
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+                <h1><center>{isSuccess?"Success":"Error"}</center> </h1>
+                <center>
+                  {isSuccess ?
+                      <CheckCircleIcon style={{color: "#26FF00", fontSize:"6em"}}/>
+                      :<CancelIcon style={{color: "#FF0000", fontSize:"6em"}}/>
+                  }
+                </center>
+                <br />
+                <div style={{paddingLeft: theme.spacing(pad), paddingRight: theme.spacing(pad)}}>
+                    <strong>
+                      {
+                        isSuccess
+                          ?"Take care, Your doctor will contact you soon"
+                          :"Oops!!  Something went wrong"
+                      }
+                    </strong>
+                </div>
+          </DialogContentText>
+        </DialogContent>
+      </Dialog>
+
+      </>
     )
   }
  
-// 4) Request tHelp ----------------------------------------------------------------------
+// 4) Request Help ----------------------------------------------------------------------
 
-  
+// ------------------i) Creating a styled Component RequestRootStyle using card component of MUI  
   const RequestHelpRootStyle = styled(Card)(({ theme }) => ({
     boxShadow: 'none',
     textAlign: 'center',
@@ -209,7 +388,8 @@ import axios from "axios";
     color: theme.palette.error.darker,
     backgroundColor: theme.palette.error.lighter
   }));
-  
+
+// ------------------ii) Creating a styled Component RequestHelpIconWrapperStyle using card component of MUI  
   const RequestHelpIconWrapperStyle = styled('div')(({ theme }) => ({
     margin: 'auto',
     display: 'flex',
@@ -217,12 +397,16 @@ import axios from "axios";
     justifyContent: 'center',
     marginBottom: theme.spacing(3),
   }));
-  
-  function RequestHelpCard(props) {
 
+// ------------------iii) code for RequestHelp component as Card in dashboard     
+  function RequestHelpCard(props) {
+    const [openDialog, setOpenDialog] = React.useState(false);
     const details = props.data
     const profile = props.profile
+    const [isSuccess, setIsSuccess] = React.useState(false);
+    const [pad, setPad] = React.useState(6);
 
+    //ONCLICK LISTENER functionality for the Financial Help component
     const RequestHelp = async () => {
       const config = {
         header: {
@@ -244,15 +428,27 @@ import axios from "axios";
           config
         );
         console.log("Request Sent");
-      
+        setIsSuccess(true);
+        setPad(0);
       }
       catch (error) {
-        console.log(error.response.data)
+        console.log(error.response.data);
       }
-  
+      setOpenDialog(true);
     }
 
-    return (
+    const handleCloseDialog = () => {
+      setOpenDialog(false);
+    }
+
+    
+    const theme = useTheme();
+
+    return (//returning JSX code for the component
+      <>
+            
+            {/*--------------Component code---------------------*/}
+
       <RequestHelpRootStyle  sx={{cursor : 'pointer'}} onClick={RequestHelp}>
 
         <RequestHelpIconWrapperStyle>
@@ -262,6 +458,39 @@ import axios from "axios";
         <Typography variant="h6">Request Help</Typography>
 
       </RequestHelpRootStyle>
+
+    {/*------Dialog popup to notify if the component action was successful----*/}
+      <Dialog
+        open={openDialog}
+        onClose={handleCloseDialog}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+        
+      >
+        {/* <DialogTitle id="alert-dialog-title">
+        </DialogTitle> */}
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+                <h1><center>{isSuccess?"Success":"Error"}</center> </h1>
+                <center>
+                  {isSuccess ?
+                      <CheckCircleIcon style={{color: "#26FF00", fontSize:"6em"}}/>
+                      :<CancelIcon style={{color: "#FF0000", fontSize:"6em"}}/>
+                  }
+                </center>
+                <br />
+                <div style={{paddingLeft: theme.spacing(pad), paddingRight: theme.spacing(pad)}}>
+                    <strong>
+                      {isSuccess
+                        ?"Your Request has been stored successfully"
+                        :"Oops!!  Something went wrong"
+                      }
+                    </strong>
+                </div>
+          </DialogContentText>
+        </DialogContent>
+      </Dialog>
+      </>
     );
   }
 
