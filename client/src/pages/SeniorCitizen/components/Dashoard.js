@@ -38,6 +38,15 @@ import { useTheme } from '@material-ui/core/styles';
     const details = props.data
     const profile = props.profile
 
+    const [openDialog, setOpenDialog] = React.useState(false);
+    const [isSuccess, setIsSuccess] = React.useState(false);
+    const [pad, setPad] = React.useState(6);
+    const handleCloseDialog = () => {
+      setOpenDialog(false);
+    }
+    const theme = useTheme();
+    
+
     const FinancialHelp = async () => {
       const config = {
         header: {
@@ -58,14 +67,18 @@ import { useTheme } from '@material-ui/core/styles';
           config
         );
         console.log("Request Sent ");
-      
+        setIsSuccess(true);
+        setPad(0);
+        setOpenDialog(true);
       }
       catch (error) {
-        console.log(error.response.data)
+        console.log(error.response.data);
+        setOpenDialog(true);
       }
   
     }
     return (
+      <>
       <FinancialHelpRootStyle sx={{cursor : 'pointer'}} onClick={FinancialHelp}>
         
           <FinancialHelpIconWrapperStyle>
@@ -75,6 +88,39 @@ import { useTheme } from '@material-ui/core/styles';
           <Typography variant="h6"> Financial Help </Typography>
 
       </FinancialHelpRootStyle>
+
+      <Dialog
+        open={openDialog}
+        onClose={handleCloseDialog}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+        
+      >
+        {/* <DialogTitle id="alert-dialog-title">
+        </DialogTitle> */}
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+                <h1><center>{isSuccess?"Success":"Error"}</center> </h1>
+                <center>
+                  {isSuccess ?
+                      <CheckCircleIcon style={{color: "#26FF00", fontSize:"6em"}}/>
+                      :<CancelIcon style={{color: "#FF0000", fontSize:"6em"}}/>
+                  }
+                </center>
+                <br />
+                <div style={{paddingLeft: theme.spacing(pad), paddingRight: theme.spacing(pad)}}>
+                    <strong>
+                      {
+                        isSuccess
+                          ?"Your voulnteer will arrange for your support soon"
+                          :"Oops!!  Something went wrong"
+                      }
+                    </strong>
+                </div>
+          </DialogContentText>
+        </DialogContent>
+      </Dialog>
+      </>
     );
   }
 
@@ -106,12 +152,12 @@ import { useTheme } from '@material-ui/core/styles';
       setOpenDialog(false);
     }
     const theme = useTheme();
-    
-    const handleLonliness= ()=>{
+
+    const handleLonliness= () => {
       console.log("Feeling Loneliness")
-      setOpenDialog(true);
       setIsSuccess(true);
       setPad(0);
+      setOpenDialog(true);
     }
 
     return (
@@ -231,11 +277,13 @@ import { useTheme } from '@material-ui/core/styles';
           setPad(0);
           
         } catch (error) {
-          console.log(error.message)
+          console.log(error.message);
+          setOpenDialog(true);
           //error
         }
       } catch (error) {
-        console.log(error.message)
+        console.log(error.message);
+        setOpenDialog(true);
         //error
       }
 
@@ -398,7 +446,7 @@ import { useTheme } from '@material-ui/core/styles';
                 <div style={{paddingLeft: theme.spacing(pad), paddingRight: theme.spacing(pad)}}>
                     <strong>
                       {isSuccess
-                        ?"Hurray!! Your Request has been stored successfully"
+                        ?"Your Request has been stored successfully"
                         :"Oops!!  Something went wrong"
                       }
                     </strong>
