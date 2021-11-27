@@ -98,8 +98,25 @@ import { useTheme } from '@material-ui/core/styles';
   }));
   
   function FeelingLoneliness_Card() {
+
+    const [openDialog, setOpenDialog] = React.useState(false);
+    const [isSuccess, setIsSuccess] = React.useState(false);
+    const [pad, setPad] = React.useState(6);
+    const handleCloseDialog = () => {
+      setOpenDialog(false);
+    }
+    const theme = useTheme();
+    
+    const handleLonliness= ()=>{
+      console.log("Feeling Loneliness")
+      setOpenDialog(true);
+      setIsSuccess(true);
+      setPad(0);
+    }
+
     return (
-      <FeelingLoneliness_RootStyle sx={{cursor : 'pointer'}} onClick={() => {console.log("Feeling Loneliness")}}>
+      <>
+      <FeelingLoneliness_RootStyle sx={{cursor : 'pointer'}} onClick={handleLonliness}>
 
         <FeelingLoneliness_IconWrapperStyle>
           <AttributionIcon sx={{ fontSize: 80 }}/>
@@ -108,6 +125,40 @@ import { useTheme } from '@material-ui/core/styles';
         <Typography variant="h6"> Feeling Loneliness </Typography>
 
       </FeelingLoneliness_RootStyle>
+
+      <Dialog
+        open={openDialog}
+        onClose={handleCloseDialog}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+        
+      >
+        {/* <DialogTitle id="alert-dialog-title">
+        </DialogTitle> */}
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+                <h1><center>{isSuccess?"Success":"Error"}</center> </h1>
+                <center>
+                  {isSuccess ?
+                      <CheckCircleIcon style={{color: "#26FF00", fontSize:"6em"}}/>
+                      :<CancelIcon style={{color: "#FF0000", fontSize:"6em"}}/>
+                  }
+                </center>
+                <br />
+                <div style={{paddingLeft: theme.spacing(pad), paddingRight: theme.spacing(pad)}}>
+                    <strong>
+                      {
+                        isSuccess
+                          ?"Take care, we will notify your companion"
+                          :"Oops!!  Something went wrong"
+                      }
+                    </strong>
+                </div>
+          </DialogContentText>
+        </DialogContent>
+      </Dialog>
+
+      </>
     );
   }
 
@@ -237,9 +288,10 @@ import { useTheme } from '@material-ui/core/styles';
                 <br />
                 <div style={{paddingLeft: theme.spacing(pad), paddingRight: theme.spacing(pad)}}>
                     <strong>
-                      {isSuccess
-                        ?"Take care, Your doctor will contact you soon"
-                        :"Oops!!  Something went wrong"
+                      {
+                        isSuccess
+                          ?"Take care, Your doctor will contact you soon"
+                          :"Oops!!  Something went wrong"
                       }
                     </strong>
                 </div>
