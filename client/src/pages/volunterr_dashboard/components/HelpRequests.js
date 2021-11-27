@@ -70,6 +70,7 @@ function Row(props){
           id="panel1a-header"
         >
           <Typography>{data.name}</Typography>
+          <Typography sx={{pl : 2}}>{data.date.slice(0,10)}</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <Typography sx={{p:2}}>

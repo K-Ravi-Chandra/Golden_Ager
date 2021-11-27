@@ -1,8 +1,9 @@
 import React from 'react'
 import {format} from 'date-fns'
 import axios from "axios";
-import { v4 as uuid } from 'uuid';
+import {  Divider,  Typography } from '@mui/material';
 import PerfectScrollbar from 'react-perfect-scrollbar';
+import LinearProgress from '@mui/material/LinearProgress';
 
 import {
   Box,
@@ -76,78 +77,10 @@ SeverityPill.propTypes = {
 };
 
 
-const orders = [
-  {
-    id: uuid(),
-    ref: 'Senior Citizen 1',
-    amount: 30.5,
-    customer: {
-      name: 'Ekaterina Tankova'
-    },
-    createdAt: 1555016400000,
-    status: 'pending'
-  },
-  {
-    id: uuid(),
-    ref: 'Senior Citizen 2',
-    amount: 25.1,
-    customer: {
-      name: 'Cao Yu'
-    },
-    createdAt: 1555016400000,
-    status: 'accepted'
-  },
-  {
-    id: uuid(),
-    ref: 'Senior Citizen 3',
-    amount: 10.99,
-    customer: {
-      name: 'Alexa Richardson'
-    },
-    createdAt: 1554930000000,
-    status: 'rejected'
-  },
-  {
-    id: uuid(),
-    ref: 'Senior Citizen 4',
-    amount: 96.43,
-    customer: {
-      name: 'Anje Keizer'
-    },
-    createdAt: 1554757200000,
-    status: 'pending'
-  },
-  {
-    id: uuid(),
-    ref: 'Senior Citizen 5',
-    amount: 32.54,
-    customer: {
-      name: 'Clarke Gillebert'
-    },
-    createdAt: 1554670800000,
-    status: 'accepted'
-  },
-  {
-    id: uuid(),
-    ref: 'Senior Citizen 6',
-    amount: 16.76,
-    customer: {
-      name: 'Adam Denisov'
-    },
-    createdAt: 1554670800000,
-    status: 'rejected'
-  }
-];
-
-
-
-
-
 const History = (props) => {
 
   const [data, setData] = React.useState([]);
-  const [updated , setUpdated] = React.useState(false)
-  //const [loading , setLoading] = React.useState(false)
+  const [history , setHistory] = React.useState(false)
   const [fetching , setFetching] = React.useState(true)
   const [error , setError] =   React.useState(false)
 
@@ -173,6 +106,7 @@ const History = (props) => {
         setError(false);
         setFetching(false);
         setData(response.data.history)
+        if(response.data.history.length)  setHistory(true)
         return response;
       })
       .catch(function(error) {
@@ -185,7 +119,12 @@ const History = (props) => {
 
 
   return (
-    <Card {...props}>
+    <>
+    {fetching ? <LinearProgress/> : <>
+      
+      {error ? <Typography> An unknown Error</Typography>  : <>
+        {history ? <>
+          <Card {...props}>
       <CardHeader title="Latest Requests" />
       <PerfectScrollbar>
         <Box sx={{ minWidth: 800 }}>
@@ -249,6 +188,8 @@ const History = (props) => {
         </Box>
       </PerfectScrollbar>
     </Card>
+          </> : <Typography> No Requests found</Typography> } </> }</>}
+    </>
   );
 }
 export default History
