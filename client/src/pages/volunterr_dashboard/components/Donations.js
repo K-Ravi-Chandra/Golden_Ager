@@ -123,6 +123,7 @@ export default function Donations(props) {
 
 
 const [data, setData] = React.useState([]);
+const [donations , setDonations] = React.useState(false);
 const [fetching , setFetching] = React.useState(true)
 const [error , setError] =   React.useState(false)
 
@@ -145,7 +146,7 @@ React.useEffect(async () => {
         setError(false); 
         setFetching(false);
         setData(response.data.donations)
-        console.log(response.data.donations)
+        if(response.data.donations.length) setDonations(true)
         return response;
       })
       .catch(function(error) {
@@ -162,6 +163,7 @@ React.useEffect(async () => {
     
       {error ? <Typography> An unknown Error</Typography>  : <>
 
+      {donations ? <>
         <TableContainer component={Paper}>
       <Table aria-label="collapsible table">
         <TableHead>
@@ -178,6 +180,9 @@ React.useEffect(async () => {
         </TableBody>
       </Table>
     </TableContainer>
+      </> : <Typography> At now there are no donations</Typography>}
+
+       
        </>}
         
     </>}

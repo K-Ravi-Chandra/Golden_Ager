@@ -17,6 +17,7 @@ import { useTheme } from '@material-ui/core/styles';
 
 // 1) Financial Help ---------------------------------------------------------------
 
+// ------------------i) Creating a styled Component FinancialHelpRootStyle using card component of MUI
   const FinancialHelpRootStyle = styled(Card)(({ theme }) => ({
     boxShadow: 'none',
     textAlign: 'center',
@@ -25,6 +26,7 @@ import { useTheme } from '@material-ui/core/styles';
     backgroundColor: theme.palette.info.lighter
   }));
   
+// ------------------ii) Creating a styled Component FinancialHelpIconWrapperStyle using card component of MUI
   const FinancialHelpIconWrapperStyle = styled('div')(({ theme }) => ({
     margin: 'auto',
     display: 'flex',
@@ -33,11 +35,21 @@ import { useTheme } from '@material-ui/core/styles';
     marginBottom: theme.spacing(3),
   }));
   
+// ------------------iii) code for Financial Help component in dashboard   
   function FinancialHelpCard(props) {
 
     const details = props.data
     const profile = props.profile
 
+    const [openDialog, setOpenDialog] = React.useState(false);
+    const [isSuccess, setIsSuccess] = React.useState(false);
+    const [pad, setPad] = React.useState(6);
+    const handleCloseDialog = () => {
+      setOpenDialog(false);
+    }
+    const theme = useTheme();
+
+    //ONCLICK LISTENER functionality for the Financial Help component
     const FinancialHelp = async () => {
       const config = {
         header: {
@@ -58,14 +70,20 @@ import { useTheme } from '@material-ui/core/styles';
           config
         );
         console.log("Request Sent ");
-      
+        setIsSuccess(true);
+        setPad(0);
+        setOpenDialog(true);
       }
       catch (error) {
-        console.log(error.response.data)
+        console.log(error.response.data);
+        setOpenDialog(true);
       }
   
     }
-    return (
+  
+    return (//returning JSX code for the component 
+      <>
+      {/*--------------Component code---------------------*/}
       <FinancialHelpRootStyle sx={{cursor : 'pointer'}} onClick={FinancialHelp}>
         
           <FinancialHelpIconWrapperStyle>
@@ -75,12 +93,47 @@ import { useTheme } from '@material-ui/core/styles';
           <Typography variant="h6"> Financial Help </Typography>
 
       </FinancialHelpRootStyle>
+
+      {/*------Dialog popup to notify if the component action was successful----*/}
+      <Dialog
+        open={openDialog}
+        onClose={handleCloseDialog}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+        
+      >
+        {/* <DialogTitle id="alert-dialog-title">
+        </DialogTitle> */}
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+                <h1><center>{isSuccess?"Success":"Error"}</center> </h1>
+                <center>
+                  {isSuccess ?
+                      <CheckCircleIcon style={{color: "#26FF00", fontSize:"6em"}}/>
+                      :<CancelIcon style={{color: "#FF0000", fontSize:"6em"}}/>
+                  }
+                </center>
+                <br />
+                <div style={{paddingLeft: theme.spacing(pad), paddingRight: theme.spacing(pad)}}>
+                    <strong>
+                      {
+                        isSuccess
+                          ?"Your voulnteer will arrange for your support soon"
+                          :"Oops!!  Something went wrong"
+                      }
+                    </strong>
+                </div>
+          </DialogContentText>
+        </DialogContent>
+      </Dialog>
+      </>
     );
   }
 
 
 // 2) Feeling Loneliness -----------------------------------------------------------------
 
+// ------------------i) Creating a styled Component FeelingLonliness_RootStyle using card component of MUI
   const FeelingLoneliness_RootStyle = styled(Card)(({ theme }) => ({
     boxShadow: 'none',
     textAlign: 'center',
@@ -88,6 +141,8 @@ import { useTheme } from '@material-ui/core/styles';
     color: theme.palette.warning.darker,
     backgroundColor: theme.palette.warning.lighter
   }));
+
+// ------------------ii) Creating a styled Component FeelingLonliness_IconWrapperStyle using card component of MUI
   
   const FeelingLoneliness_IconWrapperStyle = styled('div')(({ theme }) => ({
     margin: 'auto',
@@ -96,15 +151,19 @@ import { useTheme } from '@material-ui/core/styles';
     justifyContent: 'center',
     marginBottom: theme.spacing(3),
   }));
+
   
+
   function FeelingLoneliness_Card(props) {
     const data = props.data
+
     const [openDialog, setOpenDialog] = React.useState(false);
     const [isSuccess, setIsSuccess] = React.useState(false);
     const [pad, setPad] = React.useState(6);
     const handleCloseDialog = () => {
       setOpenDialog(false);
     }
+
     const SendNotifications = async () => {
       
       const config = {
@@ -150,6 +209,7 @@ import { useTheme } from '@material-ui/core/styles';
 
       </FeelingLoneliness_RootStyle>
 
+
       <Dialog
         open={openDialog}
         onClose={handleCloseDialog}
@@ -157,6 +217,8 @@ import { useTheme } from '@material-ui/core/styles';
         aria-describedby="alert-dialog-description"
         
       >
+
+
 
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
@@ -170,9 +232,11 @@ import { useTheme } from '@material-ui/core/styles';
                 <br />
                 <div style={{paddingLeft: theme.spacing(pad), paddingRight: theme.spacing(pad)}}>
                     <strong>
+
                       {isSuccess
                         ?"Don't feel bad, your family members will meet you soon"
                         :"Oops!!  Something went wrong"
+
                       }
                     </strong>
                 </div>
@@ -182,7 +246,6 @@ import { useTheme } from '@material-ui/core/styles';
 
       </>
 
-      
     );
   }
 
@@ -190,7 +253,7 @@ import { useTheme } from '@material-ui/core/styles';
 
 
   
-
+// ------------------i) Creating a styled Component HealthCheckup_RootStyle using card component of MUI
   const HealthCheckup_RootStyle = styled(Card)(({ theme }) => ({
     boxShadow: 'none',
     textAlign: 'center',
@@ -199,6 +262,7 @@ import { useTheme } from '@material-ui/core/styles';
     backgroundColor: theme.palette.primary.lighter
   }));
 
+  // ------------------ii) Creating a styled Component HealthCheckup_IconWrapperStyle using card component of MUI
   const HealthCheckup_IconWrapperStyle = styled('div')(({ theme }) => ({
     margin: 'auto',
     display: 'flex',
@@ -207,6 +271,7 @@ import { useTheme } from '@material-ui/core/styles';
     marginBottom: theme.spacing(3),
   }));
   
+// ------------------iii) code for HealthCheckup component as card in dashboard
   function HealthCheckup_Card(props) {
     const data = props.data
     const profile = data.profile;
@@ -218,6 +283,8 @@ import { useTheme } from '@material-ui/core/styles';
       setOpenDialog(false);
     }
     const theme = useTheme();
+
+    //ONCLICK LISTENER functionality for the HealthCheckup component
     const HealthCheckup = async () => {
       const config = {
         header: {
@@ -255,11 +322,13 @@ import { useTheme } from '@material-ui/core/styles';
           setPad(0);
           
         } catch (error) {
-          console.log(error.message)
+          console.log(error.message);
+          setOpenDialog(true);
           //error
         }
       } catch (error) {
-        console.log(error.message)
+        console.log(error.message);
+        setOpenDialog(true);
         //error
       }
 
@@ -279,8 +348,11 @@ import { useTheme } from '@material-ui/core/styles';
       //  }
   
     }
-    return (
+    return (//returning JSX code for the component
       <>
+
+            {/*--------------Component code---------------------*/}
+
       <HealthCheckup_RootStyle sx={{cursor : 'pointer'}} onClick={HealthCheckup}>
 
         <HealthCheckup_IconWrapperStyle>
@@ -290,6 +362,9 @@ import { useTheme } from '@material-ui/core/styles';
         <Typography variant="h6"> Health Checkup </Typography>
 
       </HealthCheckup_RootStyle>
+
+      
+        {/*------Dialog popup to notify if the component action was successful----*/}
 
       <Dialog
         open={openDialog}
@@ -312,9 +387,10 @@ import { useTheme } from '@material-ui/core/styles';
                 <br />
                 <div style={{paddingLeft: theme.spacing(pad), paddingRight: theme.spacing(pad)}}>
                     <strong>
-                      {isSuccess
-                        ?"Take care, Your doctor will contact you soon"
-                        :"Oops!!  Something went wrong"
+                      {
+                        isSuccess
+                          ?"Take care, Your doctor will contact you soon"
+                          :"Oops!!  Something went wrong"
                       }
                     </strong>
                 </div>
@@ -328,7 +404,7 @@ import { useTheme } from '@material-ui/core/styles';
  
 // 4) Request Help ----------------------------------------------------------------------
 
-  
+// ------------------i) Creating a styled Component RequestRootStyle using card component of MUI  
   const RequestHelpRootStyle = styled(Card)(({ theme }) => ({
     boxShadow: 'none',
     textAlign: 'center',
@@ -336,7 +412,8 @@ import { useTheme } from '@material-ui/core/styles';
     color: theme.palette.error.darker,
     backgroundColor: theme.palette.error.lighter
   }));
-  
+
+// ------------------ii) Creating a styled Component RequestHelpIconWrapperStyle using card component of MUI  
   const RequestHelpIconWrapperStyle = styled('div')(({ theme }) => ({
     margin: 'auto',
     display: 'flex',
@@ -344,13 +421,16 @@ import { useTheme } from '@material-ui/core/styles';
     justifyContent: 'center',
     marginBottom: theme.spacing(3),
   }));
-  
+
+// ------------------iii) code for RequestHelp component as Card in dashboard     
   function RequestHelpCard(props) {
     const [openDialog, setOpenDialog] = React.useState(false);
     const details = props.data
     const profile = props.profile
     const [isSuccess, setIsSuccess] = React.useState(false);
     const [pad, setPad] = React.useState(6);
+
+    //ONCLICK LISTENER functionality for the Financial Help component
     const RequestHelp = async () => {
       const config = {
         header: {
@@ -388,8 +468,11 @@ import { useTheme } from '@material-ui/core/styles';
     
     const theme = useTheme();
 
-    return (
+    return (//returning JSX code for the component
       <>
+            
+            {/*--------------Component code---------------------*/}
+
       <RequestHelpRootStyle  sx={{cursor : 'pointer'}} onClick={RequestHelp}>
 
         <RequestHelpIconWrapperStyle>
@@ -399,6 +482,8 @@ import { useTheme } from '@material-ui/core/styles';
         <Typography variant="h6">Request Help</Typography>
 
       </RequestHelpRootStyle>
+
+    {/*------Dialog popup to notify if the component action was successful----*/}
       <Dialog
         open={openDialog}
         onClose={handleCloseDialog}
@@ -421,7 +506,7 @@ import { useTheme } from '@material-ui/core/styles';
                 <div style={{paddingLeft: theme.spacing(pad), paddingRight: theme.spacing(pad)}}>
                     <strong>
                       {isSuccess
-                        ?"Hurray!! Your Request has been stored successfully"
+                        ?"Your Request has been stored successfully"
                         :"Oops!!  Something went wrong"
                       }
                     </strong>
