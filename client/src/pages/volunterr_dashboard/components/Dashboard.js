@@ -53,53 +53,34 @@ const Donationscard = (props) => (
             color="textSecondary"
             gutterBottom
             variant="overline"
+            
           >
             Donations Recieved<br/>
           </Typography>
-          {props.donations}
+          
           <Typography
             color="textPrimary"
             variant="h4"
+            sx = {{pt:2}}
           >
-           {props.totalfinancialrequests}
+          {props.donations}
           </Typography>
+         
         </Grid>
         <Grid item>
           <Avatar
             sx={{
               backgroundColor: 'error.main',
               height: 56,
-              width: 56
+              width: 56 ,
+              mx :2
             }}
           >
             <MoneyIcon />
           </Avatar>
         </Grid>
       </Grid>
-      <Box
-        sx={{
-          pt: 2,
-          display: 'flex',
-          alignItems: 'center'
-        }}
-      >
-        <ArrowDownwardIcon color="error" />
-        <Typography
-          color="error"
-          sx={{
-            mr: 1
-          }}
-          variant="body2"
-        >
-          12%
-        </Typography>
-        <Typography
-          color="textSecondary"
-          variant="caption"
-        >
-          Since last month
-        </Typography>
-      </Box>
+      
     </CardContent>
     </Card>
   
@@ -185,6 +166,7 @@ const Totalseniorcitizenscard = (props) => (
             <Typography
               color="textPrimary"
               variant="h4"
+              sx = {{pt : 2}}
             >
               {props.seniorcitizens}
             </Typography>
@@ -208,21 +190,7 @@ const Totalseniorcitizenscard = (props) => (
             pt: 2
           }}
         >
-          <ArrowUpwardIcon color="success" />
-          <Typography
-            variant="body2"
-            sx={{
-              mr: 1
-            }}
-          >
-            16%
-          </Typography>
-          <Typography
-            color="textSecondary"
-            variant="caption"
-          >
-            Since last month
-          </Typography>
+          
         </Box>
       </CardContent>
     </Card>
@@ -456,10 +424,10 @@ React.useEffect(async () => {
               <Container maxWidth="xl">
         <Box sx={{ pb: 5 }}>
           <Typography variant="h4">Hi, Welcome back</Typography>
-          financial requests pending : {financialrequests}{' '}
+          {/* financial requests pending : {financialrequests}{' '}
           total requests : {totalfinancialrequests}{' '}
           seniorcitizens : {seniorcitizens} {' '}
-          total Donations : {donations}
+          total Donations : {donations} */}
         </Box>
         <Grid container spacing={3}>
           <Grid item xs={12}  md={4}>
