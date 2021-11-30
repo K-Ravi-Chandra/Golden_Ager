@@ -11,6 +11,7 @@ import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import { useHistory } from "react-router-dom";
 import LogoutIcon from '@mui/icons-material/Logout';
+import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
 // ----------------------------------------------------------------------
 
 
@@ -65,7 +66,7 @@ const Navigation = () => {
           <ListItem disablePadding selected={Selected("/appointments")} component={NavLink} sx ={{color: 'text.primary'}} to= "/appointments" >
             <ListItemButton sx={{p :2}} >
               <ListItemIcon>
-                <NotificationsActiveIcon color = {Selected("/appointments")? "primary" : "" } />
+                <LocalHospitalIcon color = {Selected("/appointments")? "primary" : "" } />
               </ListItemIcon>
               <ListItemText>
                 <Typography variant="body1" fontSize={18}  color = {Selected("/appointments")? "primary" : "" }>
