@@ -3,6 +3,12 @@ import { Grid, Box , Paper, Typography, makeStyles, Card, Button} from '@materia
 import { styled } from '@mui/material/styles';
 import PersonIcon from '@mui/icons-material/Person';
 import axios from "axios";
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+import HealthAndSafetyIcon from '@mui/icons-material/HealthAndSafety';
+import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
+import PeopleAltRoundedIcon from '@mui/icons-material/PeopleAltRounded';
+import ElderlyRoundedIcon from '@mui/icons-material/ElderlyRounded';
+import LinearProgress from '@mui/material/LinearProgress';
 
 const useStyles = makeStyles( theme =>({
     root : {
@@ -136,160 +142,171 @@ export default function FamilyProfile(props) {
 
 
     return (
-        <Box sx={{width:'100%'}}>
-            <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-                <Grid item xs={12} md={6} style={{padding:"20px"}}>
-                    <Paper elevation={1} square className={classes.root}>
-                        <div className={classes.profileShow}>
-                            <Card className={classes.profileIcon}>
-                                <PersonIcon />
-                            </Card>
-                            <div className={classes.profileTitle}>
-                                <Typography
-                                    variant = "h6"
-                                    component = "div"
-                                >
-                                    <strong>Your Profile Details</strong>
-                                </Typography> 
-                                <Typography
-                                    variant = "subtitle1"
-                                    component = "div"
-                                >
-                                    {mydetails.username}
-                                </Typography>
-                                <Typography
-                                    variant = "subtitle2"
-                                    component = "div"
-                                >
-                                    {mydetails.email}
-                                </Typography>
-                                <Typography
-                                    variant = "subtitle3"
-                                    component = "div"
-                                >
-                                    {mydetails.phone}
-                                </Typography>
-                                
-                            </div>
-                        </div>
-                    </Paper>
-                    {/* <Button></Button> */}
-                </Grid>
+        <>
+
+        
+        {fetching ?  <LinearProgress/> : <>
+    
+            {error ? <Typography> An unknown Error</Typography>  : <>
+
+                <Box sx={{width:'100%'}}>
+                    <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+                        <Grid item xs={12} md={6} style={{padding:"20px"}}>
+                            <Paper elevation={1} square className={classes.root}>
+                                <div className={classes.profileShow}>
+                                    <Card className={classes.profileIcon}>
+                                        <PersonIcon fontSize="large"/>
+                                    </Card>
+                                    <div className={classes.profileTitle}>
+                                        <Typography
+                                            variant = "h6"
+                                            component = "div"
+                                        >
+                                            <strong>Your Profile Details</strong>
+                                        </Typography> 
+                                        <Typography
+                                            variant = "subtitle1"
+                                            component = "div"
+                                        >
+                                            {mydetails.username}
+                                        </Typography>
+                                        <Typography
+                                            variant = "subtitle2"
+                                            component = "div"
+                                        >
+                                            {mydetails.email}
+                                        </Typography>
+                                        <Typography
+                                            variant = "subtitle3"
+                                            component = "div"
+                                        >
+                                            {mydetails.phone}
+                                        </Typography>
+                                        
+                                    </div>
+                                </div>
+                            </Paper>
+                            {/* <Button></Button> */}
+                        </Grid>
 
 
 
-                <Grid item xs={12} md={6} style={{padding:"20px"}}>
-                    <Paper elevation={1} square className={classes.root}>
-                        <div className={classes.profileShow}>
-                            <Card className={classes.profileIcon}>
-                                <PersonIcon />
-                            </Card>
-                            <div className={classes.profileTitle}>
-                                <Typography
-                                    variant = "h6"
-                                    component = "div"
-                                >
-                                    <strong>Senior Citizen Details</strong>
-                                </Typography>
-                                <Typography
-                                    variant = "subtitle1"
-                                    component = "div"
-                                >
-                                    {seniorprofile.username}
-                                </Typography>
-                                <Typography
-                                    variant = "subtitle2"
-                                    component = "div"
-                                >
-                                    {seniordetails.email}
-                                </Typography>
-                                <Typography
-                                    variant = "subtitle3"
-                                    component = "div"
-                                >
-                                    {seniorprofile.phone}
-                                </Typography>
-                                
-                            </div>
-                        </div>
-                    </Paper>
-                </Grid>
+                        <Grid item xs={12} md={6} style={{padding:"20px"}}>
+                            <Paper elevation={1} square className={classes.root}>
+                                <div className={classes.profileShow}>
+                                    <Card className={classes.profileIcon}>
+                                        <ElderlyRoundedIcon fontSize="large"/>
+                                    </Card>
+                                    <div className={classes.profileTitle}>
+                                        <Typography
+                                            variant = "h6"
+                                            component = "div"
+                                        >
+                                            <strong>Senior Citizen Details</strong>
+                                        </Typography>
+                                        <Typography
+                                            variant = "subtitle1"
+                                            component = "div"
+                                        >
+                                            {seniorprofile.username}
+                                        </Typography>
+                                        <Typography
+                                            variant = "subtitle2"
+                                            component = "div"
+                                        >
+                                            {seniordetails.email}
+                                        </Typography>
+                                        <Typography
+                                            variant = "subtitle3"
+                                            component = "div"
+                                        >
+                                            {seniorprofile.phone}
+                                        </Typography>
+                                        
+                                    </div>
+                                </div>
+                            </Paper>
+                        </Grid>
 
-                <Grid item xs={12} md={6} style={{padding:"20px"}}>
-                    <Paper elevation={1} square className={classes.root}>
-                        <div className={classes.profileShow}>
-                            <Card className={classes.profileIcon}>
-                                <PersonIcon />
-                            </Card>
-                            <div className={classes.profileTitle}>
-                                <Typography
-                                    variant = "h6"
-                                    component = "div"
-                                >
-                                    <strong>Volunteer Details</strong>
-                                </Typography>
-                                <Typography
-                                    variant = "subtitle1"
-                                    component = "div"
-                                >
-                                    {volunterdetails.username}
-                                </Typography>
-                                <Typography
-                                    variant = "subtitle2"
-                                    component = "div"
-                                >
-                                    {volunterdetails.email}
-                                </Typography>
-                                <Typography
-                                    variant = "subtitle3"
-                                    component = "div"
-                                >
-                                    {volunterdetails.phone}
-                                </Typography>
-                                
-                            </div>
-                        </div>
-                    </Paper>
-                </Grid>
+                        <Grid item xs={12} md={6} style={{padding:"20px"}}>
+                            <Paper elevation={1} square className={classes.root}>
+                                <div className={classes.profileShow}>
+                                    <Card className={classes.profileIcon}>
+                                        <AdminPanelSettingsIcon fontSize="large"/>
+                                    </Card>
+                                    <div className={classes.profileTitle}>
+                                        <Typography
+                                            variant = "h6"
+                                            component = "div"
+                                        >
+                                            <strong>Volunteer Details</strong>
+                                        </Typography>
+                                        <Typography
+                                            variant = "subtitle1"
+                                            component = "div"
+                                        >
+                                            {volunterdetails.username}
+                                        </Typography>
+                                        <Typography
+                                            variant = "subtitle2"
+                                            component = "div"
+                                        >
+                                            {volunterdetails.email}
+                                        </Typography>
+                                        <Typography
+                                            variant = "subtitle3"
+                                            component = "div"
+                                        >
+                                            {volunterdetails.phone}
+                                        </Typography>
+                                        
+                                    </div>
+                                </div>
+                            </Paper>
+                        </Grid>
 
 
-                <Grid item xs={12} md={6} style={{padding:"20px"}}>
-                    <Paper elevation={1} square className={classes.root}>
-                        <div className={classes.profileShow}>
-                            <Card className={classes.profileIcon}>
-                                <PersonIcon />
-                            </Card>
-                            <div className={classes.profileTitle}>
-                                <Typography
-                                    variant = "h6"
-                                    component = "div"
-                                >
-                                    <strong>Doctor Details</strong>
-                                </Typography>
-                                <Typography
-                                    variant = "subtitle1"
-                                    component = "div"
-                                >
-                                    {doctordetails.username}
-                                </Typography>
-                                <Typography
-                                    variant = "subtitle2"
-                                    component = "div"
-                                >
-                                    {doctordetails.email}
-                                </Typography>
-                                <Typography
-                                    variant = "subtitle3"
-                                    component = "div"
-                                >
-                                    {doctordetails.phone}
-                                </Typography>
-                                
-                            </div>
-                        </div>
-                    </Paper>
-                </Grid>
-            </Grid>
-        </Box>
+                        <Grid item xs={12} md={6} style={{padding:"20px"}}>
+                            <Paper elevation={1} square className={classes.root}>
+                                <div className={classes.profileShow}>
+                                    <Card className={classes.profileIcon}>
+                                        <HealthAndSafetyIcon fontSize="large"/>
+                                    </Card>
+                                    <div className={classes.profileTitle}>
+                                        <Typography
+                                            variant = "h6"
+                                            component = "div"
+                                        >
+                                            <strong>Doctor Details</strong>
+                                        </Typography>
+                                        <Typography
+                                            variant = "subtitle1"
+                                            component = "div"
+                                        >
+                                            {doctordetails.username}
+                                        </Typography>
+                                        <Typography
+                                            variant = "subtitle2"
+                                            component = "div"
+                                        >
+                                            {doctordetails.email}
+                                        </Typography>
+                                        <Typography
+                                            variant = "subtitle3"
+                                            component = "div"
+                                        >
+                                            {doctordetails.phone}
+                                        </Typography>
+                                        
+                                    </div>
+                                </div>
+                            </Paper>
+                        </Grid>
+                    </Grid>
+                </Box>
+            </>}
+        </>}
+
+        </>
     )
 }
