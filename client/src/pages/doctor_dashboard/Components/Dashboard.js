@@ -10,7 +10,8 @@ import axios from "axios";
 import { merge } from 'lodash';
 import ReactApexChart  from 'react-apexcharts';
 import {BaseOptionChart} from '../../../components/charts'
-
+import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
+import MedicationIcon from '@mui/icons-material/Medication';
 //---------------------------------------------------
  
 
@@ -114,11 +115,11 @@ function AppointmentsCard(props) {
     return (
       <AppointmentsRootStyle>
         <AppointmentsIconWrapperStyle>
-          <PeopleIcon/>
+          <MedicationIcon/>
         </AppointmentsIconWrapperStyle>
         <Typography variant="h3">{props.appointments}</Typography>
         <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
-          Appointments
+          Pending Appointments
         </Typography>
       </AppointmentsRootStyle>
     );
@@ -195,7 +196,7 @@ const TotalAppointmentsCard = (props) => {
     return (
         <TotalAppointmentsRootStyle>
         <TotalAppointmentsIconWrapperStyle>
-            <PeopleIcon/>
+            <LocalHospitalIcon/>
         </TotalAppointmentsIconWrapperStyle>
         <Typography variant="h3">{props.totalappointments}</Typography>
         <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
