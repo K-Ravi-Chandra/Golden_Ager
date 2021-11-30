@@ -124,11 +124,7 @@ const VolunteerDashboard = (props) => {
               </Link>
         </Typography>
 
-        <IconButton component={Link} href="/notifications" color="default">
-            <Badge  badgeContent={99} color="error">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
+        
 
         <IconButton
             color="inherit"

@@ -101,7 +101,7 @@ const FamilyDashboard = (props) => {
                 {props.data.name}
               </Typography>
               <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                Care Taker
+                Family Member
               </Typography>
             </Box>
           </AccountStyle>

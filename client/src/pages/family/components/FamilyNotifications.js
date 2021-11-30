@@ -26,7 +26,10 @@ import axios from "axios";
 import { Container ,Stack  , Button} from '@mui/material';
 import Grid from '@mui/material/Grid';
 import { styled} from '@mui/styles';
-import { red , green} from '@mui/material/colors';
+import { red , green, lightGreen} from '@mui/material/colors';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import { useTheme } from '@emotion/react';
 
 
 
@@ -35,7 +38,8 @@ export default function FamilyNotifications(props) {
     const [fetching , setFetching] = React.useState(true)
     const [error , setError] =   React.useState(false)
     const [data, setData] = React.useState([]);
-  
+    const theme = useTheme();
+    const backGroundGreen = green['A100'];
     React.useEffect(async () => {
 
       const email = props.data.email
@@ -65,7 +69,7 @@ export default function FamilyNotifications(props) {
       ).then(function(response) {
         setError(false); 
         setFetching(false);
-        setData(response.data.requests)
+        setData(response.data.requests.reverse())
         console.log(response.data.requests)
         return response;
       })
@@ -88,16 +92,30 @@ export default function FamilyNotifications(props) {
     return (
         <div>
 
-{fetching ?  <LinearProgress/> : <><b>Notifications</b>
+{fetching ?  <LinearProgress/> : <><h2>Notifications</h2>
     
     {error ? <Typography> An unknown Error</Typography>  : <>
 
       {
+        
         data.map((d) =><>
-
-        <body>{d.date.slice(0,10)}</body>
-        your registered senior citizen is feeling lonely
-        <hr></hr>
+        {/* <body>{d.date.slice(0,10)}</body>
+          <strong>Please contact your elder feeling lonely at home</strong>
+        <hr></hr> */}
+          <Paper elevation={1} square style={{margin : theme.spacing(0.5)}}>
+              
+              <Typography style={{paddingTop : theme.spacing(1), paddingLeft : theme.spacing(1)}}>
+                <strong>Your registered senior citizen is feeling low , please talk and cheer him up</strong>
+              </Typography>
+              {/* <Typography style={{opacity:'1'}}>
+                Please Contact him
+              </Typography > */}
+              <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom align="right" style={{paddingRight : theme.spacing(2), paddingBottom :theme.spacing(2) }}>
+                {d.date.slice(0,10)}
+              </Typography>
+              {/* d.date.slice(11,19)+((d.date.slice(11,13)<13)?"AM":"PM") */}
+              
+          </Paper>
         </>
       )
       }
