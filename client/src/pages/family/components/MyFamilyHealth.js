@@ -157,8 +157,8 @@ export default function MyFamilyHealth(props) {
       <TableHead>
         <TableRow>
           <TableCell />
-          <TableCell>Date</TableCell>
-          <TableCell align="right">Problem</TableCell>
+          <TableCell>Name</TableCell>
+          <TableCell align="right">Date</TableCell>
           <TableCell align="right">Status</TableCell>
         </TableRow>
       </TableHead>

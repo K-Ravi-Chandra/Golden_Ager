@@ -28,66 +28,6 @@ import Grid from '@mui/material/Grid';
 import { styled} from '@mui/styles';
 import { red , green} from '@mui/material/colors';
 
-const StyledSubmitButton = styled(Button)({
-  background: "linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(0,212,255,1) 0%, rgba(162,222,131,1) 100%)",
-  border: 0,
-  borderRadius: 4,
-  boxShadow: '0 3px 5px 2px rgba(2, 212, 225, .3)',
-  color: 'white',
-});
-
-function Row(props) {
-  
-  const { data } = props;
-  const [open, setOpen] = React.useState(false);
-
-return (
-  <React.Fragment>
-      <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
-      <TableCell>
-        <IconButton
-          aria-label="expand row"
-          size="small"
-          onClick={() => setOpen(!open)}
-        >
-          {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-        </IconButton>
-      </TableCell>
-      <TableCell component="th" scope="row">
-       {data.name}
-      </TableCell>    
-      <TableCell align="right">{data.date}</TableCell>
-      <TableCell align="right">{data.status}</TableCell>
-    </TableRow>
-    <TableRow>
-      <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-    
-        <Collapse in={open} timeout="auto" unmountOnExit>
-          
-          <Box sx={{ margin: 1 }}>
-            <Typography variant="h6" gutterBottom component="div">
-              Details
-            </Typography>
-
-            <Typography variant="body1">
-              Problem : {data.problem}
-            </Typography>
-            <Typography variant="body1">
-              Solution : {data.solution}
-            </Typography>
-            <Typography variant="body1">
-              Advice : {data.advice}
-            </Typography>
-            
-            
-          
-          </Box>
-        </Collapse>
-        </TableCell>
-    </TableRow>
-  </React.Fragment>
-);
-}
 
 
 export default function FamilyNotifications(props) {
@@ -117,7 +57,7 @@ export default function FamilyNotifications(props) {
           setMydetails(response.data.details[0])           
           const email = response.data.details[0].senior;
           axios.post(
-        "api/familymember/getAppointmentsData",
+        "api/familymember/getNotifications",
         {
           email
         },
@@ -148,27 +88,20 @@ export default function FamilyNotifications(props) {
     return (
         <div>
 
-{fetching ?  <LinearProgress/> : <>
+{fetching ?  <LinearProgress/> : <><b>Notifications</b>
     
     {error ? <Typography> An unknown Error</Typography>  : <>
 
-      <TableContainer component={Paper}>
-    <Table aria-label="collapsible table">
-      <TableHead>
-        <TableRow>
-          <TableCell />
-          <TableCell>Date</TableCell>
-          <TableCell align="right">Problem</TableCell>
-          <TableCell align="right">Status</TableCell>
-        </TableRow>
-      </TableHead>
-      <TableBody>
-        {data.map((d) => (
-          <Row key={d._id} data={d} />
-        ))}
-      </TableBody>
-    </Table>
-  </TableContainer>
+      {
+        data.map((d) =><>
+
+        <body>{d.date.slice(0,10)}</body>
+        your registered senior citizen is feeling lonely
+        <hr></hr>
+        </>
+      )
+      }
+
      </>}
       
   </>}
