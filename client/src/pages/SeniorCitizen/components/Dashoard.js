@@ -97,9 +97,50 @@ import { useTheme } from '@material-ui/core/styles';
     marginBottom: theme.spacing(3),
   }));
   
-  function FeelingLoneliness_Card() {
+  function FeelingLoneliness_Card(props) {
+    const data = props.data
+    const [openDialog, setOpenDialog] = React.useState(false);
+    const [isSuccess, setIsSuccess] = React.useState(false);
+    const [pad, setPad] = React.useState(6);
+    const handleCloseDialog = () => {
+      setOpenDialog(false);
+    }
+    const SendNotifications = async () => {
+      
+      const config = {
+        header: {
+          "Content-Type": "application/json",
+        },
+      };
+
+      
+      const email = data.email;
+
+
+        try {
+
+          const sendNotification =  await axios.post(
+            "api/seniorcitizen/sendNotifications",
+            {
+               email
+            },
+            config
+          )
+
+          setOpenDialog(true);
+          setIsSuccess(true);
+          setPad(0);
+          
+        } catch (error) {
+          console.log(error.message)
+        }
+      }
+
+      const theme = useTheme();
     return (
-      <FeelingLoneliness_RootStyle sx={{cursor : 'pointer'}} onClick={() => {console.log("Feeling Loneliness")}}>
+
+      <>
+      <FeelingLoneliness_RootStyle sx={{cursor : 'pointer'}} onClick={SendNotifications}>
 
         <FeelingLoneliness_IconWrapperStyle>
           <AttributionIcon sx={{ fontSize: 80 }}/>
@@ -108,6 +149,40 @@ import { useTheme } from '@material-ui/core/styles';
         <Typography variant="h6"> Feeling Loneliness </Typography>
 
       </FeelingLoneliness_RootStyle>
+
+      <Dialog
+        open={openDialog}
+        onClose={handleCloseDialog}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+        
+      >
+
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+                <h1><center>{isSuccess?"Success":"Error"}</center> </h1>
+                <center>
+                  {isSuccess ?
+                      <CheckCircleIcon style={{color: "#26FF00", fontSize:"6em"}}/>
+                      :<CancelIcon style={{color: "#FF0000", fontSize:"6em"}}/>
+                  }
+                </center>
+                <br />
+                <div style={{paddingLeft: theme.spacing(pad), paddingRight: theme.spacing(pad)}}>
+                    <strong>
+                      {isSuccess
+                        ?"Don't feel bad, your family members will meet you soon"
+                        :"Oops!!  Something went wrong"
+                      }
+                    </strong>
+                </div>
+          </DialogContentText>
+        </DialogContent>
+      </Dialog>
+
+      </>
+
+      
     );
   }
 

@@ -2,6 +2,7 @@ const Appointments = require('../models/Appointments');
 const Doctor = require('../models/Doctor');
 const Senior = require('../models/SeniorCitizen')
 const FamilyMember = require('../models/FamilyMember')
+const Notifications = require('../models/Notifications')
 
 const User = require('../models/User');
 
@@ -52,6 +53,32 @@ exports.getAppointmentsData  = async (req ,res , next) => {
             res.status(200).json({
                     success :true,
                     requests : appointments
+            });
+
+        } catch (error) {
+            res.status(500).json({
+                success :false,
+                error: error.message,
+            });
+        }
+    }
+
+}
+exports.getNotifications  = async (req ,res , next) => {
+    
+    const {email} = req.body;
+
+    if(!email){
+        return next(new ErrorResponse("Please try again! Later", 400))
+    }
+    else{
+        try { 
+            const notifications = await Notifications.find( { "email" : email})
+            console.log(notifications)
+
+            res.status(200).json({
+                    success :true,
+                    requests : notifications
             });
 
         } catch (error) {

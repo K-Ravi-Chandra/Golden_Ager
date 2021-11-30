@@ -30,10 +30,14 @@ const ChartWrapperStyle = styled('div')(({ theme }) => ({
     top: `calc(${CHART_HEIGHT - LEGEND_HEIGHT}px) !important`
   }
 }));
-
-//-----------------------------------------------------------------
-
+//financial requests pending : {financialrequests}{' '}
+//         total requests : {totalfinancialrequests}{' '}
+ //         seniorcitizens : {seniorcitizens} {' '}
+//          total Donations : {donations}
+//--------------const [financialrequests, setFinancialrequests] = React.useState('');
+  //const [totalfinancialrequests, setTotalFinancialrequests] = React.useState('');
 const Donationscard = (props) => (
+  
   <Card
     sx={{ height: '100%' }}
     {...props}
@@ -56,7 +60,7 @@ const Donationscard = (props) => (
             color="textPrimary"
             variant="h4"
           >
-            $24k
+           {props.totalfinancialrequests}
           </Typography>
         </Grid>
         <Grid item>

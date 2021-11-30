@@ -1,5 +1,30 @@
+const Notifications = require('../models/Notifications')
 const Appointments = require('../models/Appointments')
 const SeniorCitizen = require('../models/SeniorCitizen')
+exports.sendNotifications = async (req ,res , next) => {
+    
+    const {email} = req.body;
+    const date = Date.now();
+
+    console.log(email);
+   
+    try {
+        const notifications = await Notifications.create({
+            date ,email
+        })
+
+        console.log("Notification has been sent")
+
+        res.status(200).json({
+            success :true,
+            data: "Notification has been sent",
+        });
+
+    }catch (error) {
+        console.log(error.message);
+        next(error.message);
+    } 
+}
 exports.bookAppointment = async (req ,res , next) => {
     
     const {name , doctor ,email} = req.body;
