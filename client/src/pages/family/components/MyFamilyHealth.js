@@ -1,106 +1,182 @@
-import React, {useState} from 'react'
-import FamilyHealthPageHeader from './FamilyHealthPageHeader';
-import PeopleOutlineTwoToneIcon from '@mui/icons-material/PeopleOutlineTwoTone';
-import { makeStyles, Paper, Toolbar, TableBody, TextField, InputAdornment, TableRow, TableCell } from '@material-ui/core';
-import useTable from './useTable';
-import { SearchIcon } from '@mui/icons-material/Search';
+import * as React from 'react';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
+import PropTypes from 'prop-types';
+import { Formik, Form } from 'formik';
+import * as Yup from 'yup';
+import Textfield from '../../../components/formUI/Textfield';
+import Box from '@mui/material/Box';
+import Collapse from '@mui/material/Collapse';
+import IconButton from '@mui/material/IconButton';
+import LinearProgress from '@mui/material/LinearProgress';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Typography from '@mui/material/Typography';
+import Paper from '@mui/material/Paper';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import axios from "axios";
+import { Container ,Stack  , Button} from '@mui/material';
+import Grid from '@mui/material/Grid';
+import { styled} from '@mui/styles';
+import { red , green} from '@mui/material/colors';
 
-const useStyles = makeStyles( theme =>({
-    pageContent : {
-        margin : theme.spacing(5),
-        padding : theme.spacing(3)
-    },
-    searchInput : {
-        marginTop : theme.spacing(3),
-        width : "95%",
-    }
-}))
+const StyledSubmitButton = styled(Button)({
+  background: "linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(0,212,255,1) 0%, rgba(162,222,131,1) 100%)",
+  border: 0,
+  borderRadius: 4,
+  boxShadow: '0 3px 5px 2px rgba(2, 212, 225, .3)',
+  color: 'white',
+});
 
-const headCells = [
-    {id:'healthProblem', label:'Health Problem'},
-    {id:'healthStatus', label:'Health Status'},
-    {id:'date', label:'Appointed Date'}
-]
+function Row(props) {
+  
+  const { data } = props;
+  const [open, setOpen] = React.useState(false);
 
-export default function MyFamilyHealth() {
+return (
+  <React.Fragment>
+      <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
+      <TableCell>
+        <IconButton
+          aria-label="expand row"
+          size="small"
+          onClick={() => setOpen(!open)}
+        >
+          {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+        </IconButton>
+      </TableCell>
+      <TableCell component="th" scope="row">
+       {data.name}
+      </TableCell>    
+      <TableCell align="right">{data.date}</TableCell>
+      <TableCell align="right">{data.status}</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+    
+        <Collapse in={open} timeout="auto" unmountOnExit>
+          
+          <Box sx={{ margin: 1 }}>
+            <Typography variant="h6" gutterBottom component="div">
+              Details
+            </Typography>
 
-    const classes = useStyles();
+            <Typography variant="body1">
+              Problem : {data.problem}
+            </Typography>
+            <Typography variant="body1">
+              Solution : {data.solution}
+            </Typography>
+            <Typography variant="body1">
+              Advice : {data.advice}
+            </Typography>
+            
+            
+          
+          </Box>
+        </Collapse>
+        </TableCell>
+    </TableRow>
+  </React.Fragment>
+);
+}
 
-    const lister = [
-        {id:1,problem: 'throat pain', healthStatus:'Pending',date:'25-03-2021'},
-        {id:2,problem: 'ear pain',healthStatus:'Moderate',date:'11-04-2021'},
-        {id:3,problem: 'eye sight',healthStatus:'Healthy',date:'04-05-2021'},
-        {id:4,problem: 'teeth',healthStatus:'Severe',date:'28-06-2021'},
-        {id:5,problem: 'diabetics',healthStatus:'Moderate',date:'12-07-2021'},
-        {id:6,problem: 'heart problem',healthStatus:'Helathy',date:'09-08-2021'},
-        {id:7,problem: 'gas trouble',healthStatus:'Severe',date:'25-09-2021'},
-        {id:8,problem: 'eye sight',healthStatus:'Healthy',date:'04-05-2021'},
-        {id:9,problem: 'teeth',healthStatus:'Severe',date:'28-06-2021'},
-        {id:10,problem: 'diabetics',healthStatus:'Moderate',date:'12-07-2021'}
-    ]
 
-    const [expanded, setExpanded] = React.useState(false);
-    const [records, setRecords] = useState(lister)
-    const [filterFn, setFilterFn] = useState({fn : items =>{return items}})
+export default function MyFamilyHealth(props) {
+    const [mydetails, setMydetails] = React.useState({});
+    const [fetching , setFetching] = React.useState(true)
+    const [error , setError] =   React.useState(false)
+    const [data, setData] = React.useState([]);
+  
+    React.useEffect(async () => {
 
-    const handleChange = (panel) => (event, isExpanded) =>{
-        setExpanded(isExpanded ? panel : false);
-    }
+      const email = props.data.email
+      setError(false);
+      setFetching(true);
+  
+      const config = {
+        header: {
+          "Content-Type": "application/json",
+        },
+      };
+        await axios.post( 
+          "api/familymember/getMyDetails",
+          {
+            email
+          },
+          config
+        ).then(function(response) {
+          setMydetails(response.data.details[0])           
+          const email = response.data.details[0].senior;
+          axios.post(
+        "api/familymember/getAppointmentsData",
+        {
+          email
+        },
+        config
+      ).then(function(response) {
+        setError(false); 
+        setFetching(false);
+        setData(response.data.requests)
+        console.log(response.data.requests)
+        return response;
+      })
+      .catch(function(error) {
+        setError(true);
+        setFetching(false);
+        console.log(error);
+      });
+          
 
-    const handleSearch = e => {
-        let target = e.target;
-        setFilterFn({
-            fn:items =>{
-                if(target.value==="")
-                    return items
-                else
-                    return items.filter(x => x.problem.toLowerCase().includes(target.value))
-            }
+          return response;
         })
-    }
-
-    const {
-        TblContainer,
-        TblHead,
-        TblPagination,
-        recordsAfterPagingAndSorting
-    } =useTable(records, headCells, filterFn);
+        .catch(function(error) {
+          setError(true);
+          setFetching(false);
+          console.log(error);
+        });
+    }, [])
 
     return (
-        <>
-            {/* <FamilyHealthPageHeader 
-                name = "MLK Rao(42 yrs)"
-                familyMemberName = "TT Pal(73 yrs)"
-                icon = {<PeopleOutlineTwoToneIcon fontSize="large" />}
-            /> */}
-            <Paper className={classes.searchInput}>
-                <Toolbar>
-                    <TextField
-                        variant = "outlined"
-                        label = "Search Problem"
-                        className = {classes.searchInput}
-                        Adornment = {<InputAdornment position="start">
-                            <SearchIcon />
-                        </InputAdornment>}
-                        onChange = {handleSearch}
-                    />
-                </Toolbar>
-                <TblContainer>
-                    <TblHead />
-                    <TableBody>
-                        {
-                            recordsAfterPagingAndSorting().map(item=>(
-                                <TableRow key={item.id}>
-                                    <TableCell>{item.problem}</TableCell>
-                                    <TableCell>{item.healthStatus}</TableCell>
-                                    <TableCell>{item.date}</TableCell>
-                                </TableRow>
-                            ))
-                        }
-                    </TableBody>
-                </TblContainer>
-                <TblPagination />
-            </Paper>
-        </>
+        <div>
+
+{fetching ?  <LinearProgress/> : <>
+    
+    {error ? <Typography> An unknown Error</Typography>  : <>
+
+      <TableContainer component={Paper}>
+    <Table aria-label="collapsible table">
+      <TableHead>
+        <TableRow>
+          <TableCell />
+          <TableCell>Date</TableCell>
+          <TableCell align="right">Problem</TableCell>
+          <TableCell align="right">Status</TableCell>
+        </TableRow>
+      </TableHead>
+      <TableBody>
+        {data.map((d) => (
+          <Row key={d._id} data={d} />
+        ))}
+      </TableBody>
+    </Table>
+  </TableContainer>
+     </>}
+      
+  </>}
+  
+  
+ 
+
+            
+        </div>
     )
 }
