@@ -54,8 +54,9 @@ const Donationscard = (props) => (
             gutterBottom
             variant="overline"
           >
-            Donations Recieved
+            Donations Recieved<br/>
           </Typography>
+          {props.donations}
           <Typography
             color="textPrimary"
             variant="h4"
@@ -103,8 +104,16 @@ const Donationscard = (props) => (
     </Card>
   
 );
-const RequestProgresscard = (props) => (
-    <Card
+
+
+const RequestProgresscard = (props) => {
+  const total = props.totalfinancialrequests
+  const pend = props.financialrequests
+  const perc = 100 - [(pend/total)*100]
+  const per = Math.floor(perc)
+  return (
+    <div>
+      <Card
       sx={{ height: '100%' }}
       {...props}
     >
@@ -120,13 +129,14 @@ const RequestProgresscard = (props) => (
               gutterBottom
               variant="overline"
             >
-              REQUESTS PROGRESS
+              REQUESTS PROGRESS 
             </Typography>
+
             <Typography
               color="textPrimary"
               variant="h4"
             >
-              75.5%
+              {per}%
             </Typography>
           </Grid>
           <Grid item>
@@ -149,7 +159,13 @@ const RequestProgresscard = (props) => (
         </Box>
       </CardContent>
     </Card>
-  );
+    </div>
+  )
+}
+
+
+
+
 const Totalseniorcitizenscard = (props) => (
     <Card {...props}>
       <CardContent>
@@ -170,7 +186,7 @@ const Totalseniorcitizenscard = (props) => (
               color="textPrimary"
               variant="h4"
             >
-              1,6k
+              {props.seniorcitizens}
             </Typography>
           </Grid>
           <Grid item>
@@ -446,20 +462,18 @@ React.useEffect(async () => {
           total Donations : {donations}
         </Box>
         <Grid container spacing={3}>
-          <Grid item xs={12}  md={3}>
-          <Donationscard/>
+          <Grid item xs={12}  md={4}>
+          <Donationscard donations={donations} />
           </Grid>
-          <Grid item xs={12}  md={3}>
-          <RequestProgresscard/>
+          <Grid item xs={12}  md={4}>
+          <RequestProgresscard financialrequests={financialrequests} totalfinancialrequests={totalfinancialrequests}/>
           </Grid>
-          <Grid item xs={12}  md={3}>
-          <Totalseniorcitizenscard/>
+          <Grid item xs={12}  md={4}>
+          <Totalseniorcitizenscard seniorcitizens={seniorcitizens}/>
           </Grid>
-          <Grid item xs={12}  md={3}>
-          <Totalmoneydonatedcard/>
-          </Grid>
+          
           <Grid item xs={12}  md={12}>
-             <PieChart/>
+             <PieChart financialrequests={financialrequests} totalfinancialrequests={totalfinancialrequests} />
           </Grid>
         </Grid>
       </Container>
