@@ -31,7 +31,6 @@ import PendingActionsIcon from '@mui/icons-material/PendingActions';
 
 
 // Adding style part-----------------------------------------------------
-
 const drawerWidth = 250;
 const RootStyle = styled(AppBar)( ({ theme }) =>
 ({
@@ -42,28 +41,6 @@ const RootStyle = styled(AppBar)( ({ theme }) =>
   
 }) );
 
-// Redirecting to dashboard---------------------------------------------------------------
-
-const switchRoutes = 
-(
-  <Switch>
-
-    { routes.map( (prop, key) => 
-    {
-        return (
-          <Route
-            path={prop.path}
-            component={prop.component}
-            key={key}
-          />
-        );
-
-    } )}
-    
-    <Redirect from="/" to="/dashboard" />
-
-  </Switch>
-);
 
 // Adding style components for AccountStyle -------------------------------------------
 const AccountStyle = styled('div')( ({ theme }) => 
@@ -101,7 +78,7 @@ const DoctorDashboard = (props) =>
   }, [pathname]);
 
 
-  // Adding style components
+  // Sidebar
   const drawer = 
   (
     <div>
@@ -134,7 +111,7 @@ const DoctorDashboard = (props) =>
     </div>
   );
 
-  // ------------------------------------------------------------------------------
+  
 
   return (
 
@@ -154,20 +131,15 @@ const DoctorDashboard = (props) =>
               ml: { sm: `${drawerWidth}px` },
           }}
       >
-
           <Toolbar >   
-
             <Link underline="none" href="/">
               <img style = {{ width :32, height :32, margin : 4}} alt = "logo" src = {Logo} />
             </Link>  
-
             <Typography  variant="h3" sx={{ flexGrow: 1 , fontWeight : 50}}>
               <Link  underline="none" href="/dashboard">
                 Golden&nbsp;Ager
               </Link>
             </Typography>
-
-
             <IconButton
               color="inherit"
               edge="end"
@@ -175,12 +147,8 @@ const DoctorDashboard = (props) =>
               as = {Link}
               href = '/appointments'
             >
-
               <PendingActionsIcon/>
-        
             </IconButton>  
-
-      
             <IconButton
               color="inherit"
               aria-label="open drawer"
@@ -188,24 +156,14 @@ const DoctorDashboard = (props) =>
               onClick={handleDrawerToggle}
               sx={{ mr : 2, display: { sm: 'none' } }}
             >
-
               <MenuIcon />
-
             </IconButton> 
-
-
           </Toolbar>
-
-      </RootStyle>
-
-      //--------------------------------------------------------------------------
-      
+      </RootStyle>   
       <Box
         component="nav"
         sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
       >
-
-          {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
           <Drawer
               variant="temporary"
               open={mobileOpen}
@@ -223,8 +181,6 @@ const DoctorDashboard = (props) =>
           >
           {drawer}
           </Drawer>
-
-
           <Drawer
               variant="permanent"
               sx={{
@@ -235,19 +191,12 @@ const DoctorDashboard = (props) =>
           >
           {drawer}
           </Drawer>
-
-
       </Box>
-
-      // ---------------------------------------------------------------------------------
-
       <Box
         component="main"
         sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
       >
-
-        <Toolbar />
-        
+        <Toolbar />        
         <Switch>
           {routes.map(({component: Cmp, ...route}, key) => 
           {
@@ -260,16 +209,9 @@ const DoctorDashboard = (props) =>
               />
             );
           })}
-
           <Redirect from="/" to="/dashboard" />
-
         </Switch>
-
-
       </Box>
-
-      // -----------------------------------------------------------------------
-
     </Box>
 
   </ThemeConfig>
