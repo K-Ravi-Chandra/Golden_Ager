@@ -43,7 +43,7 @@ function Row(props) {
   
     const [open, setOpen] = React.useState(false);
 
-
+    console.log(data)
 
     const Accept  = async (values, props) =>{
       setLoading(true);
@@ -100,10 +100,27 @@ function Row(props) {
             <Box sx={{ margin: 1 }}>
               <Typography variant="h6" gutterBottom component="div">
                 Donor Details
+                <Typography gutterBottom component="div" sx={{p:2}}>
+                  <b>Name</b>     :{data.firstName} 
+                </Typography>
+                <Typography  gutterBottom component="div" sx={{p:2}}>
+                  <b>Phone No</b> :{data.phone} 
+                </Typography>
+                <Typography  gutterBottom component="div" sx={{p:2}}>
+                  <b>Email </b> :{data.email} 
+                </Typography>
+                <Typography  gutterBottom component="div"sx={{p:2}}>
+                  <b>Address</b> :{data.addressLine1} 
+                                  {data.addressLine2 ?<>{', '} {data.addressLine2}</>:<></> } ,
+                                  {data.state}
+                </Typography>
+                <Typography  gutterBottom component="div" sx={{p:2}}>
+                  <b>Things Donated</b> :{data.thing} 
+                </Typography>
               </Typography>
               {loading ? <LinearProgress sx={{marginBottom: 2}}/> :<></>}
               
-              <Button onClick={Accept}>Accept</Button>
+              <Button onClick={Accept} variant = "contained">Accept</Button>
               
             </Box>
           </Collapse>
