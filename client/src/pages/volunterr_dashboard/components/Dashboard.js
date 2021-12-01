@@ -244,11 +244,13 @@ const Totalseniorcitizenscard = (props) => (
  
 
  function PieChart(props) {
-  const Requests_Solved = props.totalfinancialrequests-props.financialrequests;
+  
   const Pending_Requests = props.financialrequests;
   const Total_Financial_Requests = props.totalfinancialrequests;
+  const Requests_Solved = props.totalfinancialrequests-props.financialrequests;
   const CHART_DATA = [Requests_Solved, Total_Financial_Requests, Pending_Requests];
   const theme = useTheme();
+  
 
   const chartOptions = merge(BaseOptionChart(), {
     colors: [
@@ -278,18 +280,20 @@ const Totalseniorcitizenscard = (props) => (
 
   return (
     <Grid>
-    <Card>
+      {props.datasent ? <><Card>
       <CardHeader title="Statistics of Requests" />
       <ChartWrapperStyle dir="ltr">
         <ReactApexChart type="pie" series={CHART_DATA} options={chartOptions} height={280} />
       </ChartWrapperStyle>
-  </Card>
+  </Card></> : <><LinearProgress/></>}
+    
   </Grid>
   );
  }
  function PieChart2(props) {
   const no_of_users = props.seniorcitizens;
   const total_donations = props.donations;
+  console.log(no_of_users)
   //const Total_Financial_Requests = props.totalfinancialrequests;
   const CHART_DATA = [no_of_users, total_donations];
   const theme = useTheme();
@@ -321,14 +325,18 @@ const Totalseniorcitizenscard = (props) => (
   
 
   return (
-    <Grid>
-    <Card>
+    <>
+      {no_of_users ? <>{total_donations ?
+     <>
+      <Card>
       <CardHeader title="Statistics of Donations and Senior Citizens" />
       <ChartWrapperStyle dir="ltr">
         <ReactApexChart type="pie" series={CHART_DATA} options={chartOptions} height={280} />
       </ChartWrapperStyle>
-  </Card>
-  </Grid>
+      </Card>
+      </> : <><LinearProgress/></>}</> : <><LinearProgress/></>}
+    
+  </>
   );
  }
 const Dashboard = (props) => {
@@ -492,7 +500,7 @@ React.useEffect(async () => {
           </Grid>
           
           <Grid item xs={12}  md={6}>
-             <PieChart financialrequests={financialrequests} totalfinancialrequests={totalfinancialrequests} />
+             <PieChart financialrequests={financialrequests} totalfinancialrequests={totalfinancialrequests} datasent = 'true'/>
           </Grid>
           <Grid item xs={12}  md={6}>
              <PieChart2 donations={donations} seniorcitizens={seniorcitizens} />
