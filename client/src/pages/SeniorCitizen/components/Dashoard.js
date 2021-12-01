@@ -15,41 +15,41 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import { useTheme } from '@material-ui/core/styles';
 
 
-// 1) Financial Help ---------------------------------------------------------------
+// 1) FINANCIAL HELP ---------------------------------------------------------------
 
-// ------------------i) Creating a styled Component FinancialHelpRootStyle using card component of MUI
-  const FinancialHelpRootStyle = styled(Card)(({ theme }) => ({
+// ------------------ 1.1) Creating a styled Component FinancialHelpRootStyle using card component of MUI
+const FinancialHelpRootStyle = styled(Card)( ({ theme }) => ({
     boxShadow: 'none',
     textAlign: 'center',
     padding: theme.spacing(5, 0),
     color: theme.palette.info.darker,
     backgroundColor: theme.palette.info.lighter
-  }));
+}) );
   
-// ------------------ii) Creating a styled Component FinancialHelpIconWrapperStyle using card component of MUI
-  const FinancialHelpIconWrapperStyle = styled('div')(({ theme }) => ({
+// ------------------ 1.2) Creating a styled Component FinancialHelpIconWrapperStyle using card component of MUI
+const FinancialHelpIconWrapperStyle = styled('div')( ({ theme }) => ({
     margin: 'auto',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: theme.spacing(3),
-  }));
+}) );
   
-// ------------------iii) code for Financial Help component in dashboard   
-  function FinancialHelpCard(props) {
+// ------------------ 1.3) code for Financial Help component in dashboard   
+function FinancialHelpCard(props) {
 
-    const details = props.data
-    const profile = props.profile
+  const details = props.data
+  const profile = props.profile
 
-    const [openDialog, setOpenDialog] = React.useState(false);
-    const [isSuccess, setIsSuccess] = React.useState(false);
-    const [pad, setPad] = React.useState(6);
-    const handleCloseDialog = () => {
-      setOpenDialog(false);
-    }
-    const theme = useTheme();
+  const [openDialog, setOpenDialog] = React.useState(false);
+  const [isSuccess, setIsSuccess] = React.useState(false);
+  const [pad, setPad] = React.useState(6);
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+  }
+  const theme = useTheme();
 
-    //ONCLICK LISTENER functionality for the Financial Help component
+  //----- ONCLICK LISTENER functionality for the Financial Help component
     const FinancialHelp = async () => {
       const config = {
         header: {
@@ -81,7 +81,7 @@ import { useTheme } from '@material-ui/core/styles';
   
     }
   
-    return (//returning JSX code for the component 
+    return ( //returning JSX code for the component 
       <>
       {/*--------------Component code---------------------*/}
       <FinancialHelpRootStyle sx={{cursor : 'pointer'}} onClick={FinancialHelp}>
@@ -100,12 +100,12 @@ import { useTheme } from '@material-ui/core/styles';
         onClose={handleCloseDialog}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
-        
       >
         {/* <DialogTitle id="alert-dialog-title">
         </DialogTitle> */}
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
+
                 <h1><center>{isSuccess?"Success":"Error"}</center> </h1>
                 <center>
                   {isSuccess ?
@@ -113,8 +113,10 @@ import { useTheme } from '@material-ui/core/styles';
                       :<CancelIcon style={{color: "#FF0000", fontSize:"6em"}}/>
                   }
                 </center>
+
                 <br />
-                <div style={{paddingLeft: theme.spacing(pad), paddingRight: theme.spacing(pad)}}>
+
+                <div style = {{paddingLeft: theme.spacing(pad), paddingRight: theme.spacing(pad)}}>
                     <strong>
                       {
                         isSuccess
@@ -123,17 +125,20 @@ import { useTheme } from '@material-ui/core/styles';
                       }
                     </strong>
                 </div>
+
           </DialogContentText>
         </DialogContent>
+
       </Dialog>
       </>
     );
+
   }
 
 
-// 2) Feeling Loneliness -----------------------------------------------------------------
+// 2) FEELING LONEINESS -----------------------------------------------------------------
 
-// ------------------i) Creating a styled Component FeelingLonliness_RootStyle using card component of MUI
+// ------------------ 2.1) Creating a styled Component FeelingLonliness_RootStyle using card component of MUI
   const FeelingLoneliness_RootStyle = styled(Card)(({ theme }) => ({
     boxShadow: 'none',
     textAlign: 'center',
@@ -142,7 +147,7 @@ import { useTheme } from '@material-ui/core/styles';
     backgroundColor: theme.palette.warning.lighter
   }));
 
-// ------------------ii) Creating a styled Component FeelingLonliness_IconWrapperStyle using card component of MUI
+// ------------------ 2.2) Creating a styled Component FeelingLonliness_IconWrapperStyle using card component of MUI
   
   const FeelingLoneliness_IconWrapperStyle = styled('div')(({ theme }) => ({
     margin: 'auto',
@@ -153,8 +158,9 @@ import { useTheme } from '@material-ui/core/styles';
   }));
 
   
-
-  function FeelingLoneliness_Card(props) {
+// ------------------ 2.3) code for feeling loneliness component in dashboard   
+  function FeelingLoneliness_Card(props) 
+  {
     const data = props.data
 
     const [openDialog, setOpenDialog] = React.useState(false);
@@ -166,36 +172,35 @@ import { useTheme } from '@material-ui/core/styles';
 
     const SendNotifications = async () => {
       
-      const config = {
-        header: {
-          "Content-Type": "application/json",
+    const config = {
+      header: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    const email = data.email;
+    
+    try {
+
+        const sendNotification =  await axios.post(
+        "api/seniorcitizen/sendNotifications",
+        {
+           email
         },
-      };
+        config
+        )
 
-      
-      const email = data.email;
-
-
-        try {
-
-          const sendNotification =  await axios.post(
-            "api/seniorcitizen/sendNotifications",
-            {
-               email
-            },
-            config
-          )
-
-          setOpenDialog(true);
-          setIsSuccess(true);
-          setPad(0);
+        setOpenDialog(true);
+        setIsSuccess(true);
+        setPad(0);
           
-        } catch (error) {
-          console.log(error.message)
-        }
-      }
+    } catch (error) {
+        console.log(error.message)
+    }
 
-      const theme = useTheme();
+  }
+
+    const theme = useTheme();
     return (
 
       <>
@@ -587,9 +592,9 @@ const DashboardPage = (props) => {
                 <RequestHelpCard data={details}   profile={profile}/>
           </Grid>
           
-
         </Grid>
       </Container>       
+
         
     </ThemeConfig>
     )
