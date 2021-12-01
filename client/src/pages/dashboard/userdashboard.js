@@ -8,22 +8,21 @@ import DoctorDashboard from '../doctor_dashboard/DoctorDashboard'
 import VolunteerDashboard from '../volunterr_dashboard/VolunteerDashboard'
 
 // UserDashboard
-const UserDashBoard = ({history}) => 
-{
+const UserDashBoard = ({history}) => {
+
   const [error, setError] = useState("");
   const [privateData, setPrivateData] = useState("");
   const [role, setRole] = useState('4');
   
-  useEffect(() =>
-  {
+  useEffect(() => {
 
     if(!localStorage.getItem("authToken"))
     {
       history.push("/login");
     }
 
-    const fetchPrivateDate = async () => 
-    {
+    const fetchPrivateDate = async () =>  {
+
       const config = 
       {
         headers: 
@@ -52,15 +51,13 @@ const UserDashBoard = ({history}) =>
 
   }, [history]);
 
-  const logout = () =>
-  {
+  const logout = () => {
       localStorage.removeItem("authToken");
       history.push("/");
   }
   
   // Switch cases for entering all Dashboards
-  const renderSwitch = (role) => 
-  {
+  const renderSwitch = (role) => {
     switch(role)
     {
       case '0':
