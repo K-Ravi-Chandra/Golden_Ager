@@ -1,5 +1,6 @@
 import React from 'react'
 
+// Critical Patients page
 const CriticalPatients = () => {
     return (
         <div>
