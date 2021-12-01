@@ -28,6 +28,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import Badge from '@mui/material/Badge';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
+import PendingActionsIcon from '@mui/icons-material/PendingActions';
 
 //---------------------------------------------------------------
 
@@ -145,10 +146,22 @@ const DoctorDashboard = (props) => {
 
         <IconButton
             color="inherit"
+            edge="end"
+            sx={{ mr : 2}}
+            as = {Link}
+            href = '/appointments'
+
+
+          >
+         <PendingActionsIcon/>
+          </IconButton>  
+          <IconButton
+            color="inherit"
             aria-label="open drawer"
             edge="end"
             onClick={handleDrawerToggle}
             sx={{ mr : 2, display: { sm: 'none' } }}
+            
           >
             <MenuIcon />
           </IconButton>  

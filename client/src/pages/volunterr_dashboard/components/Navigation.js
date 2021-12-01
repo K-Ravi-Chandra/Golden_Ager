@@ -14,6 +14,9 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import HistoryIcon from '@mui/icons-material/History';
+import BloodtypeIcon from '@mui/icons-material/Bloodtype';
+import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 // ----------------------------------------------------------------------
 
 
@@ -112,7 +115,7 @@ const Navigation = () => {
           <ListItem  disablePadding selected={Selected("/donations")} component={NavLink} sx ={{color: 'text.primary'}} to= "/donations" >
             <ListItemButton sx={{p :2}} >
               <ListItemIcon>
-                <DashboardIcon color = {Selected("/donations")? "primary" : "" }/>
+                <BloodtypeIcon color = {Selected("/donations")? "primary" : "" }/>
               </ListItemIcon>
               <ListItemText>
                 <Typography variant="body1" fontSize={18} color = {Selected("/donations")? "primary" : "" } >
@@ -125,7 +128,7 @@ const Navigation = () => {
           <ListItem disablePadding selected={Selected("/History")} component={NavLink} sx ={{color: 'text.primary'}} to= "/History" >
             <ListItemButton sx={{p :2}} >
               <ListItemIcon>
-                <PeopleIcon color = {Selected("/History")? "primary" : "" } />
+                <HistoryIcon color = {Selected("/History")? "primary" : "" } />
               </ListItemIcon>
 
               <ListItemText>
@@ -151,7 +154,7 @@ const Navigation = () => {
           <ListItem disablePadding selected={Selected("/Financialrequests")} component={NavLink} sx ={{color: 'text.primary'}} to= "/Financialrequests" >
             <ListItemButton sx={{p :2}} >
               <ListItemIcon>
-                <AccountBoxIcon color = {Selected("/Financialrequests")? "primary" : "" } />
+                <MonetizationOnIcon color = {Selected("/Financialrequests")? "primary" : "" } />
               </ListItemIcon>
               < ListItemText  >
                   <Typography variant="body1" fontSize={18}  color = {Selected("/Financialrequests")? "primary" : "" }>

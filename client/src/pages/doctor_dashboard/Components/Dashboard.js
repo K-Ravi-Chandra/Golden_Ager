@@ -12,6 +12,7 @@ import ReactApexChart  from 'react-apexcharts';
 import {BaseOptionChart} from '../../../components/charts'
 import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
 import MedicationIcon from '@mui/icons-material/Medication';
+import PendingActionsIcon from '@mui/icons-material/PendingActions';
 //---------------------------------------------------
  
 
@@ -115,7 +116,8 @@ function AppointmentsCard(props) {
     return (
       <AppointmentsRootStyle>
         <AppointmentsIconWrapperStyle>
-          <MedicationIcon/>
+          
+          <PendingActionsIcon/>
         </AppointmentsIconWrapperStyle>
         <Typography variant="h3">{props.appointments}</Typography>
         <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
@@ -196,7 +198,7 @@ const TotalAppointmentsCard = (props) => {
     return (
         <TotalAppointmentsRootStyle>
         <TotalAppointmentsIconWrapperStyle>
-            <LocalHospitalIcon/>
+        <MedicationIcon/>
         </TotalAppointmentsIconWrapperStyle>
         <Typography variant="h3">{props.totalappointments}</Typography>
         <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>

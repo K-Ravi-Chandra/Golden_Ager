@@ -17,7 +17,8 @@ import Typography from '@mui/material/Typography';
 import { Link} from '@mui/material';
 import Logo from "../../components/logo.png"
 import Navigation from './components/Navigation';
-import ThemeConfig from '../../components/theme'
+import ThemeConfig from '../../components/theme';
+import HistoryIcon from '@mui/icons-material/History'
 //---------------
 
 import NotificationsIcon from '@mui/icons-material/Notifications';
@@ -123,7 +124,15 @@ const VolunteerDashboard = (props) => {
                   Golden&nbsp;Ager
               </Link>
         </Typography>
-
+        <IconButton
+            color="inherit"
+            edge="end"
+            sx={{ mr : 2}}
+            as = {Link}
+            underline = 'none' href="/History"
+          >
+            <HistoryIcon/>
+          </IconButton> 
         
 
         <IconButton
