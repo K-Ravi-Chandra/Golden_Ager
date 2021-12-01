@@ -235,15 +235,19 @@ const Totalseniorcitizenscard = (props) => (
   );
   //-----------------------------------------------------------
 
-const Requests_Solved = 600;
-const Total_Requests = 300;
-const Total_Help_Requests = 1000;
-const Total_Money_Requests = 400;
+
+
+
+//const Total_Money_Requests = 400;
 
 //-----------------------------------------------------------------------------------------
- const CHART_DATA = [Requests_Solved, Total_Help_Requests, Total_Requests, Total_Money_Requests];
+ 
 
- function PieChart() {
+ function PieChart(props) {
+  const Requests_Solved = props.totalfinancialrequests-props.financialrequests;
+  const Pending_Requests = props.financialrequests;
+  const Total_Financial_Requests = props.totalfinancialrequests;
+  const CHART_DATA = [Requests_Solved, Total_Financial_Requests, Pending_Requests];
   const theme = useTheme();
 
   const chartOptions = merge(BaseOptionChart(), {
@@ -253,7 +257,7 @@ const Total_Money_Requests = 400;
       theme.palette.warning.main,
       theme.palette.error.main
     ],
-    labels: ['Requests Solved', 'Total Requests', 'Help Requests', 'Money Requests'],
+    labels: ['Requests Solved', 'Total Requests', 'Pending Requests'],
     stroke: { colors: [theme.palette.background.paper] },
     legend: { floating: true, horizontalAlign: 'center' },
     dataLabels: { enabled: true, dropShadow: { enabled: false } },
@@ -270,14 +274,61 @@ const Total_Money_Requests = 400;
       pie: { donut: { labels: { show: false } } }
     }
   });
+  
 
   return (
+    <Grid>
     <Card>
-      <CardHeader title="Statistics" />
+      <CardHeader title="Statistics of Requests" />
       <ChartWrapperStyle dir="ltr">
         <ReactApexChart type="pie" series={CHART_DATA} options={chartOptions} height={280} />
       </ChartWrapperStyle>
-    </Card>
+  </Card>
+  </Grid>
+  );
+ }
+ function PieChart2(props) {
+  const no_of_users = props.seniorcitizens;
+  const total_donations = props.donations;
+  //const Total_Financial_Requests = props.totalfinancialrequests;
+  const CHART_DATA = [no_of_users, total_donations];
+  const theme = useTheme();
+
+  const chartOptions = merge(BaseOptionChart(), {
+    colors: [
+      theme.palette.primary.main,
+      theme.palette.info.main,
+      theme.palette.warning.main,
+      theme.palette.error.main
+    ],
+    labels: ['Total no of senior citizens', 'Total Donations Recieved'],
+    stroke: { colors: [theme.palette.background.paper] },
+    legend: { floating: true, horizontalAlign: 'center' },
+    dataLabels: { enabled: true, dropShadow: { enabled: false } },
+    tooltip: {
+      fillSeriesColor: false,
+      y: {
+        formatter: (seriesName) => seriesName,
+        title: {
+          formatter: (seriesName) => `#${seriesName}`
+        }
+      }
+    },
+    plotOptions: {
+      pie: { donut: { labels: { show: false } } }
+    }
+  });
+  
+
+  return (
+    <Grid>
+    <Card>
+      <CardHeader title="Statistics of Donations and Senior Citizens" />
+      <ChartWrapperStyle dir="ltr">
+        <ReactApexChart type="pie" series={CHART_DATA} options={chartOptions} height={280} />
+      </ChartWrapperStyle>
+  </Card>
+  </Grid>
   );
  }
 const Dashboard = (props) => {
@@ -440,8 +491,11 @@ React.useEffect(async () => {
           <Totalseniorcitizenscard seniorcitizens={seniorcitizens}/>
           </Grid>
           
-          <Grid item xs={12}  md={12}>
+          <Grid item xs={12}  md={6}>
              <PieChart financialrequests={financialrequests} totalfinancialrequests={totalfinancialrequests} />
+          </Grid>
+          <Grid item xs={12}  md={6}>
+             <PieChart2 donations={donations} seniorcitizens={seniorcitizens} />
           </Grid>
         </Grid>
       </Container>
