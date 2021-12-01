@@ -139,9 +139,9 @@ const FamilyDashboard = (props) => {
         </Typography>
 
         <IconButton component={Link} href="/notifications" color="default">
-            <Badge  badgeContent={99} color="error">
+            {/* <Badge  badgeContent={99} color="error"> */}
             <NotificationsIcon />
-          </Badge>
+          {/* </Badge> */}
         </IconButton>
 
         <IconButton
