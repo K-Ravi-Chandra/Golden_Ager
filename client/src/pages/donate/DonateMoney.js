@@ -1,5 +1,6 @@
 import React from 'react'
 
+// Donate Money Page
 const DonateMoney = () => {
   return (
     <div>

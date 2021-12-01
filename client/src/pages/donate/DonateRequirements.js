@@ -1,17 +1,22 @@
+// Imports...
 import React, { useState } from 'react';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import Logo from '../../components/logo.png'
 import { styled} from '@mui/styles';
+
 import { AppBar, Box ,Toolbar,Typography, Stack , Container, Grid} from '@mui/material'
 import Textfield from '../../components/formUI/Textfield';
 import SubmitButton from '../../components/formUI/Button';
 import Alert from '@mui/material/Alert';
 import IconButton from '@mui/material/IconButton';
+
 import Collapse from '@mui/material/Collapse';
 import CloseIcon from '@mui/icons-material/Close';
 import AlertTitle from '@mui/material/AlertTitle';
 import axios from "axios";
+
+// ---------------------------------------------------------------------------------------
 
 const phoneRegExp=/^[2-9]{2}[0-9]{8}/
 
@@ -22,6 +27,7 @@ const Title = styled(Typography)({
   WebkitTextFillColor: "transparent"
 });
 
+// Addin style components - buttons 
 const StyledSubmitButton = styled(SubmitButton)({
   background: "linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(0,212,255,1) 0%, rgba(162,222,131,1) 100%)",
   border: 0,
@@ -66,17 +72,17 @@ const FORM_VALIDATION = Yup.object().shape({
     .required('Required'),
 });
 
-const DonateRequirements = () => {
-  
-
+// Donate Requirements page
+const DonateRequirements = () => 
+{
   const [open, setOpen] = React.useState(false);
 
   const handleClose = () => {
     setOpen(false);
   };
 
-  const onSubmit = async (values, props) => {
-
+  const onSubmit = async (values, props) => 
+  {
     const config = {
       header: {
         "Content-Type": "application/json",
@@ -84,8 +90,8 @@ const DonateRequirements = () => {
     };
 
 
-    try {
-
+    try 
+    {
       const { data } = await axios.post(
         "/api/donate/donaterequirements",
         {
@@ -94,47 +100,49 @@ const DonateRequirements = () => {
         config
       );
 
-
-
       console.log(data);
       setOpen(true);
           
-    props.resetForm()
+      props.resetForm()
 
-    } catch (error) {
+    } 
+    catch (error) 
+    {
       console.log(error);
     }
 
-
     setTimeout(handleClose, 5000);
-
-
-}
+  }
 
   return (
     <div>
-        <AppBar sx ={{alignItems : 'center', p : 1}} position ="relative" elevation ={0} color = "transparent">
-          <Toolbar >
-            <img style = {{ width :32, height :32, margin : 4}} alt = "logo" src = {Logo}/>
-            <Title variant="h4" component="div" sx={{ flexGrow: 1 }}>Golden Ager</Title>
-          </Toolbar>
-        </AppBar>
+
+      <AppBar sx ={{alignItems : 'center', p : 1}} position ="relative" elevation ={0} color = "transparent">
+        <Toolbar >
+          <img style = {{ width :32, height :32, margin : 4}} alt = "logo" src = {Logo}/>
+          <Title variant="h4" component="div" sx={{ flexGrow: 1 }}>Golden Ager</Title>
+        </Toolbar>
+      </AppBar>
+
       <Container >
           <Box justifyContent="center" sx = {{alignContent : 'center',
               bgcolor: '#a3e4f1',
-            }}>
+          }}>
               <Stack
                   sx={{ p: 2}}
                   direction="row"
                   spacing={2}
                   justifyContent="center">
+
                   <Typography fontSize = {20}  alignContent>Donate Requirements</Typography>
+
                </Stack>
           </Box>
         
           <Grid container  >
 
               <Grid item xs={12}>
+
                 <Container >
                   <div >
 
@@ -223,15 +231,11 @@ const DonateRequirements = () => {
                             />
                           </Grid>
 
-
                           <Grid item xs={12}>
                             <Typography>
                               Things Donating
                             </Typography>
                           </Grid>
-
-
-
 
                           <Grid item xs={12}>
                             <Textfield
@@ -245,28 +249,33 @@ const DonateRequirements = () => {
 
                         </Grid>
 
-
                         <Box sx={{ width: '100%' , pt : 2}}>
-                    <Collapse in={open} >
-                      <Alert severity="success"
-                        action={
-                          <IconButton
-                            aria-label="close"
-                            color="inherit"
-                            size="small"
-                            onClick={() => {
-                              setOpen(false);
-                            }}
-                          >
-                            <CloseIcon fontSize="inherit" />
-                          </IconButton>
-                        }
-                        sx={{ mb: 2 }}
-                      >
-                        <AlertTitle>Thanks for Donating!</AlertTitle>
-                        One of our volunteers will get back you.
-                      </Alert>
-                    </Collapse>
+                          <Collapse in={open} >
+
+                            <Alert severity="success"
+                              action=
+                              {
+                                <IconButton
+                                  aria-label="close"
+                                  color="inherit"
+                                  size="small"
+                                  onClick={() => {
+                                     setOpen(false);
+                                  }}
+                                >
+                                    <CloseIcon fontSize="inherit" />
+
+                                </IconButton>
+                              }
+                              sx={{ mb: 2 }}
+                            >
+
+                              <AlertTitle>Thanks for Donating!</AlertTitle>
+                              One of our volunteers will get back you.
+
+                            </Alert>
+
+                          </Collapse>
                         </Box>
 
                         <Stack
@@ -274,22 +283,27 @@ const DonateRequirements = () => {
                             direction="row"
                             spacing={2}
                             justifyContent="center"
-                          >
-                            <StyledSubmitButton>Submit</StyledSubmitButton>
-                          </Stack>
+                        >
+                          <StyledSubmitButton> Submit </StyledSubmitButton>
+                        </Stack>
 
                       </Form>
+
                     </Formik>
 
                   </div>
-              </Container>
-            </Grid>
+                </Container>
+
+              </Grid>
+
           </Grid>
-</Container>
-<Toolbar/>
+      </Container>
+
+      <Toolbar/>
 
     </div>
   );
+
 };
 
 export default DonateRequirements;
