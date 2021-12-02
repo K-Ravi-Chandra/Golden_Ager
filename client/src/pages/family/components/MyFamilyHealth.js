@@ -56,7 +56,7 @@ return (
       <TableCell component="th" scope="row">
        {data.name}
       </TableCell>    
-      <TableCell align="right">{data.date}</TableCell>
+      <TableCell align="right">{data.date.slice(0,10)}</TableCell>
       <TableCell align="right">{data.status}</TableCell>
     </TableRow>
     <TableRow>

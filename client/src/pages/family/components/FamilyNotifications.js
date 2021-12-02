@@ -99,21 +99,17 @@ export default function FamilyNotifications(props) {
       {
         
         data.map((d) =><>
-        {/* <body>{d.date.slice(0,10)}</body>
-          <strong>Please contact your elder feeling lonely at home</strong>
-        <hr></hr> */}
+        
           <Paper elevation={1} square style={{margin : theme.spacing(0.5)}}>
               
               <Typography style={{paddingTop : theme.spacing(1), paddingLeft : theme.spacing(1)}}>
-                <strong>Your registered senior citizen is feeling low , please talk and cheer him up</strong>
+                Your registered senior citizen is feeling low , please talk and cheer him up
               </Typography>
-              {/* <Typography style={{opacity:'1'}}>
-                Please Contact him
-              </Typography > */}
+             
               <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom align="right" style={{paddingRight : theme.spacing(2), paddingBottom :theme.spacing(2) }}>
-                {d.date.slice(0,10)}
+                <strong>{d.date.slice(0,10)}</strong>
               </Typography>
-              {/* d.date.slice(11,19)+((d.date.slice(11,13)<13)?"AM":"PM") */}
+           
               
           </Paper>
         </>
