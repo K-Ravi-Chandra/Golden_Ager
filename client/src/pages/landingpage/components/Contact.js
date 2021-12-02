@@ -83,7 +83,7 @@ const Contact = () => {
   // Final return 
   // Adding all style components
   return (
-    <Paper sx={{position: 'relative',backgroundColor: grey[200],color: 'black',}}>
+    <Paper sx={{position: 'relative'}}>
       
       <Box sx={{position: 'relative',p: 5,}}>
 

@@ -33,23 +33,6 @@ theme.typography.body1 = {
 
 export default function About() 
 {
-    const [open , setOpen]  = useState(false);
-    const [buttonText, setButtonText] = useState("Read More ...");
-
-    // Button Test function
-    function ButtonText()
-    {
-        if(open)
-        {
-            setButtonText("Read More ...")
-            setOpen(!open)
-        }
-        else
-        {
-            setButtonText("Read Less ...")
-            setOpen(!open)
-        }
-    }
 
     // Style components
     return (
@@ -98,9 +81,7 @@ export default function About()
                 </ThemeProvider>
 
 
-                <Collapse in={open} timeout="auto" unmountOnExit>
-
-                    <Typography variant="h5" fontWeight="400"  color="inherit" paragraph>Physical Infrastructure</Typography>
+                                    <Typography variant="h5" fontWeight="400"  color="inherit" paragraph>Physical Infrastructure</Typography>
 
 
                     <ThemeProvider theme ={theme}>
@@ -143,10 +124,8 @@ export default function About()
                         </Typography>
 
                     </ThemeProvider>
-            
-                </Collapse>
 
-                <Button color="primary" onClick={ButtonText}>{buttonText}</Button>
+               
 
             </Box>
         </Paper>
