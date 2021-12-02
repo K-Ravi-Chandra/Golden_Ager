@@ -122,7 +122,7 @@ const FamilyMember = (props) => {
             setShowError(false)
             setLoading(false)
             setError("An Unknown Error Occured")
-            // props.resetForm()
+            props.resetForm()
     
           } catch (error) {
             setLoading(false)

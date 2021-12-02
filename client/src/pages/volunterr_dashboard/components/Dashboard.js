@@ -31,12 +31,7 @@ const ChartWrapperStyle = styled('div')(({ theme }) => ({
     top: `calc(${CHART_HEIGHT - LEGEND_HEIGHT}px) !important`
   }
 }));
-//financial requests pending : {financialrequests}{' '}
-//         total requests : {totalfinancialrequests}{' '}
- //         seniorcitizens : {seniorcitizens} {' '}
-//          total Donations : {donations}
-//--------------const [financialrequests, setFinancialrequests] = React.useState('');
-  //const [totalfinancialrequests, setTotalFinancialrequests] = React.useState('');
+
 const Donationscard = (props) => (
   
   <Card
@@ -49,7 +44,7 @@ const Donationscard = (props) => (
         spacing={3}
         sx={{ justifyContent: 'space-between' }}
       >
-        <Grid item>
+        <Grid item xs ={12}>
           <Typography
             color="textSecondary"
             gutterBottom
@@ -58,6 +53,8 @@ const Donationscard = (props) => (
           >
             Donations Recieved<br/>
           </Typography>
+          </Grid>
+        <Grid item  xs ={6}>
           
           <Typography
             color="textPrimary"
@@ -68,7 +65,7 @@ const Donationscard = (props) => (
           </Typography>
          
         </Grid>
-        <Grid item>
+        <Grid item xs ={6}>
           <Avatar
             sx={{
               backgroundColor: 'error.main',
@@ -109,7 +106,7 @@ const RequestProgresscard = (props) => {
           spacing={3}
           sx={{ justifyContent: 'space-between' }}
         >
-          <Grid item>
+          <Grid item xs = {12}>
             <Typography
               color="textSecondary"
               gutterBottom
@@ -117,6 +114,8 @@ const RequestProgresscard = (props) => {
             >
               REQUESTS PROGRESS 
             </Typography>
+            </Grid>
+           <Grid item  xs = {6}>
 
             <Typography
               color="textPrimary"
@@ -125,7 +124,7 @@ const RequestProgresscard = (props) => {
               {per}%
             </Typography>
           </Grid>
-          <Grid item>
+          <Grid item  xs = {6}>
             <Avatar
               sx={{
                 backgroundColor: 'warning.main',
@@ -160,7 +159,7 @@ const Totalseniorcitizenscard = (props) => (
           spacing={3}
           sx={{ justifyContent: 'space-between' }}
         >
-          <Grid item>
+          <Grid item xs ={12}>
             <Typography
               color="textSecondary"
               gutterBottom
@@ -168,6 +167,8 @@ const Totalseniorcitizenscard = (props) => (
             >
               TOTAL SENIOR CITIZENS
             </Typography>
+            </Grid>
+          <Grid item xs ={6}>
             <Typography
               color="textPrimary"
               variant="h4"
@@ -175,8 +176,8 @@ const Totalseniorcitizenscard = (props) => (
             >
               {props.seniorcitizens}
             </Typography>
-          </Grid>
-          <Grid item>
+            </Grid>
+            <Grid item xs ={6}>
             <Avatar
               sx={{
                 backgroundColor: 'success.main',
@@ -200,50 +201,6 @@ const Totalseniorcitizenscard = (props) => (
       </CardContent>
     </Card>
   );
- const Totalmoneydonatedcard = (props) => (
-    <Card {...props}>
-      <CardContent>
-        <Grid
-          container
-          spacing={3}
-          sx={{ justifyContent: 'space-between' }}
-        >
-          <Grid item>
-            <Typography
-              color="textSecondary"
-              gutterBottom
-              variant="overline"
-            >
-              TOTAL MONEY SPENT FOR  REQUESTS 
-            </Typography>
-            <Typography
-              color="textPrimary"
-              variant="h4"
-            >
-            kkj
-            </Typography>
-          </Grid>
-          <Grid item>
-            <Avatar
-              sx={{
-                backgroundColor: 'primary.main',
-                height: 56,
-                width: 56
-              }}
-            >
-              <AttachMoneyIcon />
-            </Avatar>
-          </Grid>
-        </Grid>
-      </CardContent>
-    </Card>
-  );
-  //-----------------------------------------------------------
-
-
-
-
-//const Total_Money_Requests = 400;
 
 //-----------------------------------------------------------------------------------------
  
@@ -564,10 +521,6 @@ React.useEffect(async () => {
               <Container maxWidth="xl">
         <Box sx={{ pb: 5 }}>
           <Typography variant="h4">Hi, Welcome back</Typography>
-          {/* financial requests pending : {financialrequests}{' '}
-          total requests : {totalfinancialrequests}{' '}
-          seniorcitizens : {seniorcitizens} {' '}
-          total Donations : {donations} */}
         </Box>
         <Grid container spacing={3}>
           <Grid item xs={12}  md={4}>

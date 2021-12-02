@@ -1,4 +1,3 @@
-import Registration from './components/Registration';
 import History from './components/History';
 import HelpRequests from './components/HelpRequests';
 import Financialrequests from './components/Financialrequests';

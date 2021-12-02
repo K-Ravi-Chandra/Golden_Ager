@@ -107,12 +107,12 @@ function Row(props){
 }
 
 
-export default function SimpleAccordion(props) {
+export default function HelpRequests(props) {
 
 
   const [data, setData] = React.useState([]);
+  const [requests , setRequests] = React.useState(false);
   const [updated , setUpdated] = React.useState(false)
-  //const [loading , setLoading] = React.useState(false)
   const [fetching , setFetching] = React.useState(true)
   const [error , setError] =   React.useState(false)
 
@@ -138,7 +138,7 @@ export default function SimpleAccordion(props) {
         setError(false);
         setFetching(false);
         setData(response.data.requests)
-        console.log(data)
+        if(response.data.requests.length) setRequests(true)
         return response;
       })
       .catch(function(error) {
@@ -159,9 +159,15 @@ export default function SimpleAccordion(props) {
         {error ? <Typography> An unknown Error</Typography>  : <>
 
 
-          {data.map((d) => (
+          {requests ? <>
+            {data.map((d) => (
             <Row key={d._id} data={d} />
           ))}
+          
+          </> : <Typography> You have done a great work! No help requests pending</Typography>
+          
+          }
+        
         
          </>}
         

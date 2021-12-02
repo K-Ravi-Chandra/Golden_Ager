@@ -98,8 +98,8 @@ const Doctor = (props) => {
         setLoading(false)
         setShowError(false)
         setError("An Unknown Error Occured")
-        // props.resetForm()
-        // setTimeout(CloseSuccess, 5000);
+        props.resetForm()
+        setTimeout(CloseSuccess, 5000);
 
       } catch (error) {
 

@@ -188,7 +188,7 @@ const History = (props) => {
         </Box>
       </PerfectScrollbar>
     </Card>
-          </> : <Typography> No Requests found</Typography> } </> }</>}
+          </> : <Typography> History was empty</Typography> } </> }</>}
     </>
   );
 }
