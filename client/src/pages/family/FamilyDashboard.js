@@ -116,109 +116,112 @@ const FamilyDashboard = (props) => {
   return (
 
       <ThemeConfig>
+        
         <Box sx={{ display: 'flex' }}>
-      <CssBaseline />
-      <RootStyle
-        elevation = {0}
-        color = "inherit"
-        position="fixed"
-        sx={{
-          pt : 2,
-          width: { sm: `calc(100% - ${drawerWidth}px)` },
-          ml: { sm: `${drawerWidth}px` },
-        }}
-      >
-      <Toolbar >   
-      <Link underline="none" href="/">
-            <img style = {{ width :32, height :32, margin : 4}} alt = "logo" src = {Logo} />
-        </Link>  
-        <Typography  variant="h3" sx={{ flexGrow: 1 , fontWeight : 50}}>
-              <Link  underline="none" href="/dashboard">
-                  Golden&nbsp;Ager
-              </Link>
-        </Typography>
-
-        <IconButton component={Link} href="/notifications" color="default">
-            {/* <Badge  badgeContent={99} color="error"> */}
-            <NotificationsIcon />
-          {/* </Badge> */}
-        </IconButton>
-
-        <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="end"
-            onClick={handleDrawerToggle}
-            sx={{ mr : 2, display: { sm: 'none' } }}
-          >
-            <MenuIcon />
-          </IconButton>  
-
         
-
-
-
-      </Toolbar>
-      </RootStyle>
-      <Box
-        component="nav"
-        sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
-      >
-        {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
-        <Drawer
-          
-          variant="temporary"
-          open={mobileOpen}
-          anchor={'right'}
-          onClose={handleDrawerToggle}
-          ModalProps={{
-            keepMounted: true, // Better open performance on mobile.
-          }}
-          sx={{
-            display: { xs: 'block', sm: 'none' },
-            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
-          }}
-        >
-          {drawer}
-        </Drawer>
-        <Drawer
-          variant="permanent"
-          sx={{
-            display: { xs: 'none', sm: 'block' },
-            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
-          }}
-          open
-        >
-          {drawer}
-        </Drawer>
-      </Box>
-      <Box
-        component="main"
-        sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
-      >
-        <Toolbar />
-        
-        <Switch>
-              {routes.map(({component: Cmp, ...route}, key) => {
-                
-                  return (
-                    <Route
-                      exact = {true}
-                      {...route}
-                      key={key}
-                      render={props => <Cmp {...props}  data={data} />}
-                    />
-                  );
-
-              })}
-              <Redirect from="/" to="/dashboard" />
-            </Switch>
-      </Box>
-    </Box>
-      </ThemeConfig>
-
+          <CssBaseline />
       
+          <RootStyle
+            elevation = {0}
+            color = "inherit"
+            position="fixed"
+            sx={{
+              pt : 2,
+              width: { sm: `calc(100% - ${drawerWidth}px)` },
+              ml: { sm: `${drawerWidth}px` },
+            }}
+          >
+            <Toolbar >
 
+              <Link underline="none" href="/">
+                <img style = {{ width :32, height :32, margin : 4}} alt = "logo" src = {Logo} />
+              </Link>  
+        
+              <Typography  variant="h3" sx={{ flexGrow: 1 , fontWeight : 50}}>
+                <Link  underline="none" href="/dashboard">
+                  Golden&nbsp;Ager
+                </Link>
+              </Typography>
+
+              <IconButton component={Link} href="/notifications" color="default">
+                <NotificationsIcon />
+              </IconButton>
+
+              <IconButton
+                color="inherit"
+                aria-label="open drawer"
+                edge="end"
+                onClick={handleDrawerToggle}
+                sx={{ mr : 2, display: { sm: 'none' } }}
+              >
+                <MenuIcon />
+              </IconButton>
+
+            </Toolbar>
+          </RootStyle>
+      
+          <Box
+            component="nav"
+            sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
+          >
+          
+            {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
+        
+            <Drawer
+              variant="temporary"
+              open={mobileOpen}
+              anchor={'right'}
+              onClose={handleDrawerToggle}
+              ModalProps={{
+                keepMounted: true, // Better open performance on mobile.
+              }}
+              sx={{
+                display: { xs: 'block', sm: 'none' },
+                '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+              }}
+            >
+              {drawer}
+            </Drawer>
+          
+            <Drawer
+              variant="permanent"
+              sx={{
+                display: { xs: 'none', sm: 'block' },
+                '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+              }}
+              open
+            >
+              {drawer}
+            </Drawer>
+      
+          </Box>
+      
+          <Box
+            component="main"
+            sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
+          >
+            <Toolbar />
+            
+            <Switch>
+              {routes.map(({component: Cmp, ...route}, key) => {
+                return (
+                  <Route
+                    exact = {true}
+                    {...route}
+                    key={key}
+                    render={props => <Cmp {...props}  data={data} />}
+                  />
+                );
+              })}
+                
+                <Redirect from="/" to="/dashboard" />
+              
+              </Switch>
+          </Box>
+
+        </Box>
+
+      </ThemeConfig>
   )
 }
 
