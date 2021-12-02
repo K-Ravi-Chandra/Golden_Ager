@@ -76,7 +76,7 @@ function Row(props){
       ).then(function(response) {
         setLoading(false);
         setUpdated(true);
-        alert(response.data.success)
+        alert("Are You Sure ?")
         return response;
       })
       .catch(function(error) {
