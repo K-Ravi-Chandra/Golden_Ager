@@ -15,7 +15,7 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 
 
-const phoneRegExp=/^[2-9]{2}[0-9]{8}/
+const phoneRegExp=/^[7-9][0-9]{9}$/
 
 const StyledSubmitButton = styled(SubmitButton)({
   background: "linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(0,212,255,1) 0%, rgba(162,222,131,1) 100%)",

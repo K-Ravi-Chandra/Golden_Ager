@@ -18,7 +18,7 @@ import axios from "axios";
 
 // ---------------------------------------------------------------------------------------
 
-const phoneRegExp=/^[2-9]{2}[0-9]{8}/
+const phoneRegExp=/^[7-9][0-9]{9}$/
 
 const Title = styled(Typography)({
   fontSize : 35,

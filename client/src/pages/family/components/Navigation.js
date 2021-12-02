@@ -11,7 +11,7 @@ import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import { useHistory } from "react-router-dom";
 import LogoutIcon from '@mui/icons-material/Logout';
-
+import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
 
 
 const Selected = (path) => {
@@ -53,7 +53,7 @@ const Navigation = () => {
           <ListItem disablePadding selected={Selected("/donate-money")} component={Link} sx ={{color: 'text.primary'}} href= "https://rzp.io/l/yt2s6Yf" >
             <ListItemButton sx={{p :2}} >
               <ListItemIcon>
-                <AccountBalanceIcon color = {Selected("/donate-money")? "primary" : "" } />
+                <CurrencyRupeeIcon color = {Selected("/donate-money")? "primary" : "" } />
               </ListItemIcon>
 
               <ListItemText>

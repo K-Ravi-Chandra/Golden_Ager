@@ -13,7 +13,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import LoadingButton from '@mui/lab/LoadingButton';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 
-const phoneRegExp=/^[2-9]{2}[0-9]{8}/
+const phoneRegExp=/^[7-9][0-9]{9}$/
 
 const Doctor = (props) => {
 
