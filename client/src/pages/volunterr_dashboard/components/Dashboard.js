@@ -11,6 +11,7 @@ import { useTheme,alpha, styled } from '@mui/material/styles';
 import { merge } from 'lodash';
 import ReactApexChart  from 'react-apexcharts';
 import {BaseOptionChart} from '../../../components/charts'
+import { load } from 'dotenv';
 //------------------------------------------------------------------
 const CHART_HEIGHT = 372;
 const LEGEND_HEIGHT = 72;
@@ -91,7 +92,11 @@ const RequestProgresscard = (props) => {
   const total = props.totalfinancialrequests
   const pend = props.financialrequests
   const perc = 100 - [(pend/total)*100]
-  const per = Math.floor(perc)
+  let per = Math.floor(perc)
+  console.log(per)
+  if(props.totalfinancialrequests === 0){
+     per = 0
+  }
   return (
     <div>
       <Card
@@ -134,7 +139,7 @@ const RequestProgresscard = (props) => {
         </Grid>
         <Box sx={{ pt: 3 }}>
           <LinearProgress
-            value={75.5}
+            value={per}
             variant="determinate"
           />
         </Box>
@@ -245,11 +250,27 @@ const Totalseniorcitizenscard = (props) => (
 
  function PieChart(props) {
   
+
+  
+  const [zero , setZero] = React.useState(true)
   const Pending_Requests = props.financialrequests;
   const Total_Financial_Requests = props.totalfinancialrequests;
   const Requests_Solved = props.totalfinancialrequests-props.financialrequests;
-  const CHART_DATA = [Requests_Solved, Total_Financial_Requests, Pending_Requests];
+  const [CHART_DATA, set_CHART_DATA] = React.useState([])
+
   const theme = useTheme();
+
+  React.useEffect( () => {
+
+  
+
+    set_CHART_DATA([ props.totalfinancialrequests-props.financialrequests,props.totalfinancialrequests,props.financialrequests]);
+
+    if(props.totalfinancialrequests || props.financialrequests){
+        setZero(false)
+    }
+  
+  }, [props.totalfinancialrequests,props.financialrequests])
   
 
   const chartOptions = merge(BaseOptionChart(), {
@@ -277,25 +298,65 @@ const Totalseniorcitizenscard = (props) => (
     }
   });
   
+  console.log(CHART_DATA);
 
   return (
-    <Grid>
-      {props.datasent ? <><Card>
-      <CardHeader title="Statistics of Requests" />
-      <ChartWrapperStyle dir="ltr">
-        <ReactApexChart type="pie" series={CHART_DATA} options={chartOptions} height={280} />
-      </ChartWrapperStyle>
-  </Card></> : <><LinearProgress/></>}
     
-  </Grid>
+    <>
+    
+        { CHART_DATA.length ? 
+
+        <> {zero ?   <Card>
+          <CardHeader title="Statistics of Requests" />
+          <ChartWrapperStyle dir="ltr">
+          <Typography sx = {{marginLeft : 4}}>Insufficient Data</Typography>
+          </ChartWrapperStyle>
+          </Card>: 
+          <Card>
+          <CardHeader title="Statistics of Requests" />
+          <ChartWrapperStyle dir="ltr">
+            <ReactApexChart type="pie" series={CHART_DATA} options={chartOptions} height={280} />
+          </ChartWrapperStyle>
+          </Card>}</>
+
+        
+
+         
+
+          : <Card>
+          <CardHeader title="Statistics of Donations and Senior Citizens" />
+          <ChartWrapperStyle dir="ltr">
+          <LinearProgress/>
+          </ChartWrapperStyle>
+          </Card>
+
+        }
+    
+    
+    
+  </>
   );
  }
  function PieChart2(props) {
-  const no_of_users = props.seniorcitizens;
-  const total_donations = props.donations;
-  console.log(no_of_users)
-  //const Total_Financial_Requests = props.totalfinancialrequests;
-  const CHART_DATA = [no_of_users, total_donations];
+  
+  const [zero , setZero] = React.useState(true)
+  const [no_of_users , set_no_of_users] = React.useState('')
+  const [total_donations , set_total_donations] = React.useState('')
+  const [CHART_DATA, set_CHART_DATA] = React.useState([])
+  console.log(CHART_DATA);
+
+  React.useEffect( () => {
+
+    set_CHART_DATA([props.seniorcitizens,props.donations]);
+
+    if(props.seniorcitizens || props.donations){
+      setZero(false)
+    }
+  
+  }, [props.seniorcitizens,props.donations])
+  
+
+
   const theme = useTheme();
 
   const chartOptions = merge(BaseOptionChart(), {
@@ -326,17 +387,37 @@ const Totalseniorcitizenscard = (props) => (
 
   return (
     <>
-      {no_of_users ? <>{total_donations ?
-     <>
-      <Card>
-      <CardHeader title="Statistics of Donations and Senior Citizens" />
-      <ChartWrapperStyle dir="ltr">
-        <ReactApexChart type="pie" series={CHART_DATA} options={chartOptions} height={280} />
-      </ChartWrapperStyle>
-      </Card>
-      </> : <><LinearProgress/></>}</> : <><LinearProgress/></>}
-    
-  </>
+       { CHART_DATA.length ? 
+
+<> {zero ?   <Card>
+  <CardHeader title="Statistics of Requests" />
+  <ChartWrapperStyle dir="ltr">
+  <Typography sx = {{marginLeft : 4}}>Insufficient Data</Typography>
+  </ChartWrapperStyle>
+  </Card>: 
+  <Card>
+  <CardHeader title="Statistics of Requests" />
+  <ChartWrapperStyle dir="ltr">
+    <ReactApexChart type="pie" series={CHART_DATA} options={chartOptions} height={280} />
+  </ChartWrapperStyle>
+  </Card>}</>
+
+
+
+ 
+
+  : <Card>
+  <CardHeader title="Statistics of Donations and Senior Citizens" />
+  <ChartWrapperStyle dir="ltr">
+  <LinearProgress/>
+  </ChartWrapperStyle>
+  </Card>
+
+}
+
+
+
+</>
   );
  }
 const Dashboard = (props) => {
