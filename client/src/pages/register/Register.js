@@ -22,7 +22,7 @@ import Button from '@mui/material/Button';
 
 // ------------------------------------------------------------------------------
 
-const phoneRegExp=/^[2-9]{2}[0-9]{8}/
+const phoneRegExp=/^[7-9][0-9]{9}$/
 
 // Adding Style components
 const Title = styled(Typography)({
