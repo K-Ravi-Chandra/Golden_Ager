@@ -1,6 +1,6 @@
 import React from 'react'
-import { Grid, Box , Paper, Typography, makeStyles, Card, Button} from '@material-ui/core'
-import { styled } from '@mui/material/styles';
+import { Grid, Box , Paper, Typography,  Card, Button} from '@mui/material'
+import { makeStyles } from '@mui/styles';
 import PersonIcon from '@mui/icons-material/Person';
 import axios from "axios";
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
@@ -9,23 +9,24 @@ import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
 import PeopleAltRoundedIcon from '@mui/icons-material/PeopleAltRounded';
 import ElderlyRoundedIcon from '@mui/icons-material/ElderlyRounded';
 import LinearProgress from '@mui/material/LinearProgress';
+import { Avatar } from '@mui/material';
 
-const useStyles = makeStyles( theme =>({
+const useStyles = makeStyles( ({
     root : {
         background : '#fdffff'
     },
     profileShow : {
-        padding:theme.spacing(3),
+        padding:30,
         display:'flex',
-        marginBottom:theme.spacing(2)
+        marginBottom:20
     },
     profileIcon : {
         display:'inline-block',
-        padding:theme.spacing(2),
+        padding:30,
         color:'#3c44b1'
     },
     profileTitle:{
-        paddingLeft:theme.spacing(4),
+        paddingLeft: 40,
         '& .MuiTypography-subtitle1':{
             opacity:'0.9'
         },
@@ -94,7 +95,7 @@ export default function FamilyProfile(props) {
                             setVolunterdetails(response.data.volunter)
                             email = doctor
                             console.log(email)
-                            axios.get(
+                            axios.post(
                                 "/api/doctor/getDetails",
                                 {
                                     email
@@ -152,11 +153,9 @@ export default function FamilyProfile(props) {
                 <Box sx={{width:'100%'}}>
                     <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
                         <Grid item xs={12} md={6} style={{padding:"20px"}}>
-                            <Paper elevation={1} square className={classes.root}>
+                            <Paper elevation={3}  className={classes.root}>
                                 <div className={classes.profileShow}>
-                                    <Card className={classes.profileIcon}>
-                                        <PersonIcon fontSize="large"/>
-                                    </Card>
+                                    <Avatar sx={{marginTop : 4}}><PersonIcon fontSize="large"/></Avatar>
                                     <div className={classes.profileTitle}>
                                         <Typography
                                             variant = "h6"
@@ -191,11 +190,9 @@ export default function FamilyProfile(props) {
 
 
                         <Grid item xs={12} md={6} style={{padding:"20px"}}>
-                            <Paper elevation={1} square className={classes.root}>
+                            <Paper elevation={3} square className={classes.root}>
                                 <div className={classes.profileShow}>
-                                    <Card className={classes.profileIcon}>
-                                        <ElderlyRoundedIcon fontSize="large"/>
-                                    </Card>
+                                    <Avatar sx={{marginTop : 4}}><ElderlyRoundedIcon fontSize="large"/></Avatar>
                                     <div className={classes.profileTitle}>
                                         <Typography
                                             variant = "h6"
@@ -228,11 +225,9 @@ export default function FamilyProfile(props) {
                         </Grid>
 
                         <Grid item xs={12} md={6} style={{padding:"20px"}}>
-                            <Paper elevation={1} square className={classes.root}>
+                            <Paper elevation={3}  className={classes.root}>
                                 <div className={classes.profileShow}>
-                                    <Card className={classes.profileIcon}>
-                                        <AdminPanelSettingsIcon fontSize="large"/>
-                                    </Card>
+                                    <Avatar sx={{marginTop : 4}}> <AdminPanelSettingsIcon fontSize="large"/></Avatar>
                                     <div className={classes.profileTitle}>
                                         <Typography
                                             variant = "h6"
@@ -266,11 +261,10 @@ export default function FamilyProfile(props) {
 
 
                         <Grid item xs={12} md={6} style={{padding:"20px"}}>
-                            <Paper elevation={1} square className={classes.root}>
+                            <Paper elevation={3}  className={classes.root}>
                                 <div className={classes.profileShow}>
-                                    <Card className={classes.profileIcon}>
-                                        <HealthAndSafetyIcon fontSize="large"/>
-                                    </Card>
+                                    <Avatar sx={{marginTop : 4}}> <HealthAndSafetyIcon fontSize="large"/></Avatar>
+
                                     <div className={classes.profileTitle}>
                                         <Typography
                                             variant = "h6"

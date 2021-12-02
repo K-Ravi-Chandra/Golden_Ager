@@ -87,10 +87,6 @@ const Profile = (props) => {
         </div>
 
         <div>
-          Volunteer No : 1234567890
-        </div>
-
-        <div>
           Doctor Email : {data.doctor}
         </div>
 
