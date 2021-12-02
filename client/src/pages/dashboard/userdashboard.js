@@ -7,7 +7,8 @@ import FamilyDashboard from '../family/FamilyDashboard';
 import DoctorDashboard from '../doctor_dashboard/DoctorDashboard'
 import VolunteerDashboard from '../volunterr_dashboard/VolunteerDashboard'
 
-// UserDashboard
+// UserDashboard ----------------------------------------------------------------------------
+
 const UserDashBoard = ({history}) => {
 
   const [error, setError] = useState("");
@@ -77,6 +78,7 @@ const UserDashBoard = ({history}) => {
     }
   }
     
+  // Returning the error message
   return error ? 
   (
     <span className="error-message"> {error} </span>
