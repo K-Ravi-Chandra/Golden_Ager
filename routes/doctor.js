@@ -5,7 +5,7 @@ const { updateAppointment ,getTotalAppointments,getAppointments , getDetails , g
 
 router.route("/getAppointments").post(getAppointments );
 router.route("/updateAppointment").post( updateAppointment);
-router.route("/getDetails").get( getDetails);
+router.route("/getDetails").post( getDetails);
 router.route("/getPatients").post( getPatients);
 router.route("/getTotalAppointments").post( getTotalAppointments);
 module.exports = router;

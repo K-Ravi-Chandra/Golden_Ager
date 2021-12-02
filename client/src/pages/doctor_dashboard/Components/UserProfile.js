@@ -17,14 +17,14 @@ const UserProfilePage = (props) => {
     setError(false);
     setFetching(true);
 
-    const email = data.email;
+    const email = props.data.email;
 
     const config = {
       header: {
         "Content-Type": "application/json",
       },
     };
-      await axios.get(
+      await axios.post(
         "/api/doctor/getDetails",
         {
             email
@@ -54,6 +54,8 @@ const UserProfilePage = (props) => {
                     {error ? <Typography> Please Try again Later</Typography>  : <>
                         <Typography variant="h6" >Your Profile </Typography>
                     <Stack spacing ={1}>
+
+                      
                     
                         <Stack direction = 'row' spacing = {1}>
                             <Typography > Name&nbsp;:  </Typography>

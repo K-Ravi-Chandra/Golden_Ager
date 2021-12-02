@@ -99,6 +99,7 @@ export default function Patients(props) {
 
 
 const [data, setData] = React.useState([]);
+const [patients , setPatients] = React.useState(false);
 const [fetching , setFetching] = React.useState(true)
 const [error , setError] =   React.useState(false)
 
@@ -124,7 +125,8 @@ React.useEffect(async () => {
         },
         config
       ).then(function(response) {
-        console.log(response.data.patients)
+        
+        if(response.data.patients.length)  setPatients(true)
         setError(false); 
         setFetching(false);
         setData(response.data.patients)
@@ -138,29 +140,37 @@ React.useEffect(async () => {
 
   }, [])
 
+
   return (
     <div>
     {fetching ?  <LinearProgress/> : <>
     
       {error ? <Typography> An unknown Error</Typography>  : <>
 
-        <TableContainer component={Paper}>
-      <Table aria-label="collapsible table">
-        <TableHead>
-          <TableRow>
-            <TableCell />
-            <TableCell>Patient&nbsp;Name</TableCell>
-            <TableCell align="right">Phone</TableCell>
-            <TableCell align="right">Volunter</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {data.map((d) => (
-            <Row key={d._id} data={d} />
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+         { patients ? 
+            <TableContainer component={Paper}>
+              <Table aria-label="collapsible table">
+                <TableHead>
+                  <TableRow>
+                    <TableCell />
+                    <TableCell>Patient&nbsp;Name</TableCell>
+                    <TableCell align="right">Phone</TableCell>
+                    <TableCell align="right">Volunter</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+
+                {data.map((d) => (
+                <Row key={d._id} data={d} />
+              ))}
+              
+                </TableBody>
+              </Table>
+            </TableContainer> : 
+
+            <> We coundn't find patients registerd on your name</>
+
+         }
        </>}
         
     </>}

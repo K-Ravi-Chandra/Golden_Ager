@@ -93,6 +93,7 @@ exports.getAppointments  = async (req ,res , next) => {
 exports.getDetails  = async (req ,res , next) =>{
 
     const email = req.body
+    console.log(req.body)
     if(!email){
         return next(new ErrorResponse("Please try again! Later", 400))
     }

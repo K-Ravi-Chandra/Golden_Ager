@@ -34,6 +34,13 @@ import Grid from '@mui/material/Grid';
 import { styled} from '@mui/styles';
 import { red , green} from '@mui/material/colors';
 
+
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+
 // Button -----------------------------------------------------------------------------
 const StyledSubmitButton = styled(Button)({
     background: "linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(0,212,255,1) 0%, rgba(162,222,131,1) 100%)",
@@ -57,6 +64,14 @@ function Row(props)
     setStatus(event.target.value);
   };
 
+
+  const [openDailog, setOpenDailog] = React.useState(false);
+
+
+  const handleCloseDailog = () => {
+    setOpenDailog(false);
+  };
+
   const onSubmit  = async (values, props) =>
   {
     setLoading(true);
@@ -76,7 +91,7 @@ function Row(props)
     ).then(function(response) {
         setLoading(false);
         setUpdated(true);
-        alert(response.data.success)
+        setOpenDailog(true);
         return response;
       })
      .catch(function(error) {
@@ -105,7 +120,24 @@ function Row(props)
   return (
     <React.Fragment>
 
-      {updated ?  <></> : <> 
+      {updated ?  <><Dialog
+            open={openDailog}
+            onClose={handleCloseDailog}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogTitle id="alert-dialog-title">
+              {"Appointment Successfully Updated"}
+            </DialogTitle>
+            <DialogActions>
+              
+              <Button onClick={handleCloseDailog} autoFocus>
+                Ok
+              </Button>
+            </DialogActions>
+        </Dialog></> : <> 
+
+        
 
         <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
           <TableCell>
@@ -125,12 +157,12 @@ function Row(props)
           </TableCell>    
 
           <TableCell align="right">
-            {data.date} 
+            {data.date.slice(0,10) + " " + data.date.slice(11,19)} 
           </TableCell>
 
         </TableRow>
 
-        //-----------------------------------------------------------------------------
+        
 
         <TableRow>
           <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -230,6 +262,8 @@ function Row(props)
 //-------------------------------------------------------------------------------------
 export default function Appointments(props) 
 {
+
+  const [Appointments , setAppointments] = React.useState(false);
   const [fetching , setFetching] = React.useState(true)
   const [error , setError] =   React.useState(false)
   const [data, setData] = React.useState([]);
@@ -257,6 +291,7 @@ export default function Appointments(props)
       setError(false); 
       setFetching(false);
       setData(response.data.requests)
+      if(response.data.requests.length)  setAppointments(true)
       return response;
     })
      .catch(function(error) {
@@ -275,28 +310,32 @@ export default function Appointments(props)
     
       {error ? <Typography> An unknown Error </Typography>  : <>
 
-        <TableContainer component={Paper}>
-          <Table aria-label="collapsible table">
-
-            <TableHead>
-              <TableRow>
-
-                <TableCell />
-                <TableCell>Patient&nbsp;Name</TableCell>
-                <TableCell align="right">Date</TableCell>
-
-              </TableRow>
-            </TableHead>
-
-            <TableBody>
-              {data.map((d) => 
-              (
-                <Row key={d._id} data={d} />
-              ) )}
-            </TableBody>
-
-          </Table>
-        </TableContainer>
+        { Appointments ?
+            <TableContainer component={Paper}>
+            <Table aria-label="collapsible table">
+  
+              <TableHead>
+                <TableRow>
+  
+                  <TableCell />
+                  <TableCell>Patient&nbsp;Name</TableCell>
+                  <TableCell align="right">Date</TableCell>
+  
+                </TableRow>
+              </TableHead>
+  
+              <TableBody>
+                {data.map((d) => 
+                (
+                  <Row key={d._id} data={d} />
+                ) )}
+              </TableBody>
+  
+            </Table>
+          </TableContainer> :
+           
+          <>Have a Good time Doctor ! You have no Appointments present</>
+        }
 
       </>}
         

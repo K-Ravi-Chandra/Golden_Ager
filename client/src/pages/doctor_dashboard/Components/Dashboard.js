@@ -1,6 +1,6 @@
 import React from 'react'
 import { useTheme,alpha, styled } from '@mui/material/styles';
-import { Box, Grid, Container,CardHeader , Typography,Card} from '@mui/material';
+import { Box, Grid, Container,CardHeader , Typography,Card, LinearProgress} from '@mui/material';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import PeopleIcon from '@mui/icons-material/People';
 import MedicalServicesIcon from '@mui/icons-material/MedicalServices';
@@ -45,9 +45,25 @@ const ChartWrapperStyle = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
  function PieChart(props) {
+
   const theme = useTheme();
 
-  const CHART_DATA = [props.patients, props.totalappointments, props.appointments];
+  const [CHART_DATA, set_CHART_DATA] = React.useState([])
+  const [zero , setZero] = React.useState(true)
+
+
+
+  React.useEffect( () => {
+
+  
+
+    set_CHART_DATA([props.totalappointments,props.appointments ,props.totalappointments- props.appointments]);
+
+    if(props.totalappointments || props.appointments){
+        setZero(false)
+    }
+  
+  }, [ props.totalappointments, props.appointments])
 
   const chartOptions = merge(BaseOptionChart(), {
     colors: [
@@ -56,7 +72,7 @@ const ChartWrapperStyle = styled('div')(({ theme }) => ({
       theme.palette.primary.main,
       theme.palette.warning.main,
     ],
-    labels: [ 'Total Patients', 'Total Appointments', 'Appointments'],
+    labels: [ 'Total Appointments', 'Pending Appointments', 'Completed Appointments'],
     stroke: { colors: [theme.palette.background.paper] },
     legend: { floating: true, horizontalAlign: 'center' },
     dataLabels: { enabled: true, dropShadow: { enabled: false } },
@@ -75,12 +91,39 @@ const ChartWrapperStyle = styled('div')(({ theme }) => ({
   });
 
   return (
-    <Card>
-      <CardHeader title="Statistics" />
-      <ChartWrapperStyle dir="ltr">
-        <ReactApexChart type="pie" series={CHART_DATA} options={chartOptions} height={280} />
-      </ChartWrapperStyle>
-    </Card>
+    <>
+    
+        { CHART_DATA.length ? 
+
+        <> {zero ?   <Card>
+          <CardHeader title="Statistics of Requests" />
+          <ChartWrapperStyle dir="ltr">
+          <Typography sx = {{marginLeft : 4}}>Insufficient Data to show Statistics</Typography>
+          </ChartWrapperStyle>
+          </Card>: 
+          <Card>
+          <CardHeader title="Statistics of Requests" />
+          <ChartWrapperStyle dir="ltr">
+            <ReactApexChart type="pie" series={CHART_DATA} options={chartOptions} height={280} />
+          </ChartWrapperStyle>
+          </Card>}</>
+
+        
+
+         
+
+          : <Card>
+          <CardHeader title="Statistics of Donations and Senior Citizens" />
+          <ChartWrapperStyle dir="ltr">
+          <LinearProgress/>
+          </ChartWrapperStyle>
+          </Card>
+
+        }
+    
+    
+    
+  </>
   );
 }
 
