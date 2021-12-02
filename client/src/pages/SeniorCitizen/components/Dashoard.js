@@ -1,13 +1,16 @@
+// Imports...
 import React from 'react'
 import { alpha, styled } from '@mui/material/styles';
 import { Grid, Container, Typography,Card, Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions} from '@mui/material';
 import PeopleIcon from '@mui/icons-material/People';
 import ThemeConfig from '../../../components/theme'
+
 import MoneyIcon from '@mui/icons-material/Money';
 import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
 import LocalHospitalOutlinedIcon from '@mui/icons-material/LocalHospitalOutlined';
 import ConnectWithoutContactIcon from '@mui/icons-material/ConnectWithoutContact';
 import AccessibleForwardIcon from '@mui/icons-material/AccessibleForward';
+
 import AttributionIcon from '@mui/icons-material/Attribution';
 import axios from "axios";
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -36,101 +39,108 @@ const FinancialHelpIconWrapperStyle = styled('div')( ({ theme }) => ({
 }) );
   
 // ------------------ 1.3) code for Financial Help component in dashboard   
-function FinancialHelpCard(props) {
-
+function FinancialHelpCard(props) 
+{
   const details = props.data
   const profile = props.profile
 
   const [openDialog, setOpenDialog] = React.useState(false);
   const [isSuccess, setIsSuccess] = React.useState(false);
   const [pad, setPad] = React.useState(6);
+
   const handleCloseDialog = () => {
     setOpenDialog(false);
   }
+
   const theme = useTheme();
 
   //----- ONCLICK LISTENER functionality for the Financial Help component
-    const FinancialHelp = async () => {
-      const config = {
-        header: {
-          "Content-Type": "application/json",
+  const FinancialHelp = async () => {
+    const config = {
+      header: {
+        "Content-Type": "application/json",
+      },
+    };
+  
+    const name = profile.username
+    const email = details.email
+    const phone = profile.phone
+    const volunter  = details.volunter
+  
+    try
+    {
+      const financialHelp = await axios.post(
+        "/api/help/financialhelp",
+        {
+          name ,email, phone,volunter
         },
-      };
-      const name = profile.username
-      const email = details.email
-      const phone = profile.phone
-      const volunter  = details.volunter
-  
-      try{
-        const financialHelp = await axios.post(
-          "/api/help/financialhelp",
-          {
-            name ,email, phone,volunter
-          },
-          config
-        );
-        console.log("Request Sent ");
-        setIsSuccess(true);
-        setPad(0);
-        setOpenDialog(true);
-      }
-      catch (error) {
-        console.log(error.response.data);
-        setOpenDialog(true);
-      }
-  
+        config
+      );
+      console.log("Request Sent ");
+      setIsSuccess(true);
+      setPad(0);
+      setOpenDialog(true);
+    }
+    catch (error) 
+    {
+      console.log(error.response.data);
+      setOpenDialog(true);
     }
   
-    return ( //returning JSX code for the component 
-      <>
-      {/*--------------Component code---------------------*/}
-      <FinancialHelpRootStyle sx={{cursor : 'pointer'}} onClick={FinancialHelp}>
+  }
+  
+  return ( //returning JSX code for the component 
+    <>
+    {/*--------------Component code---------------------*/}
+    <FinancialHelpRootStyle sx={{cursor : 'pointer'}} onClick={FinancialHelp}>
         
-          <FinancialHelpIconWrapperStyle>
-            <MoneyIcon sx={{ fontSize: 80}} />
-          </FinancialHelpIconWrapperStyle>
+      <FinancialHelpIconWrapperStyle>
+          <MoneyIcon sx={{ fontSize: 80}} />
+      </FinancialHelpIconWrapperStyle>
         
-          <Typography variant="h6"> Financial Help </Typography>
+      <Typography variant="h6"> Financial Help </Typography>
 
-      </FinancialHelpRootStyle>
+    </FinancialHelpRootStyle>
 
-      {/*------Dialog popup to notify if the component action was successful----*/}
-      <Dialog
-        open={openDialog}
-        onClose={handleCloseDialog}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        {/* <DialogTitle id="alert-dialog-title">
-        </DialogTitle> */}
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
+    {/*------Dialog popup to notify if the component action was successful----*/}
+    <Dialog
+      open={openDialog}
+      onClose={handleCloseDialog}
+      aria-labelledby="alert-dialog-title"
+      aria-describedby="alert-dialog-description"
+    >
+      {/* <DialogTitle id="alert-dialog-title">
+      </DialogTitle> */}
+      <DialogContent>
+        <DialogContentText id="alert-dialog-description">
 
-                <h1><center>{isSuccess?"Success":"Error"}</center> </h1>
-                <center>
-                  {isSuccess ?
-                      <CheckCircleIcon style={{color: "#26FF00", fontSize:"6em"}}/>
-                      :<CancelIcon style={{color: "#FF0000", fontSize:"6em"}}/>
-                  }
-                </center>
+            <h1><center>{isSuccess?"Success":"Error"}</center> </h1>
 
-                <br />
+            <center>
+              {isSuccess ?
+                <CheckCircleIcon style={{color: "#26FF00", fontSize:"6em"}}/>
+                :<CancelIcon style={{color: "#FF0000", fontSize:"6em"}}/>
+              }
+            </center>
 
-                <div style = {{paddingLeft: theme.spacing(pad), paddingRight: theme.spacing(pad)}}>
-                    <strong>
-                      {
-                        isSuccess
-                          ?"Your voulnteer will arrange for your support soon"
-                          :"Oops!!  Something went wrong"
-                      }
-                    </strong>
-                </div>
+            <br />
 
-          </DialogContentText>
-        </DialogContent>
+            <div style = {{paddingLeft: theme.spacing(pad), paddingRight: theme.spacing(pad)}}>
+                <strong>
+                {
+                  isSuccess
+                  ?"Your voulnteer will arrange for your support soon"
+                  :"Oops!!  Something went wrong"
+                }
+                </strong>
+            </div>
 
-      </Dialog>
-      </>
+        </DialogContentText>
+      </DialogContent>
+
+    </Dialog>
+    
+    </>
     );
 
   }
